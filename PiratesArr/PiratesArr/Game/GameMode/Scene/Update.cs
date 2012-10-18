@@ -8,6 +8,12 @@ namespace PiratesArr.Game.GameMode.Scene
         public override void Update(GameTime gameTime)
         {
             Input();
+
+            camera.Update();
+            viewMatrix = camera.View;
+
+            Matrix worldMatrix = Matrix.CreateRotationZ((float)gameTime.TotalGameTime.TotalSeconds*0);
+            basic.Parameters["xWorld"].SetValue(worldMatrix);
         }
     }
 }

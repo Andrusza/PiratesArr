@@ -4,6 +4,8 @@ using PiratesArr.Game.GameMode.BaseMode;
 using PiratesArr.Game.GameMode.Intro;
 using PiratesArr.GUI.LoadCursor;
 using PiratesArr.MainLoop;
+using PiratesArr.Game.GameMode.Scene;
+using PiratesArr.Game.Camera.FirstPersonCamera;
 
 namespace PiratesArr
 {
@@ -11,6 +13,15 @@ namespace PiratesArr
     {
         private Mode renderMode;
         private FPScounter fps;
+        private FirstPersonCamera camera;
+
+        Matrix viewMatrix;
+
+        public Matrix ViewMatrix
+        {
+            get { return viewMatrix; }
+            set { viewMatrix = value; }
+        }
 
         public Mode RenderMode
         {
@@ -31,6 +42,8 @@ namespace PiratesArr
 
             Form winForm = (Form)Form.FromHandle(Window.Handle);
             winForm.Cursor = myCursor;
+
+            camera = new FirstPersonCamera();
         }
 
         protected override void Initialize()
@@ -40,6 +53,7 @@ namespace PiratesArr
 
             fps = new FPScounter();
             renderMode = new Intro();
+           // renderMode = new Scene();
         }
 
         #region Singleton

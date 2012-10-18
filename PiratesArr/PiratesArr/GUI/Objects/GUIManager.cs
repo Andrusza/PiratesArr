@@ -11,7 +11,6 @@ namespace PiratesArr.GUI.Objects
         private SpriteBatch spriteBatch;
 
         private static Main mainInstance;
-        private static GraphicsDeviceManager graphicsInstance;
 
         public bool IsClicked(int id)
         {
@@ -33,7 +32,6 @@ namespace PiratesArr.GUI.Objects
             objects = new List<GUIObject>();
             mainInstance = Main.GetInstance();
             spriteBatch = new SpriteBatch(mainInstance.GraphicsDevice);
-            graphicsInstance = Main.GetInstance(mainInstance);
         }
 
         public void Add(GUIObject obj)

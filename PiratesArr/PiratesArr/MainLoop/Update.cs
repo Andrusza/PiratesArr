@@ -6,6 +6,7 @@ namespace PiratesArr
     {
         protected override void Update(GameTime gameTime)
         {
+           
             renderMode.Update(gameTime);
             fps.Update(gameTime);
 

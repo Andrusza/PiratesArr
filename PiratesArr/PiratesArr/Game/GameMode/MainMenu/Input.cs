@@ -31,13 +31,14 @@ namespace PiratesArr.Game.GameMode.MainMenu
 
                 if (manager.IsClicked(1) == true)
                 {
-                    ButtonNewGameClicked();
+                    ButtonLoadClicked();
                 }
             }
         }
 
         private void ButtonNewGameClicked()
         {
+            mainInstance.RenderMode = new PiratesArr.Game.GameMode.Scene.Scene();
         }
 
         private void ButtonLoadClicked()
