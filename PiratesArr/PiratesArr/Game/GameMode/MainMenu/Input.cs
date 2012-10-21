@@ -11,7 +11,7 @@ namespace PiratesArr.Game.GameMode.MainMenu
             MousePressed();
         }
 
-        private void KeysPressed()
+        static private void KeysPressed()
         {
             KeyboardState keyState = Keyboard.GetState();
         }
@@ -36,12 +36,12 @@ namespace PiratesArr.Game.GameMode.MainMenu
             }
         }
 
-        private void ButtonNewGameClicked()
+        static private void ButtonNewGameClicked()
         {
             mainInstance.RenderMode = new PiratesArr.Game.GameMode.Scene.Scene();
         }
 
-        private void ButtonLoadClicked()
+        static private void ButtonLoadClicked()
         {
         }
     }

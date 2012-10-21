@@ -11,9 +11,7 @@ namespace PiratesArr.Game.GameMode.Scene
 
             camera.Update();
             viewMatrix = camera.View;
-
-            Matrix worldMatrix = Matrix.CreateRotationZ((float)gameTime.TotalGameTime.TotalSeconds*0);
-            basic.Parameters["xWorld"].SetValue(worldMatrix);
+            VP = viewMatrix * projectionMatrix;
         }
     }
 }

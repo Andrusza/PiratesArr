@@ -1,11 +1,9 @@
 using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using PiratesArr.Game.GameMode.BaseMode;
-using PiratesArr.Game.GameMode.Intro;
+using PiratesArr.Game.GameMode.Scene;
 using PiratesArr.GUI.LoadCursor;
 using PiratesArr.MainLoop;
-using PiratesArr.Game.GameMode.Scene;
-using PiratesArr.Game.Camera.FirstPersonCamera;
 
 namespace PiratesArr
 {
@@ -13,9 +11,8 @@ namespace PiratesArr
     {
         private Mode renderMode;
         private FPScounter fps;
-        private FirstPersonCamera camera;
 
-        Matrix viewMatrix;
+        private Matrix viewMatrix;
 
         public Matrix ViewMatrix
         {
@@ -42,8 +39,6 @@ namespace PiratesArr
 
             Form winForm = (Form)Form.FromHandle(Window.Handle);
             winForm.Cursor = myCursor;
-
-            camera = new FirstPersonCamera();
         }
 
         protected override void Initialize()
@@ -52,8 +47,9 @@ namespace PiratesArr
             mainInstance = this;
 
             fps = new FPScounter();
-            renderMode = new Intro();
-           // renderMode = new Scene();
+            // renderMode = new Intro();
+            renderMode = new Scene();
+            // renderMode = new Tera();
         }
 
         #region Singleton
@@ -77,7 +73,7 @@ namespace PiratesArr
             return mainInstance;
         }
 
-        public static GraphicsDeviceManager GetInstance(Main instance)
+        public static GraphicsDeviceManager GetInstance(Microsoft.Xna.Framework.Game instance)
         {
             if (graphicsInstance == null)
             {

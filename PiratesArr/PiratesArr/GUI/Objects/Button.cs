@@ -4,7 +4,7 @@
     {
         public Button()
         {
-            this.IsClickAble = true;
+            this.IsClickable = true;
             this.IsDragAble = false;
             this.IsEditable = false;
             this.IsVisible = true;
@@ -12,7 +12,7 @@
 
         public override bool Click(int x, int y)
         {
-            if (this.IsClickAble == true)
+            if (this.IsClickable == true)
             {
                 if (x >= this.Pos.X && x <= this.Pos.X + this.Width)
                 {

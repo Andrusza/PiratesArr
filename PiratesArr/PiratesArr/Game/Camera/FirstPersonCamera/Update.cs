@@ -1,13 +1,11 @@
-﻿using System;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace PiratesArr.Game.Camera.FirstPersonCamera
 {
     public partial class FirstPersonCamera
     {
-        int lastX;
-        int lastY;
+        private int lastX;
+        private int lastY;
 
         public void Update()
         {
@@ -15,7 +13,7 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
             MouseEvents();
         }
 
-        private void mouseFollow(int x,int y)
+        private void MouseFollow(int x, int y)
         {
             lastX = x;
             lastY = y;
@@ -23,8 +21,8 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
 
         private void Motion(int x, int y)
         {
-            float pitch = (float) y - lastY;
-            float yaw =   (float) x - lastX;
+            float pitch = (float)y - lastY;
+            float yaw = (float)x - lastX;
 
             lastY = y;
             lastX = x;
@@ -32,10 +30,9 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
             pitch = pitch * 0.001f;
             yaw = yaw * 0.001f;
 
-           
             if (pitch != 0)
             {
-                this.orientation=Quaternion.CreateFromYawPitchRoll(0, pitch, 0)*this.orientation;
+                this.orientation = Quaternion.CreateFromYawPitchRoll(0, pitch, 0) * this.orientation;
             }
 
             if (yaw != 0)

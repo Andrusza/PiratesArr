@@ -71,12 +71,12 @@ namespace PiratesArr.GUI.Objects
             set { isVisible = value; }
         }
 
-        private bool isClickAble;
+        private bool isClickable;
 
-        public bool IsClickAble
+        public bool IsClickable
         {
-            get { return isClickAble; }
-            set { isClickAble = value; }
+            get { return isClickable; }
+            set { isClickable = value; }
         }
 
         private bool isClicked;

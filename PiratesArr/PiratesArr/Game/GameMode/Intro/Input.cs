@@ -5,13 +5,13 @@ namespace PiratesArr.Game.GameMode.Intro
 {
     public partial class Intro : Mode
     {
-        public void Input()
+        static public void Input()
         {
             KeysPressed();
             MousePressed();
         }
 
-        private void KeysPressed()
+        static private void KeysPressed()
         {
             KeyboardState keyState = Keyboard.GetState();
 
@@ -21,7 +21,7 @@ namespace PiratesArr.Game.GameMode.Intro
             }
         }
 
-        private void MousePressed()
+        static private void MousePressed()
         {
             MouseState mouseState = Mouse.GetState();
             if (mouseState.LeftButton == ButtonState.Pressed)

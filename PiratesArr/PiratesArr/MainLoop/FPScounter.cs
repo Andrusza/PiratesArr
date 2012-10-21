@@ -6,9 +6,9 @@ namespace PiratesArr.MainLoop
     public class FPScounter
     {
         private SpriteFont _spr_font;
-        private int _total_frames = 0;
-        private float _elapsed_time = 0.0f;
-        private int _fps = 0;
+        private int _total_frames;
+        private float _elapsed_time;
+        private int _fps;
 
         private SpriteBatch spriteBatch;
 
@@ -35,7 +35,6 @@ namespace PiratesArr.MainLoop
 
         public void Draw()
         {
-            // Only update total frames when drawing
             _total_frames++;
 
             spriteBatch.Begin();

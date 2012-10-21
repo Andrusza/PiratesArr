@@ -1,5 +1,5 @@
-﻿using PiratesArr.Game.GameMode.BaseMode;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using PiratesArr.Game.GameMode.BaseMode;
 
 namespace PiratesArr.Game.GameMode.Scene
 {
@@ -8,9 +8,6 @@ namespace PiratesArr.Game.GameMode.Scene
         public override void LoadContent()
         {
             basic = mainInstance.Content.Load<Effect>("Shaders//basic");
-            basic.CurrentTechnique = basic.Techniques["ColoredNoShading"];
-
-          
         }
 
         public override void UnloadContent()

@@ -7,7 +7,7 @@ namespace PiratesArr.Game.GameMode.BaseMode
         protected static Main mainInstance;
         protected static GraphicsDeviceManager graphicsInstance;
 
-        public Mode()
+        protected Mode()
         {
             mainInstance = Main.GetInstance();
             graphicsInstance = Main.GetInstance(mainInstance);

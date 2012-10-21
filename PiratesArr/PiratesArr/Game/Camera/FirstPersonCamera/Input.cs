@@ -19,27 +19,26 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
 
             if (keyState.IsKeyDown(Keys.A))
             {
-                direction += new Vector3(1, 0, 0);
+                direction += new Vector3(10, 0, 0);
             }
 
             if (keyState.IsKeyDown(Keys.D))
             {
-                direction += new Vector3(-1, 0, 0);
+                direction += new Vector3(-10, 0, 0);
             }
 
             if (keyState.IsKeyDown(Keys.W))
             {
-                direction += new Vector3(0, 0, -1);
+                direction += new Vector3(0, 0, -10);
             }
 
             if (keyState.IsKeyDown(Keys.S))
             {
-                direction += new Vector3(0, 0, 1);
+                direction += new Vector3(0, 0, 10);
             }
             CameraTranslate(direction);
         }
 
-     
         private void MouseEvents()
         {
             MouseState mouseState = Mouse.GetState();
@@ -50,7 +49,7 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
             }
             else
             {
-                mouseFollow(mouseState.X, mouseState.Y);
+                MouseFollow(mouseState.X, mouseState.Y);
             }
         }
     }
