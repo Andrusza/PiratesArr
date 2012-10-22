@@ -15,21 +15,39 @@ namespace PiratesArr.Game.Terrain
         private uint vertexCountX;
         private uint vertexCountZ;
 
-        private VertexDeclaration vertexDeclaration;
-
         private uint blockScale;
         private uint heightScale;
 
         private uint numTriangles;
         private uint numVertices;
 
+        private VertexBuffer vbo;
+
+        public VertexBuffer Vbo
+        {
+            get { return vbo; }
+            set { vbo = value; }
+        }
+        private IndexBuffer ibo;
+
+        public IndexBuffer Ibo
+        {
+            get { return ibo; }
+            set { ibo = value; }
+        }
+
         private Color[] heightMap;
 
-        private void Load(string assetName)
+        public void Draw()
+        {
+           
+        }
+
+        public Terrain(string assetName)
         {
             mainInstance = Main.GetInstance();
             basic = mainInstance.Content.Load<Effect>("Shaders//basic");
-            heightMapTexture = mainInstance.Content.Load<Texture2D>("Heightmap//assetName");
+            heightMapTexture = mainInstance.Content.Load<Texture2D>("Heightmap//"+assetName);
 
             int heightMapSize = heightMapTexture.Width * heightMapTexture.Height;
 
@@ -38,10 +56,10 @@ namespace PiratesArr.Game.Terrain
 
             vertexCountX = (uint)heightMapTexture.Width;
             vertexCountZ = (uint)heightMapTexture.Height;
-            blockScale = 1;
-            heightScale = 1;
+            blockScale = 30;
+            heightScale = 3;
 
-            vertexDeclaration = new VertexDeclaration(VertexPositionNormalTangentBinormalTexture.VertexElements);
+            GenerateTerrainMesh();
         }
 
         private void GenerateTerrainMesh()
@@ -52,7 +70,14 @@ namespace PiratesArr.Game.Terrain
             uint[] indices = GenerateTerrainIndices();
 
             VertexPositionNormalTangentBinormalTexture[] vertices = GenerateTerrainVertices();
-            GenerateTerrainNormals(vertices);
+            GenerateTerrainNormals(vertices, indices);
+            GenerateTerrainTangentBinormal(vertices, indices);
+
+          
+            Vbo = new VertexBuffer(mainInstance.GraphicsDevice, VertexPositionNormalTangentBinormalTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+            Vbo.SetData(vertices);
+            Ibo = new IndexBuffer(mainInstance.GraphicsDevice, typeof(uint), indices.Length, BufferUsage.WriteOnly);
+            Ibo.SetData(indices);
         }
 
         private VertexPositionNormalTangentBinormalTexture[] GenerateTerrainVertices()
@@ -85,21 +110,41 @@ namespace PiratesArr.Game.Terrain
             return vertices;
         }
 
-        private void GenerateTerrainNormals(VertexPositionNormalTangentBinormalTexture[] vectices)
+        private void GenerateTerrainNormals(VertexPositionNormalTangentBinormalTexture[] vertices, uint[] indices)
         {
-           
+            for (uint i = 0; i < indices.Length; i += 3)
+            {
+                // Get the vertex position (v1, v2, and v3)
+                Vector3 v1 = vertices[indices[i]].Position;
+                Vector3 v2 = vertices[indices[i + 1]].Position;
+                uint lol=indices[i + 2];
+                Vector3 v3 = vertices[lol].Position;
+
+                // Calculate vectors v1->v3 and v1->v2 and the normal as a cross product
+                Vector3 vu = v3 - v1;
+                Vector3 vt = v2 - v1;
+                Vector3 normal = Vector3.Cross(vu, vt);
+                normal.Normalize();
+
+                vertices[indices[i]].Normal += normal;
+                vertices[indices[i + 1]].Normal += normal;
+                vertices[indices[i + 2]].Normal += normal;
+            }
+
+            for (int i = 0; i < vertices.Length; i++)
+                vertices[i].Normal.Normalize();
         }
 
         private uint[] GenerateTerrainIndices()
         {
             uint numIndices = numTriangles * 3;
             uint[] indices = new uint[numIndices];
-            int indicesCount = 0;
+            uint indicesCount = 0;
             for (uint i = 0; i < (vertexCountZ - 1); i++)
             {
                 for (uint j = 0; j < (vertexCountX - 1); j++)
                 {
-                    uint index = (j + i) * vertexCountZ;
+                    uint index = j + i * vertexCountZ;
                     // First triangle
                     indices[indicesCount++] = index;
                     indices[indicesCount++] = index + 1;
@@ -113,6 +158,34 @@ namespace PiratesArr.Game.Terrain
             return indices;
         }
 
+        public void GenerateTerrainTangentBinormal(VertexPositionNormalTangentBinormalTexture[] vertices, uint[] indices)
+        {
+            for (uint i = 0; i < vertexCountZ; i++)
+            {
+                for (uint j = 0; j < vertexCountX; j++)
+                {
+                    uint vertexIndex = j + i * vertexCountX;
+                    Vector3 v1 = vertices[vertexIndex].Position;
+                    // Calculate the tangent vector
+                    if (j < vertexCountX - 1)
+                    {
+                        Vector3 v2 = vertices[vertexIndex + 1].Position;
+                        vertices[vertexIndex].Tangent = (v2 - v1);
+                    }
+                    // Special case: last vertex of the plane in the X axis
+                    else
+                    {
+                        Vector3 v2 = vertices[vertexIndex - 1].Position;
+                        vertices[vertexIndex].Tangent = (v1 - v2);
+                    }
+                    // Calculate binormal as a cross product (Tangent x Normal)
+                    vertices[vertexIndex].Tangent.Normalize();
+                    vertices[vertexIndex].Binormal = Vector3.Cross(
+                    vertices[vertexIndex].Tangent, vertices[vertexIndex].Normal);
+                }
+            }
+        }
+
         public struct VertexPositionNormalTangentBinormalTexture
         {
             public Vector3 Position;
@@ -121,16 +194,14 @@ namespace PiratesArr.Game.Terrain
             public Vector3 Tangent;
             public Vector3 Binormal;
 
-            public static readonly VertexElement[] VertexElements = new VertexElement[]
-            {
+            public readonly static VertexDeclaration VertexDeclaration = new VertexDeclaration
+            (
                 new VertexElement(0,VertexElementFormat.Vector3,VertexElementUsage.Position,0),
-                new VertexElement(12,VertexElementFormat.Vector3,VertexElementUsage.Position,0),
-                new VertexElement(24,VertexElementFormat.Vector2,VertexElementUsage.Position,0),
-                new VertexElement(32,VertexElementFormat.Vector3,VertexElementUsage.Position,0),
-                new VertexElement(44,VertexElementFormat.Vector3,VertexElementUsage.Position,0),
-            };
-
-            public static readonly int SizeInBytes = sizeof(float) * (3 + 3 + 2 + 3 + 3);
+                new VertexElement(12,VertexElementFormat.Vector3,VertexElementUsage.Normal,0),
+                new VertexElement(24,VertexElementFormat.Vector2,VertexElementUsage.TextureCoordinate,0),
+                new VertexElement(32,VertexElementFormat.Vector3,VertexElementUsage.Tangent,0),
+                new VertexElement(44,VertexElementFormat.Vector3,VertexElementUsage.Binormal,0)
+            );
         }
     }
 }
