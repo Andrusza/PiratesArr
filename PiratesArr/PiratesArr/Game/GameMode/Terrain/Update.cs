@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using PiratesArr.Game.GameMode.BaseMode;
 
-namespace PiratesArr.Game.GameMode.Tera
+namespace PiratesArr.Game.GameMode.Terrain
 {
     public partial class Tera : Mode
     {
@@ -11,9 +11,7 @@ namespace PiratesArr.Game.GameMode.Tera
 
             camera.Update();
             viewMatrix = camera.View;
-
-            Matrix worldMatrix = Matrix.CreateRotationZ((float)gameTime.TotalGameTime.TotalSeconds * 0);
-            basic.Parameters["xWorld"].SetValue(worldMatrix);
+            VP = viewMatrix * projectionMatrix;
         }
     }
 }

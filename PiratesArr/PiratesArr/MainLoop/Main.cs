@@ -4,6 +4,7 @@ using PiratesArr.Game.GameMode.BaseMode;
 using PiratesArr.Game.GameMode.Scene;
 using PiratesArr.GUI.LoadCursor;
 using PiratesArr.MainLoop;
+using PiratesArr.Game.GameMode.Terrain;
 
 namespace PiratesArr
 {
@@ -48,8 +49,8 @@ namespace PiratesArr
 
             fps = new FPScounter();
             // renderMode = new Intro();
-            renderMode = new Scene();
-            // renderMode = new Tera();
+            //renderMode = new Scene();
+             renderMode = new Tera();
         }
 
         #region Singleton
