@@ -15,6 +15,7 @@ namespace PiratesArr.Game.GameMode.Terrain
         private Matrix modelMatrix = Matrix.Identity;
         private Matrix VP;
         private RasterizerState rs;
+        private Texture2D sand;
 
 
         PiratesArr.Game.Terrain.Terrain tera;
@@ -27,6 +28,7 @@ namespace PiratesArr.Game.GameMode.Terrain
 
             rs = new RasterizerState();
             tera = new PiratesArr.Game.Terrain.Terrain("map2");
+            
             rs.CullMode = CullMode.None;
         }
 

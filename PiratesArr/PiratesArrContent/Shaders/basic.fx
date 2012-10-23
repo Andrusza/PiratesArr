@@ -1,74 +1,54 @@
-struct VertexToPixel
+texture2D diffuseMap_sand;
+sampler2D sand_Sampler = sampler_state
 {
-    float4 Position   	: POSITION;    
-    float4 Color		: COLOR0;
-    float LightingFactor: TEXCOORD0;
-    float2 TextureCoords: TEXCOORD1;
+	Texture   = <diffuseMap_sand>;
+	MinFilter = linear;
+	MagFilter = linear;
+	MipFilter = linear;
 };
 
-struct PixelToFrame
+
+struct VertexIn
 {
-    float4 Color : COLOR0;
+	float4 vec4_position      : POSITION0;
+	float3 vec3_normal		  : NORMAL0;
+	float2 vec2_textureCoords : TEXCOORD0;
+	float3 vec3_tangent       : TANGENT0;
+	float3 vec3_binormal      : BINORMAL0;
 };
 
-//------- Constants --------
-float4x4 mat_View;
-float4x4 mat_Projection;
-float4x4 mat_Model;
+struct PixelIn
+{
+	float4 vec4_position      : POSITION0;
+	float2 vec2_textureCoords : TEXCOORD0;
+};
+
+struct PixelOut
+{
+    float4 color : COLOR0;
+};
+
 float4x4 mat_MVP;
 
 
-VertexToPixel TexturedVS( float4 inPos : POSITION, float3 inNormal: NORMAL, float2 inTexCoords: TEXCOORD0)
+PixelIn TexturedVS(VertexIn input)
 {	
-	VertexToPixel Output = (VertexToPixel)0;
+	PixelIn output = (PixelIn)0;
 
-	float4x4 preViewProjection = mat_MVP;
-	float4x4 preWorldViewProjection = mat_MVP;
-    
-	Output.Position = mul(inPos, preWorldViewProjection);	
-	Output.Color=float4(inNormal,1);
+	output.vec4_position = mul(input.vec4_position, mat_MVP);	
+	output.vec2_textureCoords=input.vec2_textureCoords;
 	
-	
-	return Output;    
+	return output;    
 }
 
-PixelToFrame TexturedPS(VertexToPixel PSIn) 
+PixelOut TexturedPS(PixelIn input) 
 {
-	PixelToFrame Output = (PixelToFrame)0;		
-	Output.Color=PSIn.Color;
+	PixelOut output = (PixelOut)0;		
+	output.color=tex2D(sand_Sampler,input.vec2_textureCoords);
 
-	return Output;
+	return output;
 }
 
-////------- Technique: Textured --------
-//
-//VertexToPixel TexturedVS( float4 inPos : POSITION, float3 inNormal: NORMAL, float2 inTexCoords: TEXCOORD0)
-//{	
-	//VertexToPixel Output = (VertexToPixel)0;
-	//float4x4 preViewProjection = mul (xView, xProjection);
-	//float4x4 preWorldViewProjection = mul (xWorld, preViewProjection);
-    //
-	//Output.Position = mul(inPos, preWorldViewProjection);	
-	//Output.TextureCoords = inTexCoords;
-	//
-	//float3 Normal = normalize(mul(normalize(inNormal), xWorld));	
-	//Output.LightingFactor = 1;
-	//if (xEnableLighting)
-		//Output.LightingFactor = dot(Normal, -xLightDirection);
-    //
-	//return Output;    
-//}
-//
-//PixelToFrame TexturedPS(VertexToPixel PSIn) 
-//{
-	//PixelToFrame Output = (PixelToFrame)0;		
-	//
-	//Output.Color = tex2D(TextureSampler, PSIn.TextureCoords);
-	//Output.Color.rgb *= saturate(PSIn.LightingFactor) + xAmbient;
-//
-	//return Output;
-//}
-//
 technique Textured
 {
 	pass Pass0

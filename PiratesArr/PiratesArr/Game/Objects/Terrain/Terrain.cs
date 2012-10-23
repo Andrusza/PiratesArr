@@ -97,6 +97,7 @@ namespace PiratesArr.Game.Terrain
             int count = 0;
             for (float i = -halfTerrainDepth; i <= halfTerrainDepth; i += blockScale)
             {
+                tu = 0.0f;
                 for (float j = -halfTerrainWidth; j <= halfTerrainWidth; j += blockScale)
                 {
                     vertices[count].Position = new Vector3(j, heightMap[count].R * heightScale, i);

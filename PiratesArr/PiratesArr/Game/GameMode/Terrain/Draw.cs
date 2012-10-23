@@ -10,7 +10,7 @@ namespace PiratesArr.Game.GameMode.Terrain
         {
             mainInstance.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             mainInstance.GraphicsDevice.RasterizerState = rs;
-            basic.CurrentTechnique = basic.Techniques["Textured"];
+          
             basic.Parameters["mat_MVP"].SetValue(VP*modelMatrix);
 
 
