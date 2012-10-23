@@ -130,6 +130,7 @@
     <Compile Include="Game\GameMode\MainMenu\Update.cs" />
     <Compile Include="Game\Objects\Ship\Ship.cs" />
     <Compile Include="Game\Objects\Terrain\Terrain.cs" />
+    <Compile Include="Game\Objects\Terrain\VertexPositionNormalTangentBinormalTexture.cs" />
     <Compile Include="GUI\Objects\Button.cs" />
     <Compile Include="GUI\Objects\GUIManager.cs" />
     <Compile Include="GUI\Objects\GUIObject.cs" />

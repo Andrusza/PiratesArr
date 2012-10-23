@@ -9,9 +9,9 @@ namespace PiratesArr.Game.GameMode.Terrain
         {
             Input();
 
-            camera.Update();
-            viewMatrix = camera.View;
-            VP = viewMatrix * projectionMatrix;
+            VP=camera.Update();
+            
+            
         }
     }
 }

@@ -16,7 +16,7 @@ namespace PiratesArr.Game.GameMode.Scene
         private Matrix VP;
         private RasterizerState rs;
 
-        private FirstPersonCamera camera = new FirstPersonCamera();
+        private FirstPersonCamera camera = new FirstPersonCamera(new Vector3(0,0,50));
 
         private Ship playerShip;
 

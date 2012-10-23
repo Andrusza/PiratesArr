@@ -10,8 +10,7 @@ namespace PiratesArr.Game.GameMode.Scene
             Input();
 
             camera.Update();
-            viewMatrix = camera.View;
-            VP = viewMatrix * projectionMatrix;
+           
         }
     }
 }

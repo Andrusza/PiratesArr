@@ -10,18 +10,9 @@ namespace PiratesArr.Game.GameMode.Terrain
         {
             mainInstance.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             mainInstance.GraphicsDevice.RasterizerState = rs;
-          
-            basic.Parameters["mat_MVP"].SetValue(VP*modelMatrix);
 
-
-            foreach (EffectPass pass in basic.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-
-                mainInstance.GraphicsDevice.Indices = tera.Ibo;
-                mainInstance.GraphicsDevice.SetVertexBuffer(tera.Vbo);
-                mainInstance.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, tera.Vbo.VertexCount, 0, tera.Ibo.IndexCount / 3);
-            }
+            tera.Draw(VP);
+            
         }
     }
 }

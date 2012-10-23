@@ -7,11 +7,7 @@ namespace PiratesArr.Game.GameMode.Terrain
     {
         public override void LoadContent()
         {
-            basic = mainInstance.Content.Load<Effect>("Shaders//basic");
-            basic.CurrentTechnique = basic.Techniques["Textured"];
-            sand = mainInstance.Content.Load<Texture2D>("Textures//sand");
-            basic.Parameters["diffuseMap_sand"].SetValue(sand);
-                
+         
         }
 
         public override void UnloadContent()

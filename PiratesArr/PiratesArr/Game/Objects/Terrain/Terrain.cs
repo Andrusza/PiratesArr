@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PiratesArr.Game.Objects.Terrain;
 
 namespace PiratesArr.Game.Terrain
 {
@@ -9,6 +10,8 @@ namespace PiratesArr.Game.Terrain
 
         private Texture2D heightMapTexture;
         private Texture2D sand;
+
+        private Matrix worldMatrix = Matrix.Identity;
 
         private static Main mainInstance;
 
@@ -21,33 +24,38 @@ namespace PiratesArr.Game.Terrain
         private uint numTriangles;
         private uint numVertices;
 
+        private int numIndices;
+
         private VertexBuffer vbo;
-
-        public VertexBuffer Vbo
-        {
-            get { return vbo; }
-            set { vbo = value; }
-        }
         private IndexBuffer ibo;
-
-        public IndexBuffer Ibo
-        {
-            get { return ibo; }
-            set { ibo = value; }
-        }
 
         private Color[] heightMap;
 
-        public void Draw()
+        public void Draw(Matrix VP)
         {
-           
+            basic.Parameters["mat_MVP"].SetValue(VP * worldMatrix);
+
+            foreach (EffectPass pass in basic.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+
+                mainInstance.GraphicsDevice.Indices = this.ibo;
+                mainInstance.GraphicsDevice.SetVertexBuffer(this.vbo);
+                mainInstance.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this.vbo.VertexCount, 0, numIndices);
+            }
         }
 
         public Terrain(string assetName)
         {
             mainInstance = Main.GetInstance();
+
             basic = mainInstance.Content.Load<Effect>("Shaders//basic");
-            heightMapTexture = mainInstance.Content.Load<Texture2D>("Heightmap//"+assetName);
+            heightMapTexture = mainInstance.Content.Load<Texture2D>("Heightmap//" + assetName);
+
+            basic = mainInstance.Content.Load<Effect>("Shaders//basic");
+            basic.CurrentTechnique = basic.Techniques["Textured"];
+            sand = mainInstance.Content.Load<Texture2D>("Textures//sand");
+            basic.Parameters["diffuseMap_sand"].SetValue(sand);
 
             int heightMapSize = heightMapTexture.Width * heightMapTexture.Height;
 
@@ -68,16 +76,16 @@ namespace PiratesArr.Game.Terrain
             numTriangles = (vertexCountX - 1) * (vertexCountZ - 1) * 2;
 
             uint[] indices = GenerateTerrainIndices();
+            numIndices = indices.Length;
 
             VertexPositionNormalTangentBinormalTexture[] vertices = GenerateTerrainVertices();
             GenerateTerrainNormals(vertices, indices);
             GenerateTerrainTangentBinormal(vertices, indices);
 
-          
-            Vbo = new VertexBuffer(mainInstance.GraphicsDevice, VertexPositionNormalTangentBinormalTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
-            Vbo.SetData(vertices);
-            Ibo = new IndexBuffer(mainInstance.GraphicsDevice, typeof(uint), indices.Length, BufferUsage.WriteOnly);
-            Ibo.SetData(indices);
+            vbo = new VertexBuffer(mainInstance.GraphicsDevice, VertexPositionNormalTangentBinormalTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+            vbo.SetData(vertices);
+            ibo = new IndexBuffer(mainInstance.GraphicsDevice, typeof(uint), indices.Length, BufferUsage.WriteOnly);
+            ibo.SetData(indices);
         }
 
         private VertexPositionNormalTangentBinormalTexture[] GenerateTerrainVertices()
@@ -118,7 +126,7 @@ namespace PiratesArr.Game.Terrain
                 // Get the vertex position (v1, v2, and v3)
                 Vector3 v1 = vertices[indices[i]].Position;
                 Vector3 v2 = vertices[indices[i + 1]].Position;
-                uint lol=indices[i + 2];
+                uint lol = indices[i + 2];
                 Vector3 v3 = vertices[lol].Position;
 
                 // Calculate vectors v1->v3 and v1->v2 and the normal as a cross product
@@ -187,22 +195,6 @@ namespace PiratesArr.Game.Terrain
             }
         }
 
-        public struct VertexPositionNormalTangentBinormalTexture
-        {
-            public Vector3 Position;
-            public Vector3 Normal;
-            public Vector2 TextureCoordinate;
-            public Vector3 Tangent;
-            public Vector3 Binormal;
-
-            public readonly static VertexDeclaration VertexDeclaration = new VertexDeclaration
-            (
-                new VertexElement(0,VertexElementFormat.Vector3,VertexElementUsage.Position,0),
-                new VertexElement(12,VertexElementFormat.Vector3,VertexElementUsage.Normal,0),
-                new VertexElement(24,VertexElementFormat.Vector2,VertexElementUsage.TextureCoordinate,0),
-                new VertexElement(32,VertexElementFormat.Vector3,VertexElementUsage.Tangent,0),
-                new VertexElement(44,VertexElementFormat.Vector3,VertexElementUsage.Binormal,0)
-            );
-        }
+       
     }
 }

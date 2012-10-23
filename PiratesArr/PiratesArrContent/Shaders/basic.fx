@@ -28,6 +28,16 @@ struct PixelOut
     float4 color : COLOR0;
 };
 
+// Light related
+float4 AmbientColor=float4(1,1,1,1);
+float AmbientIntensity=1.0f;
+
+float4 DiffuseColor=float4(1,1,0,1);
+float DiffuseIntensity=1.0f;
+
+float4 SpecularColor;
+
+
 float4x4 mat_MVP;
 
 
@@ -44,7 +54,9 @@ PixelIn TexturedVS(VertexIn input)
 PixelOut TexturedPS(PixelIn input) 
 {
 	PixelOut output = (PixelOut)0;		
-	output.color=tex2D(sand_Sampler,input.vec2_textureCoords);
+	float4 color=tex2D(sand_Sampler,input.vec2_textureCoords);
+	color=color * AmbientColor * AmbientIntensity; //+ color * DiffuseIntensity * DiffuseColor;
+	output.color=color;
 
 	return output;
 }

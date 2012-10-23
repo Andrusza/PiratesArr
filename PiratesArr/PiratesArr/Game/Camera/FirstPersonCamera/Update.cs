@@ -7,10 +7,11 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
         private int lastX;
         private int lastY;
 
-        public void Update()
+        public Matrix Update()
         {
             KeyPressed();
             MouseEvents();
+            return view * projectionMatrix;
         }
 
         private void MouseFollow(int x, int y)
@@ -39,7 +40,7 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
             {
                 this.orientation = this.orientation * Quaternion.CreateFromYawPitchRoll(yaw, 0, 0);
             }
-            View = Matrix.CreateFromQuaternion(orientation);
+            view = Matrix.CreateFromQuaternion(orientation);
             SetViewPosition();
         }
 
@@ -51,7 +52,7 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
             SetViewPosition();
         }
 
-        public void SetViewPosition()
+        private void SetViewPosition()
         {
             xAxis.X = view.M11;
             xAxis.Y = view.M21;
@@ -71,5 +72,6 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
             view.M42 = Vector3.Dot(yAxis, eye);
             view.M43 = Vector3.Dot(zAxis, eye);
         }
+       
     }
 }
