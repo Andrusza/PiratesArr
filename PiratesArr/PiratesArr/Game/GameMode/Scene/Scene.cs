@@ -4,23 +4,23 @@ using PiratesArr.Game.Camera.FirstPersonCamera;
 using PiratesArr.Game.GameMode.BaseMode;
 using PiratesArr.Game.Objects.Namespace_Ship;
 
-namespace PiratesArr.Game.GameMode.Scene
+namespace PiratesArr.Game.GameMode
 {
     public partial class Scene : Mode
     {
         private Effect basic;
-      
 
         private Matrix projectionMatrix;
         private Matrix viewMatrix;
-        private Matrix VP;
+
         private RasterizerState rs;
 
-        private FirstPersonCamera camera = new FirstPersonCamera(new Vector3(0,0,50));
+        private FirstPersonCamera camera = new FirstPersonCamera(new Vector3(0, 0, 50));
 
         private Ship playerShip;
 
-        public Scene(): base()
+        public Scene()
+            : base()
         {
             SetUpCamera();
             playerShip = new Ship("ship");

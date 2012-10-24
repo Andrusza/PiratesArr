@@ -129,6 +129,11 @@
     <Compile Include="Game\GameMode\MainMenu\MangeContent.cs" />
     <Compile Include="Game\GameMode\MainMenu\Update.cs" />
     <Compile Include="Game\Objects\Ship\Ship.cs" />
+    <Compile Include="Game\Objects\Terrain\GenerateTerrainVertices.cs" />
+    <Compile Include="Game\Objects\Terrain\GenerateTerrainNormals.cs" />
+    <Compile Include="Game\Objects\Terrain\GenerateTerrainIndices.cs" />
+    <Compile Include="Game\Objects\Terrain\GenerateTerrainTangentBinormal.cs" />
+    <Compile Include="Game\Objects\Terrain\Draw.cs" />
     <Compile Include="Game\Objects\Terrain\Terrain.cs" />
     <Compile Include="Game\Objects\Terrain\VertexPositionNormalTangentBinormalTexture.cs" />
     <Compile Include="GUI\Objects\Button.cs" />

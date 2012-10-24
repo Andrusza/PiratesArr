@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using PiratesArr.Game.GameMode.BaseMode;
 
-namespace PiratesArr.Game.GameMode.Intro
+namespace PiratesArr.Game.GameMode
 {
     public partial class Intro : Mode
     {
@@ -26,7 +26,7 @@ namespace PiratesArr.Game.GameMode.Intro
             MouseState mouseState = Mouse.GetState();
             if (mouseState.LeftButton == ButtonState.Pressed)
             {
-                mainInstance.RenderMode = new PiratesArr.Game.GameMode.MainMenu.MainMenu();
+                mainInstance.RenderMode = new MainMenu();
             }
         }
     }

@@ -14,7 +14,7 @@ namespace PiratesArr.Game.Objects.Namespace_Ship
         {
             mainInstance = Main.GetInstance();
             basic = mainInstance.Content.Load<Effect>("Shaders//basic");
-            
+
             model = LoadModel("Models//" + assetname, basic);
         }
 
@@ -43,7 +43,7 @@ namespace PiratesArr.Game.Objects.Namespace_Ship
             {
                 foreach (Effect currentEffect in mesh.Effects)
                 {
-                    currentEffect.Parameters["mat_MVP"].SetValue(modelTansforms[mesh.ParentBone.Index] * modelMatrix*VP);
+                    currentEffect.Parameters["mat_MVP"].SetValue(modelTansforms[mesh.ParentBone.Index] * modelMatrix * VP);
                 }
                 mesh.Draw();
             }

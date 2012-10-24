@@ -1,15 +1,16 @@
 using System.Windows.Forms;
 using Microsoft.Xna.Framework;
+using PiratesArr.Game.GameMode;
 using PiratesArr.Game.GameMode.BaseMode;
-using PiratesArr.Game.GameMode.Scene;
 using PiratesArr.GUI.LoadCursor;
 using PiratesArr.MainLoop;
-using PiratesArr.Game.GameMode.Terrain;
 
 namespace PiratesArr
 {
     public partial class Main : Microsoft.Xna.Framework.Game
     {
+        private static GraphicsDeviceManager graphicMenager;
+
         private Mode renderMode;
         private FPScounter fps;
 
@@ -29,34 +30,37 @@ namespace PiratesArr
 
         public Main()
         {
-            graphicsInstance = new GraphicsDeviceManager(this);
+            graphicMenager = new GraphicsDeviceManager(this);
+           
             Content.RootDirectory = "Content";
 
-            graphicsInstance.PreferredBackBufferHeight = 600;
-            graphicsInstance.PreferredBackBufferWidth = 800;
+            graphicMenager.PreferredBackBufferHeight = 600;
+            graphicMenager.PreferredBackBufferWidth  = 800;
 
             this.IsMouseVisible = true;
             Cursor myCursor = CustomCursor.LoadCustomCursor(@"Content\Cursors\PIRATE.ani");
 
             Form winForm = (Form)Form.FromHandle(Window.Handle);
             winForm.Cursor = myCursor;
+
+            this.Window.AllowUserResizing = true;
         }
 
         protected override void Initialize()
         {
+            this.IsFixedTimeStep = false;
             base.Initialize();
             mainInstance = this;
 
             fps = new FPScounter();
-            // renderMode = new Intro();
+            //renderMode = new Intro();
             //renderMode = new Scene();
-             renderMode = new Tera();
+            renderMode = new Tera();
         }
 
         #region Singleton
 
         private static Main mainInstance;
-        private static GraphicsDeviceManager graphicsInstance;
         private static object syncLock = new object();
 
         public static Main GetInstance()
@@ -72,21 +76,6 @@ namespace PiratesArr
                 }
             }
             return mainInstance;
-        }
-
-        public static GraphicsDeviceManager GetInstance(Microsoft.Xna.Framework.Game instance)
-        {
-            if (graphicsInstance == null)
-            {
-                lock (syncLock)
-                {
-                    if (graphicsInstance == null)
-                    {
-                        graphicsInstance = new GraphicsDeviceManager(instance);
-                    }
-                }
-            }
-            return graphicsInstance;
         }
 
         #endregion Singleton

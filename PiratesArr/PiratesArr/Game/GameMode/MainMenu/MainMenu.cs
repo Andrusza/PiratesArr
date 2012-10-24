@@ -2,7 +2,7 @@
 using PiratesArr.Game.GameMode.BaseMode;
 using PiratesArr.GUI.Objects;
 
-namespace PiratesArr.Game.GameMode.MainMenu
+namespace PiratesArr.Game.GameMode
 {
     public partial class MainMenu : Mode
     {
@@ -11,7 +11,6 @@ namespace PiratesArr.Game.GameMode.MainMenu
         private GUIManager manager = new GUIManager();
 
         private Texture2D backgroundTexture;
-        private GraphicsDevice device;
 
         private int screenWidth;
         private int screenHeight;

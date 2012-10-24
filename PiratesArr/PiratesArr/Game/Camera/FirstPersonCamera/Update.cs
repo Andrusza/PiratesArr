@@ -72,6 +72,5 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
             view.M42 = Vector3.Dot(yAxis, eye);
             view.M43 = Vector3.Dot(zAxis, eye);
         }
-       
     }
 }

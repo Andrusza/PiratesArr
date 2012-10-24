@@ -2,7 +2,7 @@
 using PiratesArr.Game.GameMode.BaseMode;
 using PiratesArr.GUI.Objects;
 
-namespace PiratesArr.Game.GameMode.MainMenu
+namespace PiratesArr.Game.GameMode
 {
     public partial class MainMenu : Mode
     {
@@ -11,11 +11,10 @@ namespace PiratesArr.Game.GameMode.MainMenu
             //background//
             spriteBatch = new SpriteBatch(mainInstance.GraphicsDevice);
             backgroundTexture = mainInstance.Content.Load<Texture2D>("GUI\\MainMenu\\Mainmenu");
-            device = graphicsInstance.GraphicsDevice;
 
-            screenWidth = device.PresentationParameters.BackBufferWidth;
-            screenHeight = device.PresentationParameters.BackBufferHeight;
-
+            screenWidth = mainInstance.GraphicsDevice.PresentationParameters.BackBufferWidth;
+            screenHeight = mainInstance.GraphicsDevice.PresentationParameters.BackBufferHeight;
+            
             ///GUI///
             Button b_newGame = new Button();
             b_newGame.TextureName = "BNewGame";

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using PiratesArr.Game.GameMode.BaseMode;
 
-namespace PiratesArr.Game.GameMode.Scene
+namespace PiratesArr.Game.GameMode
 {
     public partial class Scene : Mode
     {
@@ -11,7 +11,7 @@ namespace PiratesArr.Game.GameMode.Scene
             mainInstance.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             mainInstance.GraphicsDevice.RasterizerState = rs;
 
-            playerShip.DrawModel(VP);
+            //playerShip.DrawModel(VP);
         }
     }
 }

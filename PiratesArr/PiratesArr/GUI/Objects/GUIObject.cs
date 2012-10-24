@@ -5,33 +5,22 @@ namespace PiratesArr.GUI.Objects
 {
     abstract public class GUIObject
     {
-        private string textureName;
+        private Rectangle frame;
+        private int height;
+        private int width;
 
-        public string TextureName
-        {
-            get { return textureName; }
-            set { textureName = value; }
-        }
+        private bool isClickable;
+        private bool isClicked;
+        private bool isDragAble;
+        private bool isEditable;
+        private bool isMouseOver;
+        private bool isVisible;
+
+        private Vector2 pos;
 
         private Texture2D texture;
-
-        public Texture2D Texture
-        {
-            get { return texture; }
-            set { texture = value; }
-        }
-
-        private Rectangle frame;
-
-        public int FrameWidth
-        {
-            set { frame.Width += value; }
-        }
-
-        public int FrameHeight
-        {
-            set { frame.Height += value; }
-        }
+        private string textureName;
+        
 
         public Rectangle Frame
         {
@@ -39,7 +28,15 @@ namespace PiratesArr.GUI.Objects
             set { frame = value; }
         }
 
-        private int height;
+        public int FrameHeight
+        {
+            set { frame.Height += value; }
+        }
+
+        public int FrameWidth
+        {
+            set { frame.Width += value; }
+        }
 
         public int Height
         {
@@ -47,39 +44,11 @@ namespace PiratesArr.GUI.Objects
             set { height = value; }
         }
 
-        private int width;
-
-        public int Width
-        {
-            get { return width; }
-            set { width = value; }
-        }
-
-        private Vector2 pos;
-
-        public Vector2 Pos
-        {
-            get { return pos; }
-            set { pos = value; }
-        }
-
-        private bool isVisible;
-
-        public bool IsVisible
-        {
-            get { return isVisible; }
-            set { isVisible = value; }
-        }
-
-        private bool isClickable;
-
         public bool IsClickable
         {
             get { return isClickable; }
             set { isClickable = value; }
         }
-
-        private bool isClicked;
 
         public bool IsClicked
         {
@@ -87,7 +56,11 @@ namespace PiratesArr.GUI.Objects
             set { isClicked = value; }
         }
 
-        private bool isEditable;
+        public bool IsDragAble
+        {
+            get { return isDragAble; }
+            set { isDragAble = value; }
+        }
 
         public bool IsEditable
         {
@@ -95,20 +68,40 @@ namespace PiratesArr.GUI.Objects
             set { isEditable = value; }
         }
 
-        private bool isDragAble;
-
-        public bool IsDragAble
-        {
-            get { return isDragAble; }
-            set { isDragAble = value; }
-        }
-
-        private bool isMouseOver;
-
         public bool IsMouseOver
         {
             get { return isMouseOver; }
             set { isMouseOver = value; }
+        }
+
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set { isVisible = value; }
+        }
+
+        public Vector2 Pos
+        {
+            get { return pos; }
+            set { pos = value; }
+        }
+
+        public Texture2D Texture
+        {
+            get { return texture; }
+            set { texture = value; }
+        }
+
+        public string TextureName
+        {
+            get { return textureName; }
+            set { textureName = value; }
+        }
+
+        public int Width
+        {
+            get { return width; }
+            set { width = value; }
         }
 
         abstract public bool Click(int x, int y);

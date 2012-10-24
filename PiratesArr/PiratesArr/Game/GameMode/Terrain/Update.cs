@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using PiratesArr.Game.GameMode.BaseMode;
 
-namespace PiratesArr.Game.GameMode.Terrain
+namespace PiratesArr.Game.GameMode
 {
     public partial class Tera : Mode
     {
@@ -9,9 +9,7 @@ namespace PiratesArr.Game.GameMode.Terrain
         {
             Input();
 
-            VP=camera.Update();
-            
-            
+            VP = camera.Update();
         }
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using PiratesArr.Game.GameMode.BaseMode;
 
-namespace PiratesArr.Game.GameMode.Terrain
+namespace PiratesArr.Game.GameMode
 {
     public partial class Tera : Mode
     {
@@ -12,7 +12,6 @@ namespace PiratesArr.Game.GameMode.Terrain
             mainInstance.GraphicsDevice.RasterizerState = rs;
 
             tera.Draw(VP);
-            
         }
     }
 }

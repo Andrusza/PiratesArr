@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using PiratesArr.Game.GameMode.BaseMode;
 
-namespace PiratesArr.Game.GameMode.Intro
+namespace PiratesArr.Game.GameMode
 {
     public partial class Intro : Mode
     {

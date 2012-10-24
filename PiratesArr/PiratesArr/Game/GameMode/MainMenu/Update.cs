@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using PiratesArr.Game.GameMode.BaseMode;
 
-namespace PiratesArr.Game.GameMode.MainMenu
+namespace PiratesArr.Game.GameMode
 {
     public partial class MainMenu : Mode
     {

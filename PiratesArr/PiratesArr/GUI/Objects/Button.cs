@@ -9,7 +9,7 @@
             this.IsEditable = false;
             this.IsVisible = true;
         }
-
+       
         public override bool Click(int x, int y)
         {
             if (this.IsClickable == true)

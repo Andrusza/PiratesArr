@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using PiratesArr.Game.GameMode.BaseMode;
 
-namespace PiratesArr.Game.GameMode.Terrain
+namespace PiratesArr.Game.GameMode
 {
     public partial class Tera : Mode
     {

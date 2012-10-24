@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using PiratesArr.Game.GameMode.BaseMode;
 
-namespace PiratesArr.Game.GameMode.Scene
+namespace PiratesArr.Game.GameMode
 {
     public partial class Scene : Mode
     {
@@ -10,7 +10,6 @@ namespace PiratesArr.Game.GameMode.Scene
             Input();
 
             camera.Update();
-           
         }
     }
 }

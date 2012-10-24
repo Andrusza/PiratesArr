@@ -1,7 +1,7 @@
-texture2D diffuseMap_sand;
+texture2D diffuseMap_water;
 sampler2D sand_Sampler = sampler_state
 {
-	Texture   = <diffuseMap_sand>;
+	Texture   = <diffuseMap_water>;
 	MinFilter = linear;
 	MagFilter = linear;
 	MipFilter = linear;

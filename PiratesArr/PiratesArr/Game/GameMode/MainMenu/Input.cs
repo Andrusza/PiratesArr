@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using PiratesArr.Game.GameMode.BaseMode;
 
-namespace PiratesArr.Game.GameMode.MainMenu
+namespace PiratesArr.Game.GameMode
 {
     public partial class MainMenu : Mode
     {
@@ -24,12 +24,12 @@ namespace PiratesArr.Game.GameMode.MainMenu
             if (mouseState.LeftButton == ButtonState.Pressed)
             {
                 manager.CheckIfClick(mouseState.X, mouseState.Y);
-                if (manager.IsClicked(0) == true)
+                if (manager.IsClicked(0))
                 {
                     ButtonNewGameClicked();
                 }
 
-                if (manager.IsClicked(1) == true)
+                if (manager.IsClicked(1))
                 {
                     ButtonLoadClicked();
                 }
@@ -38,7 +38,7 @@ namespace PiratesArr.Game.GameMode.MainMenu
 
         static private void ButtonNewGameClicked()
         {
-            mainInstance.RenderMode = new PiratesArr.Game.GameMode.Scene.Scene();
+            mainInstance.RenderMode = new Scene();
         }
 
         static private void ButtonLoadClicked()
