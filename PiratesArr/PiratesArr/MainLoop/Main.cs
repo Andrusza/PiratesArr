@@ -54,8 +54,8 @@ namespace PiratesArr
 
             fps = new FPScounter();
             //renderMode = new Intro();
-            //renderMode = new Scene();
-            renderMode = new Tera();
+            renderMode = new Scene();
+            //renderMode = new Tera();
         }
 
         #region Singleton

@@ -6,6 +6,13 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
     public partial class FirstPersonCamera
     {
         private Vector3 eye = new Vector3();
+
+        public Vector3 Eye
+        {
+            get { return eye; }
+            set { eye = value; }
+        }
+
         private Vector3 xAxis = new Vector3();
         private Vector3 yAxis = new Vector3();
         private Vector3 zAxis = new Vector3();

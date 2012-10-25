@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using PiratesArr.Game.Objects.Terrain;
 
-namespace PiratesArr.Game.Terrain
+
+namespace PiratesArr.Game.Surface
 {
     public partial class Terrain
     {

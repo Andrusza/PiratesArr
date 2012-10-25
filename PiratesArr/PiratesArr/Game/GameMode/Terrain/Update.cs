@@ -10,6 +10,7 @@ namespace PiratesArr.Game.GameMode
             Input();
 
             VP = camera.Update();
+
         }
     }
 }

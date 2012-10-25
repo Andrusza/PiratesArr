@@ -16,6 +16,7 @@ namespace PiratesArr.Game.GameMode.BaseMode
         public abstract void UnloadContent();
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(GameTime gameTime);
+
        
     }
 }

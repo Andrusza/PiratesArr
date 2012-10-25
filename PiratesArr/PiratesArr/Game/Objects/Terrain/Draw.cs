@@ -1,15 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace PiratesArr.Game.Terrain
+namespace PiratesArr.Game.Surface
 {
     public partial class Terrain
     {
-        public void Draw(Matrix VP)
+        public void Draw(Effect effect)
         {
-            basic.Parameters["mat_MVP"].SetValue(VP * worldMatrix);
-
-            foreach (EffectPass pass in basic.CurrentTechnique.Passes)
+            foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
 

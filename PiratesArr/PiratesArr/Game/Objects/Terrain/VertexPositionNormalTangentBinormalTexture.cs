@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace PiratesArr.Game.Objects.Terrain
+namespace PiratesArr.Game.Surface
 {
     public struct VertexPositionNormalTangentBinormalTexture
     {

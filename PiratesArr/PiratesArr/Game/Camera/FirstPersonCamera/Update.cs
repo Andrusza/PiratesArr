@@ -46,9 +46,9 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
 
         private void CameraTranslate(Vector3 direction)
         {
-            eye += xAxis * direction.X;
-            eye += worldY * direction.Y;
-            eye += dir * direction.Z;
+            Eye += xAxis * direction.X;
+            Eye += worldY * direction.Y;
+            Eye += dir * direction.Z;
             SetViewPosition();
         }
 
@@ -68,9 +68,9 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
 
             dir = -zAxis;
 
-            view.M41 = Vector3.Dot(xAxis, eye);
-            view.M42 = Vector3.Dot(yAxis, eye);
-            view.M43 = Vector3.Dot(zAxis, eye);
+            view.M41 = Vector3.Dot(xAxis, Eye);
+            view.M42 = Vector3.Dot(yAxis, Eye);
+            view.M43 = Vector3.Dot(zAxis, Eye);
         }
     }
 }

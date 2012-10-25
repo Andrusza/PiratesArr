@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using PiratesArr.Game.Objects.Terrain;
 
-namespace PiratesArr.Game.Terrain
+namespace PiratesArr.Game.Surface
 {
     public partial class Terrain
     {
-        private Effect basic;
-
+        
         private Texture2D heightMapTexture;
         private List<Texture2D> texturesAtlas;
 
@@ -77,18 +75,15 @@ namespace PiratesArr.Game.Terrain
             texturesAtlas.Add(temp);
         }
 
-        public void BindTextures()
+        public void BindTextures(Effect effect)
         {
             foreach (Texture2D tex in texturesAtlas)
             {
-                basic.Parameters[tex.Name].SetValue(tex);
+                effect.Parameters[tex.Name].SetValue(tex);
             }
         }
 
-        public void SetShader(string shadername, string shaderTechniqueName)
-        {
-            basic = mainInstance.Content.Load<Effect>("Shaders//" + shadername);
-            basic.CurrentTechnique = basic.Techniques[shaderTechniqueName];
-        }
+       
+
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace PiratesArr.Game.Terrain
+﻿namespace PiratesArr.Game.Surface
 {
     public partial class Terrain
     {
