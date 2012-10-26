@@ -11,7 +11,7 @@ namespace PiratesArr.Game.GameMode
             mainInstance.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             mainInstance.GraphicsDevice.RasterizerState = rs;
 
-            //playerShip.DrawModel(VP);
+            playerShip.DrawModel(camera.Update(), camera.ProjectionMatrix, new Vector4(camera.Update().Translation, 1));
         }
     }
 }

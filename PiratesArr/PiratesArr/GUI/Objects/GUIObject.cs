@@ -20,7 +20,6 @@ namespace PiratesArr.GUI.Objects
 
         private Texture2D texture;
         private string textureName;
-        
 
         public Rectangle Frame
         {

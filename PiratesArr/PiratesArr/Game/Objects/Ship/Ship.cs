@@ -8,14 +8,11 @@ namespace PiratesArr.Game.Objects.Namespace_Ship
         private Model model;
         private Matrix modelMatrix = Matrix.Identity;
         private static Main mainInstance;
-        private Effect basic;
 
-        public Ship(string assetname)
+        public Ship(string assetname, Effect effect)
         {
             mainInstance = Main.GetInstance();
-            basic = mainInstance.Content.Load<Effect>("Shaders//basic");
-
-            model = LoadModel("Models//" + assetname, basic);
+            model = LoadModel("Models//" + assetname, effect);
         }
 
         private Model LoadModel(string assetName, Effect technique)
@@ -35,7 +32,7 @@ namespace PiratesArr.Game.Objects.Namespace_Ship
         {
         }
 
-        public void DrawModel(Matrix VP)
+        public void DrawModel(Matrix View, Matrix Projection, Vector4 eye)
         {
             Matrix[] modelTansforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(modelTansforms);
@@ -43,7 +40,10 @@ namespace PiratesArr.Game.Objects.Namespace_Ship
             {
                 foreach (Effect currentEffect in mesh.Effects)
                 {
-                    currentEffect.Parameters["mat_MVP"].SetValue(modelTansforms[mesh.ParentBone.Index] * modelMatrix * VP);
+                    currentEffect.Parameters["vec4_Eye"].SetValue(eye);
+                    currentEffect.Parameters["mat_View"].SetValue(View);
+                    currentEffect.Parameters["mat_Projection"].SetValue(Projection);
+                    currentEffect.Parameters["mat_World"].SetValue(modelTansforms[mesh.ParentBone.Index] * modelMatrix);
                 }
                 mesh.Draw();
             }

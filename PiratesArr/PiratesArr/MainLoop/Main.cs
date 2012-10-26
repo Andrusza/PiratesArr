@@ -31,11 +31,11 @@ namespace PiratesArr
         public Main()
         {
             graphicMenager = new GraphicsDeviceManager(this);
-           
+
             Content.RootDirectory = "Content";
 
             graphicMenager.PreferredBackBufferHeight = 600;
-            graphicMenager.PreferredBackBufferWidth  = 800;
+            graphicMenager.PreferredBackBufferWidth = 800;
 
             this.IsMouseVisible = true;
             Cursor myCursor = CustomCursor.LoadCustomCursor(@"Content\Cursors\PIRATE.ani");
@@ -54,8 +54,8 @@ namespace PiratesArr
 
             fps = new FPScounter();
             //renderMode = new Intro();
-            renderMode = new Scene();
-            //renderMode = new Tera();
+            //renderMode = new Scene();
+            renderMode = new Tera();
         }
 
         #region Singleton

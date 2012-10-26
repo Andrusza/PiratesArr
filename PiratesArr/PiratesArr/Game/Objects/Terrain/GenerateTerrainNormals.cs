@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 
-
 namespace PiratesArr.Game.Surface
 {
     public partial class Terrain

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PiratesArr.Game.Camera.FirstPersonCamera;
 using PiratesArr.Game.GameMode.BaseMode;
@@ -8,16 +9,18 @@ namespace PiratesArr.Game.GameMode
 {
     public partial class Tera : Mode
     {
-        private Matrix VP;
         private RasterizerState rs;
 
         private Terrain tera;
-        Effect effect;
+        private Effect effect;
+        private Random rng = new Random();
 
-        private FirstPersonCamera camera = new FirstPersonCamera(new Vector3(0, 100, 0));
-     
-        public Tera(): base()
+        private FirstPersonCamera camera;
+
+        public Tera()
+            : base()
         {
+            camera = new FirstPersonCamera(new Vector3(0, -500, 0), mainInstance.GraphicsDevice.Viewport.AspectRatio, 1f, 100000f);
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
         }

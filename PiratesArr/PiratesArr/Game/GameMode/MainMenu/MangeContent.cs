@@ -14,7 +14,7 @@ namespace PiratesArr.Game.GameMode
 
             screenWidth = mainInstance.GraphicsDevice.PresentationParameters.BackBufferWidth;
             screenHeight = mainInstance.GraphicsDevice.PresentationParameters.BackBufferHeight;
-            
+
             ///GUI///
             Button b_newGame = new Button();
             b_newGame.TextureName = "BNewGame";

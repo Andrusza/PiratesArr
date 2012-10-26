@@ -11,7 +11,7 @@ namespace PiratesArr.Game.Camera.FirstPersonCamera
         {
             KeyPressed();
             MouseEvents();
-            return view * projectionMatrix;
+            return view;
         }
 
         private void MouseFollow(int x, int y)

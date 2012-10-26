@@ -6,7 +6,6 @@ namespace PiratesArr.Game.Surface
 {
     public partial class Terrain
     {
-        
         private Texture2D heightMapTexture;
         private List<Texture2D> texturesAtlas;
 
@@ -43,7 +42,7 @@ namespace PiratesArr.Game.Surface
 
             vertexCountX = (uint)heightMapTexture.Width;
             vertexCountZ = (uint)heightMapTexture.Height;
-            blockScale = 1;
+            blockScale = 10;
             heightScale = 1;
 
             GenerateTerrainMesh();
@@ -82,8 +81,5 @@ namespace PiratesArr.Game.Surface
                 effect.Parameters[tex.Name].SetValue(tex);
             }
         }
-
-       
-
     }
 }

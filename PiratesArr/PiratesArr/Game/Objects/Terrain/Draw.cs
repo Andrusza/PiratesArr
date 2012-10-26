@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 
 namespace PiratesArr.Game.Surface
 {
@@ -7,6 +6,7 @@ namespace PiratesArr.Game.Surface
     {
         public void Draw(Effect effect)
         {
+            effect.Parameters["mat_World"].SetValue(worldMatrix);
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();

@@ -9,8 +9,6 @@ namespace PiratesArr
             renderMode.Update(gameTime);
             fps.Update(gameTime);
 
-            
-
             base.Update(gameTime);
         }
     }

@@ -9,7 +9,8 @@ namespace PiratesArr.Game.GameMode
         {
             Input();
 
-            camera.Update();
+            // effect.Parameters["mat_View"].SetValue(camera.Update());
+            // effect.Parameters["mat_Projection"].SetValue(camera.ProjectionMatrix);
         }
     }
 }
