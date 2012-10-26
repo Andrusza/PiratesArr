@@ -8,10 +8,7 @@ namespace PiratesArr.Game.GameMode
     {
         public override void Draw(GameTime gameTime)
         {
-            mainInstance.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            mainInstance.GraphicsDevice.RasterizerState = rs;
-
-            playerShip.DrawModel(camera.Update(), camera.ProjectionMatrix, new Vector4(camera.Update().Translation, 1));
+      
         }
     }
 }

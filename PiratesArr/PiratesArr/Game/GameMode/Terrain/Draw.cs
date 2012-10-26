@@ -10,7 +10,9 @@ namespace PiratesArr.Game.GameMode
         {
             mainInstance.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             mainInstance.GraphicsDevice.RasterizerState = rs;
+            mainInstance.GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
+            playerShip.DrawModel(View, camera.ProjectionMatrix);
             tera.Draw(effect);
         }
     }

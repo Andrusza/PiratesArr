@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PiratesArr.Game.Camera.FirstPersonCamera;
 using PiratesArr.Game.GameMode.BaseMode;
 using PiratesArr.Game.Surface;
+using PiratesArr.Game.Objects.Namespace_Ship;
 
 namespace PiratesArr.Game.GameMode
 {
@@ -13,6 +14,10 @@ namespace PiratesArr.Game.GameMode
 
         private Terrain tera;
         private Effect effect;
+        private Effect effect2;
+
+        Ship playerShip;
+
         private Random rng = new Random();
 
         private FirstPersonCamera camera;

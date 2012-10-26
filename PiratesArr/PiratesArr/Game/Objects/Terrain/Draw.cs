@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace PiratesArr.Game.Surface
 {
@@ -7,6 +8,10 @@ namespace PiratesArr.Game.Surface
         public void Draw(Effect effect)
         {
             effect.Parameters["mat_World"].SetValue(worldMatrix);
+            Matrix temp=Matrix.Invert(worldMatrix);
+            temp=Matrix.Transpose(temp);
+
+            effect.Parameters["WorldInverseTranspose"].SetValue(temp);
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();

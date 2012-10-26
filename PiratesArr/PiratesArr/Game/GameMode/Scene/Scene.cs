@@ -19,7 +19,7 @@ namespace PiratesArr.Game.GameMode
         public Scene()
             : base()
         {
-            camera = new FirstPersonCamera(new Vector3(0, 0, 0), mainInstance.GraphicsDevice.Viewport.AspectRatio, 1f, 1000f);
+            camera = new FirstPersonCamera(new Vector3(0, 0, 0), mainInstance.GraphicsDevice.Viewport.AspectRatio, 1f, 100000f);
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
         }

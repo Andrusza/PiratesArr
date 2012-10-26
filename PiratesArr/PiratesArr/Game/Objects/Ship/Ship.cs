@@ -13,6 +13,10 @@ namespace PiratesArr.Game.Objects.Namespace_Ship
         {
             mainInstance = Main.GetInstance();
             model = LoadModel("Models//" + assetname, effect);
+            Matrix.CreateScale(1, out modelMatrix);
+            modelMatrix = Matrix.CreateRotationZ(MathHelper.ToRadians(-90));
+            modelMatrix.Translation += new Vector3(0, 110, 0);
+           
         }
 
         private Model LoadModel(string assetName, Effect technique)
@@ -32,18 +36,18 @@ namespace PiratesArr.Game.Objects.Namespace_Ship
         {
         }
 
-        public void DrawModel(Matrix View, Matrix Projection, Vector4 eye)
+        public void DrawModel(Matrix View, Matrix Projection)
         {
             Matrix[] modelTansforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(modelTansforms);
+            //Matrix.CreateScale(100, out modelMatrix);
             foreach (ModelMesh mesh in model.Meshes)
             {
                 foreach (Effect currentEffect in mesh.Effects)
                 {
-                    currentEffect.Parameters["vec4_Eye"].SetValue(eye);
-                    currentEffect.Parameters["mat_View"].SetValue(View);
-                    currentEffect.Parameters["mat_Projection"].SetValue(Projection);
-                    currentEffect.Parameters["mat_World"].SetValue(modelTansforms[mesh.ParentBone.Index] * modelMatrix);
+                    currentEffect.Parameters["View"].SetValue(View);
+                    currentEffect.Parameters["Projection"].SetValue(Projection);
+                    currentEffect.Parameters["World"].SetValue(modelTansforms[mesh.ParentBone.Index] * (modelMatrix));
                 }
                 mesh.Draw();
             }

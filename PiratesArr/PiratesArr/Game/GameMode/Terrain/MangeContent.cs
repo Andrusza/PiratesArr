@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PiratesArr.Game.GameMode.BaseMode;
+using PiratesArr.Game.Objects.Namespace_Ship;
 using PiratesArr.Game.Surface;
 
 namespace PiratesArr.Game.GameMode
@@ -21,10 +22,15 @@ namespace PiratesArr.Game.GameMode
 
         public override void LoadContent()
         {
-            tera = new Terrain("wire");
+            effect2 = mainInstance.Content.Load<Effect>("Shaders//MVP");
+            effect2.CurrentTechnique = effect2.Techniques["Technique1"];
+
+            playerShip = new Ship("ship", effect2);
+
+            tera = new Terrain("map2");
             SetShader("basic", "Textured");
-            tera.AddTexture("p", "diffuseMap0");
-            tera.AddTexture("pn", "normalMap0");
+            tera.AddTexture("water2", "diffuseMap0");
+            tera.AddTexture("waterNormal", "normalMap0");
             tera.BindTextures(effect);
 
             amplitude = new float[8];
@@ -41,17 +47,17 @@ namespace PiratesArr.Game.GameMode
                 waveDirection[i] = new Vector2((float)Math.Sin(randomRange()), (float)Math.Cos(randomRange()));
             }
 
-            //effect.Parameters["numWaves"].SetValue(8);
-            //effect.Parameters["amplitude"].SetValue(amplitude);
-            //effect.Parameters["wavelength"].SetValue(wavelenght);
-            //effect.Parameters["speed"].SetValue(speed);
-            //effect.Parameters["direction"].SetValue(waveDirection);
+            effect.Parameters["numWaves"].SetValue(8);
+            effect.Parameters["amplitude"].SetValue(amplitude);
+            effect.Parameters["wavelength"].SetValue(wavelenght);
+            effect.Parameters["speed"].SetValue(speed);
+            effect.Parameters["direction"].SetValue(waveDirection);
 
             effect.Parameters["AmbientColor"].SetValue(Color.White.ToVector4());
-            effect.Parameters["AmbientIntensity"].SetValue(0.3f);
+            effect.Parameters["AmbientIntensity"].SetValue(0.1f);
 
             effect.Parameters["DiffuseColor"].SetValue(Color.White.ToVector4());
-            effect.Parameters["DiffuseIntensity"].SetValue(0.7f);
+            effect.Parameters["DiffuseIntensity"].SetValue(0.10f);
             Vector3 direction = Vector3.Normalize(new Vector3(1, 0, -1));
             effect.Parameters["LightDirection"].SetValue(direction);
 

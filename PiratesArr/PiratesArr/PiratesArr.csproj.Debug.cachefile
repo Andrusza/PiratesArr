@@ -19,7 +19,6 @@ Content\GUI\Fonts\mono.xnb
 Content\Shaders\basic.xnb
 Content\Models\ship.xnb
 Content\Models\heli.xnb
-Content\Models\Object.xnb
 Content\dark_teak_0.xnb
 Content\sails1_0.xnb
 Content\flag_0.xnb
@@ -30,5 +29,13 @@ Content\Models\HelicopterTexture_0.xnb
 Content\Models\model_diff_0.xnb
 Content\textures\pn.xnb
 Content\textures\p.xnb
+Content\textures\cos.xnb
+Content\textures\bc.xnb
+Content\textures\bn.xnb
+Content\Models\model_norm.xnb
+Content\Models\Object.xnb
+Content\textures\wavesbump.xnb
+Content\Models\ocean.xnb
+Content\Shaders\MVP.xnb
 Content\Cursors\PIRATE.ani
 Content\Models\ship.fbx

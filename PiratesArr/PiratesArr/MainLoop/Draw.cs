@@ -6,7 +6,7 @@ namespace PiratesArr
     {
         protected override void Draw(GameTime gameTime)
         {
-            // GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.SkyBlue);
             renderMode.Draw(gameTime);
             fps.Draw();
 
