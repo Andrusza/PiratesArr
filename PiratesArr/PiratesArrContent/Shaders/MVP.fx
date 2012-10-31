@@ -2,11 +2,22 @@ float4x4 World;
 float4x4 View;
 float4x4 Projection;
 
+
+    texture2D diffuseMap0;
+sampler2D d0_Sampler = sampler_state
+    {
+    Texture   = <diffuseMap0>;
+    MinFilter = linear;
+    MagFilter = linear;
+    MipFilter = linear;
+}
+;
 // TODO: add effect parameters here.
 
 struct VertexShaderInput
 {
     float4 Position : POSITION0;
+	 float2 vec2_textureCoords : TEXCOORD0;
 
     // TODO: add input channels such as texture
     // coordinates and vertex colors here.
@@ -15,6 +26,7 @@ struct VertexShaderInput
 struct VertexShaderOutput
 {
     float4 Position : POSITION0;
+	 float2 vec2_textureCoords : TEXCOORD0;
 
     // TODO: add vertex shader outputs such as colors and texture
     // coordinates here. These values will automatically be interpolated
@@ -25,8 +37,12 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
     VertexShaderOutput output;
 
+	 float3 color=tex2D(d0_Sampler,input.vec2_textureCoords);
+
     float4 worldPosition = mul(input.Position, World);
     float4 viewPosition = mul(worldPosition, View);
+
+	output.vec2_textureCoords=input.vec2_textureCoords;
     output.Position = mul(viewPosition, Projection);
 
     // TODO: add your vertex shader code here.
@@ -37,8 +53,9 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
     // TODO: add your pixel shader code here.
+	 float3 color=tex2D(d0_Sampler,input.vec2_textureCoords);
 
-    return float4(1, 0, 0, 1);
+    return float4(color, 1);
 }
 
 technique Technique1

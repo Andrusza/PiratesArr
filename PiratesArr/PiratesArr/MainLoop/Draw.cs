@@ -10,7 +10,7 @@ namespace PiratesArr
             renderMode.Draw(gameTime);
             fps.Draw();
 
-            base.Draw(gameTime);
+            //base.Draw(gameTime);
         }
     }
 }

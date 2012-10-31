@@ -18,7 +18,7 @@ sampler2D n0_Sampler = sampler_state
 ;
 struct VertexIn
     {
-    float4 vec4_position      : POSITION0;
+    float3 vec4_position      : POSITION0;
     float3 vec3_normal        : NORMAL0;
     float2 vec2_textureCoords : TEXCOORD0;
     float3 vec3_tangent       : TANGENT0;
@@ -91,11 +91,10 @@ float waveHeight(float x, float y) {
     {
     PixelIn output = (PixelIn)0;
 
-float h=waveHeight(input.vec4_position.x,input.vec4_position.y);
-	input.vec4_position.y+=(h*3);
 
 
-    float4 worldPosition = mul(input.vec4_position, mat_World);
+
+    float4 worldPosition = mul(float4(input.vec4_position,1), mat_World);
     float4 viewPosition = mul(worldPosition, mat_View);
     output.vec4_position = mul(viewPosition, mat_Projection);
     output.vec3_View = normalize(vec4_Eye - worldPosition);
@@ -113,20 +112,20 @@ float h=waveHeight(input.vec4_position.x,input.vec4_position.y);
 	
     float3 color=tex2D(d0_Sampler,input.vec2_textureCoords);
 	
-	input.vec2_textureCoords.x = input.vec2_textureCoords.x*40.0f + sin(time*3+10)/256;
-    input.vec2_textureCoords.y = input.vec2_textureCoords.y*40.0f;
+	float h=waveHeight(input.vec4_position.x,input.vec4_position.y);
+	input.vec4_position.y+=(h*5);
 	
   
     float3 bump = 2.0 *(tex2D(n0_Sampler, input.vec2_textureCoords)) - 1.0;
     bump = normalize(mul(bump, input.WorldToTangentSpace));
-    float3 diffuse = saturate(dot(-LightDirection,bump));
-    float3 reflect = normalize(2*diffuse*bump-LightDirection);
-    float3 specular = pow(saturate(dot(reflect,input.vec3_View)),5);
-    float3 ambientColor=color*AmbientColor*AmbientIntensity;
-    float3 diffuseColor=color*DiffuseColor*DiffuseIntensity*diffuse;
-    float3 specularColor=specular*float4(1,1,0,1);
-    output.color=float4(ambientColor+diffuseColor+specularColor,1);
-    //output.color=float4(bump,1);
+    //float3 diffuse = saturate(dot(-LightDirection,bump));
+    //float3 reflect = normalize(2*diffuse*bump-LightDirection);
+    //float3 specular = pow(saturate(dot(reflect,input.vec3_View)),5);
+    //float3 ambientColor=color*AmbientColor*AmbientIntensity;
+    //float3 diffuseColor=color*DiffuseColor*DiffuseIntensity*diffuse;
+    //float3 specularColor=specular*float4(1,1,0,1);
+    //output.color=float4(ambientColor+diffuseColor+specularColor,1);
+    output.color=float4(bump,1);
             return output;
 }
 

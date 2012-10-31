@@ -18,7 +18,7 @@ namespace PiratesArr.Game.Surface
 
                 mainInstance.GraphicsDevice.Indices = this.ibo;
                 mainInstance.GraphicsDevice.SetVertexBuffer(this.vbo);
-                mainInstance.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this.vbo.VertexCount, 0, numIndices);
+                mainInstance.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this.vbo.VertexCount, 0, numIndices / 3);
             }
         }
     }

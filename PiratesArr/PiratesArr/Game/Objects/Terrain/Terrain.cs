@@ -42,7 +42,7 @@ namespace PiratesArr.Game.Surface
 
             vertexCountX = (uint)heightMapTexture.Width;
             vertexCountZ = (uint)heightMapTexture.Height;
-            blockScale = 100;
+            blockScale = 1;
             heightScale = 1;
 
             GenerateTerrainMesh();

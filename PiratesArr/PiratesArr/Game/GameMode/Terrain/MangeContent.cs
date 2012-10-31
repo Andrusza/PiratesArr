@@ -24,6 +24,7 @@ namespace PiratesArr.Game.GameMode
         {
             effect2 = mainInstance.Content.Load<Effect>("Shaders//MVP");
             effect2.CurrentTechnique = effect2.Techniques["Technique1"];
+            
 
             playerShip = new Ship("ship", effect2);
 
@@ -32,6 +33,8 @@ namespace PiratesArr.Game.GameMode
             tera.AddTexture("water2", "diffuseMap0");
             tera.AddTexture("waterNormal", "normalMap0");
             tera.BindTextures(effect);
+            Texture2D waterr = mainInstance.Content.Load<Texture2D>("textures//water2");
+            effect2.Parameters["diffuseMap0"].SetValue(waterr);
 
             amplitude = new float[8];
             wavelenght = new float[8];
