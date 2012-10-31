@@ -12,7 +12,9 @@ namespace Pirates.Screens.Scene
             view = camera.Update();
 
             effect.ViewMatrix = view;
+            effect.WorldMatrix = island.WorldMatrix;
             effect.Update(0);
+            
         }
     }
 }

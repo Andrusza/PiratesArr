@@ -121,31 +121,29 @@
     <Compile Include="Loaders\Terrain\GenerateTerrainVertices.cs" />
     <Compile Include="Loaders\Terrain\Terrain.cs" />
     <Compile Include="Loaders\Terrain\VertexPositionNormalTangentBinormalTexture.cs" />
+    <Compile Include="Main.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Screens\BaseMode.cs" />
+    <Compile Include="Screens\SceneWater\Draw.cs" />
+    <Compile Include="Screens\SceneWater\Input.cs" />
+    <Compile Include="Screens\SceneWater\ManageContent.cs" />
+    <Compile Include="Screens\SceneWater\Setup.cs" />
+    <Compile Include="Screens\SceneWater\Update.cs" />
     <Compile Include="Screens\TerrainScreen\Draw.cs" />
     <Compile Include="Screens\TerrainScreen\Input.cs" />
     <Compile Include="Screens\TerrainScreen\ManageContent.cs" />
     <Compile Include="Screens\TerrainScreen\Setup.cs" />
     <Compile Include="Screens\TerrainScreen\Update.cs" />
-    <Compile Include="Screens\SkyDome\Draw.cs" />
-    <Compile Include="Screens\SkyDome\Input.cs" />
-    <Compile Include="Screens\SkyDome\ManageContent.cs" />
-    <Compile Include="Screens\SkyDome\Setup.cs" />
-    <Compile Include="Screens\SkyDome\Update.cs" />
-    <Compile Include="Screens\SceneWater\Draw.cs" />
     <Compile Include="Loaders\Content\Loaders.cs" />
-    <Compile Include="Screens\SceneWater\Input.cs" />
-    <Compile Include="Screens\SceneWater\ManageContent.cs" />
-    <Compile Include="Screens\SceneWater\Update.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Main.cs" />
-    <Compile Include="Screens\SceneWater\Setup.cs" />
     <Compile Include="Shaders\BaseShader.cs" />
     <Compile Include="Shaders\Basic.cs" />
     <Compile Include="Shaders\JustMvp.cs" />
     <Compile Include="Shaders\MultiTextured.cs" />
     <Compile Include="Utility\FpsCounter.cs" />
+    <Compile Include="Utility\Serializer.cs" />
     <Compile Include="Window\XnaWindow.cs" />
   </ItemGroup>
   <ItemGroup>

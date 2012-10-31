@@ -49,20 +49,19 @@ namespace Pirates
         {
             base.Initialize();
             Device = this.GraphicsDevice;
-            fps = new FPScounter(Device);
+
             AspectRatio = this.GraphicsDevice.Viewport.AspectRatio;
             //renderMode = new SceneScreen();
             //renderMode = new SkyDomeScreen();
-            //try
-            //{
-            //    renderMode = TerrainScreen.FromFile();
-            //}
-            //catch (Exception e)
+            try
+            {
+                renderMode = TerrainScreen.FromFile();
+            }
+            catch (Exception e)
             {
                 renderMode = new TerrainScreen();
             }
-            //renderMode = new SceneScreen();
-            
+
         }
 
         protected override void LoadContent()

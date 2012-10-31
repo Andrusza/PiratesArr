@@ -1,0 +1,35 @@
+﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using Pirates.Screens;
+
+namespace Pirates.Utility
+{
+    public class Serializer
+    {
+        public Serializer()
+        {
+        }
+
+        public void SerializeObject<T>(string filename, T objectToSerialize)
+        {
+            using (Stream stream = File.Open(filename, FileMode.Create))
+            {
+                BinaryFormatter bFormatter = new BinaryFormatter();
+                bFormatter.Serialize(stream, objectToSerialize);
+                
+            }
+        }
+
+        public T DeSerializeObject<T>(string filename)
+        {
+            T objectToSerialize;
+            using (Stream stream = File.Open(filename, FileMode.Open))
+            {
+                BinaryFormatter bFormatter = new BinaryFormatter();
+                objectToSerialize = (T)bFormatter.Deserialize(stream);
+                
+            }
+            return objectToSerialize;
+        }
+    }
+}

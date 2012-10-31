@@ -22,10 +22,10 @@ sampler GrassSampler = sampler_state
 	MagFilter = Anisotropic;
 };
 
-texture d2_Rock;
-sampler RockSampler = sampler_state
+texture d2_Snow;
+sampler SnowSampler = sampler_state
 {
-	texture = <d2_Rock>;
+	texture = <d2_Snow>;
 	AddressU = Wrap;
 	AddressV = Wrap;
 	MinFilter = Anisotropic;
@@ -68,14 +68,28 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-    
-
-    return float4(1, 0, 0, 1);
+	float3 Snow=tex2D( SnowSampler,input.TexCoord);
+	float3 Grass=tex2D( GrassSampler,input.TexCoord);
+	float3 Sand=tex2D( SandSampler,input.TexCoord);
+    float3 Height=tex2D( WeightMapSampler,input.TexCoord);
+	
+	float3 color=0;
+	if(Height.x!=1)
+	{
+	color=Height.x*Sand+Height.y*Grass+Height.z*Snow;
+	return float4(color, 1);
+	}
+	else
+	{
+	return float4(0,0,0,0);
+	}
+	
+	
 }
 
-technique Technique1
+technique MultiTexturing
 {
-    pass Pass1
+    pass Pass0
     {
         VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader = compile ps_2_0 PixelShaderFunction();

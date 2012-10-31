@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Loaders;
 using Pirates.Shaders;
+using System.Runtime.Serialization;
 
 namespace Pirates.Screens.Scene
 {
@@ -31,10 +32,30 @@ namespace Pirates.Screens.Scene
                 water.InitParameters();
             }
 
-            tera = new Terrain("map2", 20, 1);
+            tera = new Terrain("map1", 1, 1);
 
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
+        }
+
+        public SceneScreen(SerializationInfo info, StreamingContext ctxt)
+        {
+           
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        {
+            
+        }
+
+        public override void ToFile()
+        {
+           
+        }
+
+        public static SceneScreen FromFile()
+        {
+            return null;
         }
     }
 }

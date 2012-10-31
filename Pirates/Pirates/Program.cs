@@ -1,17 +1,22 @@
+using System;
+using Pirates;
+
 namespace Pirates
 {
 #if WINDOWS || XBOX
-
-    internal static class Program
+    static class Program
     {
-        private static void Main()
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        static void Main(string[] args)
         {
-            using (BaseClass.GetInstance())
+            using (BaseClass game = BaseClass.GetInstance())
             {
-                BaseClass.GetInstance().Run();
+                game.Run();
             }
         }
     }
-
 #endif
 }
+

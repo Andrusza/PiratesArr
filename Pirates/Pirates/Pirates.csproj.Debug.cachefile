@@ -1,7 +1,5 @@
 Content\Font\mono.xnb
 Content\Texture\d0.xnb
-Content\Texture\SkyNight.xnb
-Content\Texture\Sunset.xnb
 Content\Texture\n0.xnb
 Content\Shader\Basic.xnb
 Content\Fbx\skydome.xnb
@@ -19,5 +17,17 @@ Content\Wood floor ffs062_0.xnb
 Content\Fbx\dome.xnb
 Content\Texture\BlueSky.xnb
 Content\Texture\Sky.xnb
-Content\Texture\SkyDay.xnb
 Content\Shader\MultiTexturing.xnb
+Content\Heightmap\Coastal Shelf.xnb
+Content\Heightmap\Island, Crecent.xnb
+Content\Heightmap\Island, Rocky.xnb
+Content\Heightmap\Islands, Leafy.xnb
+Content\Heightmap\Islands.xnb
+Content\Heightmap\RiverBed.xnb
+Content\Heightmap\Wetlands, Rugged.xnb
+Content\Heightmap\island3.xnb
+Content\Heightmap\island4.xnb
+Content\Texture\sand.xnb
+Content\Texture\grass.xnb
+Content\Texture\snow.xnb
+Content\Texture\island4.xnb

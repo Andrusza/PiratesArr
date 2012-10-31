@@ -21,6 +21,7 @@ namespace Pirates.Shaders
 
         public override void Update(float time)
         {
+            Technique.Parameters["World"].SetValue(worldMatrix);
             Technique.Parameters["View"].SetValue(viewMatrix);
         }
     }
