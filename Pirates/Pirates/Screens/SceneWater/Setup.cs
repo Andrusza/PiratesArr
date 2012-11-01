@@ -32,7 +32,7 @@ namespace Pirates.Screens.Scene
                 water.InitParameters();
             }
 
-            tera = new Terrain("map1", 1, 1);
+            tera = new Terrain("map2", 1, 1);
 
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;

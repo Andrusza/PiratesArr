@@ -45,6 +45,7 @@ sampler WeightMapSampler = sampler_state
 struct VertexShaderInput
 {
     float4 Position : POSITION0;
+	float3 Normal:NORMAL0;
 	float4 TexCoord:TEXCOORD0;
 };
 
@@ -52,13 +53,29 @@ struct VertexShaderOutput
 {
     float4 Position : POSITION0;
 	float4 TexCoord:TEXCOORD0; 
+	float3 ToLight: TEXCOORD1;
+	float3 Normal:TEXCOORD2;
 };
+
+float3 LightPosition;
+
+float3 AmbientLightColor=float3(1,1,1);
+float3 DiffuseLightColor=float3(1,1,1);
+
+float AmbientIntensity=0.2;
+float DiffuseIntensity=0.6;
+
+
 
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
     VertexShaderOutput output;
 
     float4 worldPosition = mul(input.Position, World);
+	
+	output.ToLight  = LightPosition - worldPosition;
+	output.Normal   = mul(input.Normal, World);
+	
     float4 viewPosition = mul(worldPosition, View);
     output.Position = mul(viewPosition, Projection);
 	output.TexCoord=input.TexCoord;
@@ -76,8 +93,18 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 color=0;
 	if(Height.x!=1)
 	{
+	
+	float3 ToLight = normalize(input.ToLight);
+	float3 diffuse = saturate(dot(ToLight,input.Normal));
+	
+	
+	float3 ambientColor=AmbientLightColor*AmbientIntensity;
+	float3 diffuseColor=DiffuseLightColor*DiffuseIntensity*diffuse;
+	
+	
 	color=Height.x*Sand+Height.y*Grass+Height.z*Snow;
-	return float4(color, 1);
+	float3 finalColor=color*ambientColor+color*diffuseColor;
+	return float4(finalColor, 1);
 	}
 	else
 	{

@@ -14,6 +14,10 @@ namespace Pirates.Screens.Scene
             effect.ViewMatrix = view;
             effect.WorldMatrix = island.WorldMatrix;
             effect.Update(0);
+
+            waterShader.ViewMatrix = view;
+            waterShader.WorldMatrix = water.WorldMatrix;
+            waterShader.Update((float)gameTime.TotalGameTime.Milliseconds);
             
         }
     }

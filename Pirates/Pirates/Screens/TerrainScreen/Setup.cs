@@ -19,7 +19,11 @@ namespace Pirates.Screens.Scene
         private RasterizerState rs;
 
         private MultiTextured effect;
+        private Basic waterShader;
+       
+
         Terrain island;
+        Terrain water;
 
         public TerrainScreen()
         {
@@ -34,10 +38,19 @@ namespace Pirates.Screens.Scene
                 effect.InitParameters();
             }
 
+            waterShader = new Basic();
+            {
+                 waterShader.ProjectionMatrix = projectionMatrix;
+                 waterShader.ViewMatrix = camera.View;
+                 waterShader.InitParameters();
+            }
+
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
 
             island = new Terrain("island4", 2, 1);
+            water = new Terrain("map2", 10, 1);
+            water.Translate(0, 30, 0);
            
         }
 
@@ -54,6 +67,8 @@ namespace Pirates.Screens.Scene
                 effect.InitParameters();
             }
             this.island = new Terrain("island4", 2, 1);
+            this.water = new Terrain("map2", 10, 1);
+          
            
         }
 

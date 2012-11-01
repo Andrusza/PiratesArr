@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Loaders;
+using Microsoft.Xna.Framework;
 
 namespace Pirates.Shaders
 {
     public class MultiTextured : BaseShader
     {
+       
+
         public MultiTextured(): base("MultiTexturing")
         {
             this.Technique.CurrentTechnique = this.Technique.Techniques["MultiTexturing"];
@@ -28,6 +31,8 @@ namespace Pirates.Shaders
 
             Technique.Parameters["Projection"].SetValue(projectionMatrix);
             Technique.Parameters["View"].SetValue(viewMatrix);
+
+            Technique.Parameters["LightPosition"].SetValue(new Vector3(0, 100, 1000));
         }
 
         public override void Update(float time)

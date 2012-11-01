@@ -5,8 +5,6 @@ namespace Cameras
 {
     public partial class FirstPersonCamera
     {
-       
-
         public Vector3 Eye
         {
             get { return eye; }

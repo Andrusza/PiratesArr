@@ -15,7 +15,7 @@ struct VertexShaderInput
 {
     float4 Position : POSITION0;
 	float2  TextureCoord:TEXCOORD0;
-
+	float3 ToLight:TEXTCOORD1;
   
 };
 

@@ -3,16 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Pirates.Loaders
 {
-    public partial class Terrain
+    public partial class Terrain: BaseObject
     {
         private Texture2D heightMapTexture;
 
-        private Matrix worldMatrix = Matrix.Identity;
-
         public Matrix WorldMatrix
         {
-            get { return worldMatrix; }
-            set { worldMatrix = value; }
+            get { return modelMatrix; }
+            set { modelMatrix = value; }
         }
 
         private uint vertexCountX;

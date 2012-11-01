@@ -18,8 +18,8 @@ namespace Pirates.Shaders
         private EffectParameter fx_DiffuseIntensity;
         private EffectParameter fx_SpecularIntensity;
 
-        private Texture2D color = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "d0");
-        private Texture2D normal = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "n0");
+        private Texture2D color = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "seamwater6");
+        private Texture2D normal = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "normalwater6");
 
         public Basic()
             : base("basic")
@@ -42,7 +42,7 @@ namespace Pirates.Shaders
         public void InitParameters()
         {
             fx_world.SetValue(worldMatrix);
-            fx_LightPosition.SetValue(new Vector3(0, 100, 0));
+            fx_LightPosition.SetValue(new Vector3(0, 100, 1000));
 
             fx_d0.SetValue(color);
             fx_n0.SetValue(normal);
@@ -50,7 +50,7 @@ namespace Pirates.Shaders
             fx_AmbientIntensity.SetValue(0.2f);
             fx_DiffuseIntensity.SetValue(0.7f);
             fx_SpecularIntensity.SetValue(0.2f);
-            fx_Shininess.SetValue(100.0f);
+            fx_Shininess.SetValue(2.0f);
 
             InverseTransposeWorld();
             InverseTransposeView();
@@ -58,6 +58,7 @@ namespace Pirates.Shaders
 
         public override void Update(float time)
         {
+            //fx_LightPosition.SetValue(new Vector3(0, 1000, time));
             InverseTransposeWorld();
             InverseTransposeView();
 

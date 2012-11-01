@@ -45,8 +45,8 @@ float3 LightPosition;
 float Shininess;
 
 float3 AmbientLightColor=float3(1,1,1);
-float3 DiffuseLightColor=float3(1,1,1);;
-float3 SpecularLightColor=float3(1,1,1);
+float3 DiffuseLightColor=float3(1,1,1);
+float3 SpecularLightColor=float3(0.98,0.97,0.7);
 
 
 float AmbientIntensity;
@@ -79,8 +79,6 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
     VertexShaderOutput output;
 
-
-	
     output.Position = mul(input.Position, MVP);
 	
 	// Matrix for transformation to tangent space

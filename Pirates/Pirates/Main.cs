@@ -53,9 +53,10 @@ namespace Pirates
             AspectRatio = this.GraphicsDevice.Viewport.AspectRatio;
             //renderMode = new SceneScreen();
             //renderMode = new SkyDomeScreen();
+
             //try
             //{
-            //    renderMode = TerrainScreen.FromFile();
+            //   // renderMode = TerrainScreen.FromFile();
             //}
             //catch (Exception e)
             {

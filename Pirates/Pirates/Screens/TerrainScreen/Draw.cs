@@ -10,6 +10,7 @@ namespace Pirates.Screens.Scene
             BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
             island.Draw(effect);
+            water.Draw(waterShader);
         }
     }
 }
