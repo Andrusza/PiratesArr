@@ -21,7 +21,8 @@ namespace Pirates.Screens.Scene
         private MultiTextured effect;
         private Basic waterShader;
         private JustMvp mvpshader;
-        private AtmosphericScattaring scataringShader;
+        private Scattaring scattering;
+       
 
         private Terrain island;
         private Terrain water;
@@ -49,31 +50,34 @@ namespace Pirates.Screens.Scene
 
             }
 
+            scattering = new Scattaring();
+            {
+                scattering.ProjectionMatrix = projectionMatrix;
+                scattering.ViewMatrix = camera.View;
+                scattering.InitParameters();
+            }
+
             waterShader = new Basic();
             {
                 waterShader.ProjectionMatrix = projectionMatrix;
                 waterShader.ViewMatrix = camera.View;
-                waterShader.Fx_LightPosition.SetValue(new Vector3(1000, 350, 0));
                 waterShader.InitParameters();
             }
 
-            scataringShader = new AtmosphericScattaring();
-            {
-                scataringShader.ProjectionMatrix = projectionMatrix;
-                scataringShader.ViewMatrix = camera.View;
-                scataringShader.InitParameters();
-            }
+           
 
+           
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
 
             island = new Terrain("island4", 2, 1);
             water = new Terrain("map2", 10, 1);
             water.Translate(0, 30, 0);
+            water.Update();
 
 
-            skydome = new GameObject("skydome4", scataringShader);
-            skydome.Scale(1200);
+            skydome = new GameObject("skydome4", scattering);
+            skydome.Scale(1500);
             skydome.Rotate(-90, new Vector3(1, 0, 0));
             skydome.Update();
 

@@ -62,8 +62,8 @@ float3 LightPosition;
 float3 AmbientLightColor=float3(1,1,1);
 float3 DiffuseLightColor=float3(1,1,1);
 
-float AmbientIntensity=0.2;
-float DiffuseIntensity=0.6;
+float AmbientIntensity=0.1;
+float DiffuseIntensity=0.9;
 
 
 

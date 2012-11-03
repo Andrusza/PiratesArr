@@ -5,6 +5,12 @@ namespace Pirates.Loaders
     abstract public class BaseObject
     {
         protected Matrix modelMatrix = Matrix.Identity;
+
+        public Matrix ModelMatrix
+        {
+            get { return modelMatrix; }
+            set { modelMatrix = value; }
+        }
         private Matrix scaleMatrix = Matrix.Identity;
         private Matrix rotateMatrix = Matrix.Identity;
         private Matrix translateMatrix = Matrix.Identity;
@@ -29,22 +35,22 @@ namespace Pirates.Loaders
 
         public void Rotate(Quaternion q)
         {
-            Matrix.CreateFromQuaternion(ref q, out modelMatrix);
+           // Matrix.CreateFromQuaternion(ref q, out modelMatrix);
         }
 
         public void Translate(Vector3 translation)
         {
-            Matrix.CreateTranslation(ref translation, out modelMatrix);
+           // Matrix.CreateTranslation(ref translation, out modelMatrix);
         }
 
         public void Translate(float x, float y, float z)
         {
-            Matrix.CreateTranslation(x, y, z, out modelMatrix);
+            Matrix.CreateTranslation(x, y, z, out translateMatrix);
         }
 
         public void Update()
         {
-            modelMatrix = scaleMatrix * rotateMatrix * translateMatrix;
+            ModelMatrix = scaleMatrix * rotateMatrix * translateMatrix;
         }
     }
 }

@@ -11,6 +11,16 @@ namespace Pirates.Shaders
         private EffectParameter fx_d0;
         private EffectParameter fx_n0;
 
+
+        private Vector3 lightPosition;
+
+        public Vector3 LightPosition
+        {
+            get { return lightPosition; }
+            set { lightPosition = value; }
+        }
+
+
         private EffectParameter fx_LightPosition;
 
         public EffectParameter Fx_LightPosition
@@ -48,7 +58,7 @@ namespace Pirates.Shaders
         public void InitParameters()
         {
             fx_world.SetValue(worldMatrix);
-          //  Fx_LightPosition.SetValue(new Vector3(0, 100, 1000));
+         
 
             fx_d0.SetValue(color);
             fx_n0.SetValue(normal);
@@ -65,7 +75,7 @@ namespace Pirates.Shaders
         int x = -1000;
         public override void Update(float time)
         {
-            fx_LightPosition.SetValue(new Vector3(0, 100, x++));
+            fx_LightPosition.SetValue(new Vector3(x++, 300, 0));
             
             InverseTransposeWorld();
             InverseTransposeView();

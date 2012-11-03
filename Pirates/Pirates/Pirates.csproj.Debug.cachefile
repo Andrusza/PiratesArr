@@ -37,6 +37,7 @@ Content\Texture\sky2.xnb
 Content\Fbx\skydome.xnb
 Content\Fbx\skydome2.xnb
 Content\Fbx\skydome3.xnb
+Content\Shader\Scattaring.xnb
 Content\Fbx\skydome4.xnb
-Content\Shader\AtmosphericScattaring.xnb
-Content\Fbx\sphere.xnb
+Content\Texture\sunrise.xnb
+Content\Texture\night.xnb

@@ -300,20 +300,28 @@
       <Name>skydome4</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Shader\AtmosphericScattaring.fx">
-      <Name>AtmosphericScattaring</Name>
+    <Compile Include="Shader\Scattaring.fx">
+      <Name>Scattaring</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fbx\sphere.x">
-      <Name>sphere</Name>
-      <Importer>XImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+    <Compile Include="Texture\sunrise.jpg">
+      <Name>sunrise</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Texture\night.jpg">
+      <Name>night</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

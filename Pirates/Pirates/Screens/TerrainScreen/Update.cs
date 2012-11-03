@@ -19,7 +19,9 @@ namespace Pirates.Screens.Scene
             waterShader.WorldMatrix = water.WorldMatrix;
             waterShader.Update((float)gameTime.TotalGameTime.Milliseconds);
 
-            scataringShader.ViewMatrix = view;
+            scattering.ViewMatrix = view;
+            scattering.WorldMatrix = skydome.ModelMatrix;
+            scattering.Update(0);
           
         }
     }

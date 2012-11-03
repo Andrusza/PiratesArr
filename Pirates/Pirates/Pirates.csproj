@@ -140,9 +140,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Shaders\BaseShader.cs" />
     <Compile Include="Shaders\Basic.cs" />
-    <Compile Include="Shaders\Scattaring.cs" />
     <Compile Include="Shaders\JustMvp.cs" />
     <Compile Include="Shaders\MultiTextured.cs" />
+    <Compile Include="Shaders\Scattaring.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Utility\FpsCounter.cs" />
     <Compile Include="Utility\Serializer.cs" />
     <Compile Include="Window\XnaWindow.cs" />

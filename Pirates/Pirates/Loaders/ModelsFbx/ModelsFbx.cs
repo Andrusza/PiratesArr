@@ -38,18 +38,14 @@ namespace Pirates.Loaders
             }
         }
 
-        public void DrawModel(Matrix view,Matrix projection)
+        public void DrawModel()
         {
             Matrix[] modelTansforms = new Matrix[fbx.Bones.Count];
             fbx.CopyAbsoluteBoneTransformsTo(modelTansforms);
 
             foreach (ModelMesh mesh in fbx.Meshes)
             {
-                foreach (Effect currentEffect in mesh.Effects)
-                {
-                    currentEffect.Parameters["World"].SetValue(modelTansforms[mesh.ParentBone.Index] * (modelMatrix));
-                    currentEffect.Parameters["MVP"].SetValue(modelTansforms[mesh.ParentBone.Index] * (modelMatrix) * view * projection);
-                }
+                
                 mesh.Draw();
             }
         }

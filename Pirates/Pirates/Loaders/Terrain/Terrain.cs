@@ -9,8 +9,8 @@ namespace Pirates.Loaders
 
         public Matrix WorldMatrix
         {
-            get { return modelMatrix; }
-            set { modelMatrix = value; }
+            get { return ModelMatrix; }
+            set { ModelMatrix = value; }
         }
 
         private uint vertexCountX;

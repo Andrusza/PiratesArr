@@ -14,6 +14,14 @@ namespace Pirates.Shaders
             set { fx_LightPosition = value; }
         }
 
+        private Vector3 lightPosition;
+
+        public Vector3 LightPosition
+        {
+            get { return lightPosition; }
+            set { lightPosition = value; }
+        }
+
         public MultiTextured()
             : base("MultiTexturing")
         {
@@ -43,7 +51,7 @@ namespace Pirates.Shaders
         int x = -1000;
         public override void Update(float time)
         {
-            fx_LightPosition.SetValue(new Vector3(0, 100, x++));
+            fx_LightPosition.SetValue(new Vector3(x++, 300, 0));
             Technique.Parameters["World"].SetValue(worldMatrix);
             Technique.Parameters["View"].SetValue(viewMatrix);
         }
