@@ -1,10 +1,10 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Screens;
 using Pirates.Screens.Scene;
 using Pirates.Utility;
 using Pirates.Window;
-using System;
 
 namespace Pirates
 {
@@ -63,7 +63,6 @@ namespace Pirates
                 renderMode = new TerrainScreen();
             }
             //renderMode = new SceneScreen();
-            
         }
 
         protected override void LoadContent()

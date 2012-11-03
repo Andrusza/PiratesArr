@@ -1,11 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using Cameras;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pirates.Loaders;
 using Pirates.Shaders;
 using Pirates.Utility;
-using System;
-using Pirates.Loaders;
 
 namespace Pirates.Screens.Scene
 {
@@ -20,10 +20,12 @@ namespace Pirates.Screens.Scene
 
         private MultiTextured effect;
         private Basic waterShader;
-       
+        private JustMvp mvpshader;
+        private AtmosphericScattaring scataringShader;
 
-        Terrain island;
-        Terrain water;
+        private Terrain island;
+        private Terrain water;
+        private GameObject skydome;
 
         public TerrainScreen()
         {
@@ -35,14 +37,31 @@ namespace Pirates.Screens.Scene
             {
                 effect.ProjectionMatrix = projectionMatrix;
                 effect.ViewMatrix = camera.View;
+                effect.Fx_LightPosition.SetValue(new Vector3(1000, 350, 0));
                 effect.InitParameters();
+            }
+
+            mvpshader = new JustMvp();
+            {
+                mvpshader.ProjectionMatrix = projectionMatrix;
+                mvpshader.ViewMatrix = camera.View;
+                mvpshader.InitParameters();
+
             }
 
             waterShader = new Basic();
             {
-                 waterShader.ProjectionMatrix = projectionMatrix;
-                 waterShader.ViewMatrix = camera.View;
-                 waterShader.InitParameters();
+                waterShader.ProjectionMatrix = projectionMatrix;
+                waterShader.ViewMatrix = camera.View;
+                waterShader.Fx_LightPosition.SetValue(new Vector3(1000, 350, 0));
+                waterShader.InitParameters();
+            }
+
+            scataringShader = new AtmosphericScattaring();
+            {
+                scataringShader.ProjectionMatrix = projectionMatrix;
+                scataringShader.ViewMatrix = camera.View;
+                scataringShader.InitParameters();
             }
 
             rs = new RasterizerState();
@@ -51,7 +70,15 @@ namespace Pirates.Screens.Scene
             island = new Terrain("island4", 2, 1);
             water = new Terrain("map2", 10, 1);
             water.Translate(0, 30, 0);
-           
+
+
+            skydome = new GameObject("skydome4", scataringShader);
+            skydome.Scale(1200);
+            skydome.Rotate(-90, new Vector3(1, 0, 0));
+            skydome.Update();
+
+
+
         }
 
         public TerrainScreen(SerializationInfo info, StreamingContext ctxt)
@@ -64,12 +91,11 @@ namespace Pirates.Screens.Scene
             {
                 effect.ProjectionMatrix = projectionMatrix;
                 effect.ViewMatrix = camera.View;
+                
                 effect.InitParameters();
             }
             this.island = new Terrain("island4", 2, 1);
             this.water = new Terrain("map2", 10, 1);
-          
-           
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext ctxt)
@@ -88,7 +114,7 @@ namespace Pirates.Screens.Scene
         public static TerrainScreen FromFile()
         {
             Serializer serializer = new Serializer();
-            TerrainScreen obj= serializer.DeSerializeObject<TerrainScreen>("save.txt");
+            TerrainScreen obj = serializer.DeSerializeObject<TerrainScreen>("save.txt");
             return obj;
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Pirates.Screens;
 
 namespace Pirates.Utility
 {
@@ -16,7 +15,6 @@ namespace Pirates.Utility
             {
                 BinaryFormatter bFormatter = new BinaryFormatter();
                 bFormatter.Serialize(stream, objectToSerialize);
-                
             }
         }
 
@@ -27,7 +25,6 @@ namespace Pirates.Utility
             {
                 BinaryFormatter bFormatter = new BinaryFormatter();
                 objectToSerialize = (T)bFormatter.Deserialize(stream);
-                
             }
             return objectToSerialize;
         }

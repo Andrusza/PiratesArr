@@ -108,7 +108,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	}
 	else
 	{
-	return float4(0,0,0,0);
+	return 0;
 	}
 	
 	

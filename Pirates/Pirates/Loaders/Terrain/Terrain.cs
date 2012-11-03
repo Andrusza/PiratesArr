@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Pirates.Loaders
 {
-    public partial class Terrain: BaseObject
+    public partial class Terrain : BaseObject
     {
         private Texture2D heightMapTexture;
 

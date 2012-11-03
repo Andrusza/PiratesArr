@@ -1,25 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Loaders;
-using Microsoft.Xna.Framework;
 
 namespace Pirates.Shaders
 {
     public class MultiTextured : BaseShader
     {
-       
+        private EffectParameter fx_LightPosition;
 
-        public MultiTextured(): base("MultiTexturing")
+        public EffectParameter Fx_LightPosition
+        {
+            get { return fx_LightPosition; }
+            set { fx_LightPosition = value; }
+        }
+
+        public MultiTextured()
+            : base("MultiTexturing")
         {
             this.Technique.CurrentTechnique = this.Technique.Techniques["MultiTexturing"];
+            fx_LightPosition = Technique.Parameters["LightPosition"];
         }
 
         public void InitParameters()
         {
-            Texture2D snow= ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "snow");
+            Texture2D snow = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "snow");
             Texture2D grass = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "grass");
             Texture2D sand = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "sand");
             Texture2D weight = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "island4");
@@ -32,11 +36,14 @@ namespace Pirates.Shaders
             Technique.Parameters["Projection"].SetValue(projectionMatrix);
             Technique.Parameters["View"].SetValue(viewMatrix);
 
-            Technique.Parameters["LightPosition"].SetValue(new Vector3(0, 100, 1000));
-        }
+          
 
+            //fx_LightPosition.SetValue(new Vector3(0, 0, 0));
+        }
+        int x = -1000;
         public override void Update(float time)
         {
+            fx_LightPosition.SetValue(new Vector3(0, 100, x++));
             Technique.Parameters["World"].SetValue(worldMatrix);
             Technique.Parameters["View"].SetValue(viewMatrix);
         }

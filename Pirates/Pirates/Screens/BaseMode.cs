@@ -1,13 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace Pirates.Screens
 {
     [Serializable()]
     public abstract class BaseMode : ISerializable
     {
-
         public abstract void LoadContent();
 
         public abstract void UnloadContent();
@@ -19,6 +18,5 @@ namespace Pirates.Screens
         public abstract void GetObjectData(SerializationInfo info, StreamingContext ctxt);
 
         public abstract void ToFile();
-        
     }
 }

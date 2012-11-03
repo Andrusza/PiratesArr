@@ -1,6 +1,7 @@
 float4x4 World;
 float4x4 View;
 float4x4 Projection;
+float4x4 MVP;
 
 texture2D diffuseMap0;
 sampler2D d0_Sampler = sampler_state
@@ -15,8 +16,7 @@ struct VertexShaderInput
 {
     float4 Position : POSITION0;
 	float2  TextureCoord:TEXCOORD0;
-	float3 ToLight:TEXTCOORD1;
-  
+	
 };
 
 struct VertexShaderOutput
@@ -30,10 +30,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
     VertexShaderOutput output;
 
-    float4 worldPosition = mul(input.Position, World);
-    float4 viewPosition = mul(worldPosition, View);
-    output.Position = mul(viewPosition, Projection);
-	
+    output.Position = mul(input.Position, MVP);
 	output.TextureCoord=input.TextureCoord;
     
 

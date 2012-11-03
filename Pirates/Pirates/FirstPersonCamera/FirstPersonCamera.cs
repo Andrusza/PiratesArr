@@ -27,7 +27,7 @@ namespace Cameras
         public FirstPersonCamera(Vector3 position)
         {
             view = Matrix.Identity;
-            dir  = new Vector3(0, 0, 1);
+            dir = new Vector3(0, 0, 1);
             this.orientation = new Quaternion(0, 0, 0, 1);
             this.CameraTranslate(position);
         }

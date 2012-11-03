@@ -1,9 +1,9 @@
-﻿using Cameras;
+﻿using System.Runtime.Serialization;
+using Cameras;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Loaders;
 using Pirates.Shaders;
-using System.Runtime.Serialization;
 
 namespace Pirates.Screens.Scene
 {
@@ -40,17 +40,14 @@ namespace Pirates.Screens.Scene
 
         public SceneScreen(SerializationInfo info, StreamingContext ctxt)
         {
-           
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
-            
         }
 
         public override void ToFile()
         {
-           
         }
 
         public static SceneScreen FromFile()

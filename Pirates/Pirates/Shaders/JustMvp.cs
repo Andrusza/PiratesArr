@@ -5,14 +5,15 @@ namespace Pirates.Shaders
 {
     public class JustMvp : BaseShader
     {
-        public JustMvp(): base("JustMvp")
+        public JustMvp()
+            : base("JustMvp")
         {
             this.Technique.CurrentTechnique = this.Technique.Techniques["Basic"];
         }
 
         public void InitParameters()
         {
-            Texture2D color = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "BlueSky");
+            Texture2D color = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "Sky2");
             Technique.Parameters["diffuseMap0"].SetValue(color);
 
             Technique.Parameters["Projection"].SetValue(projectionMatrix);
