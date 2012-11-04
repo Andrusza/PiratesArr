@@ -91,8 +91,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float3 Height=tex2D( WeightMapSampler,input.TexCoord);
 	
 	float3 color=0;
-	if(Height.x!=1)
-	{
+	
 	
 	float3 ToLight = normalize(input.ToLight);
 	float3 diffuse = saturate(dot(ToLight,input.Normal));
@@ -102,13 +101,19 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 diffuseColor=DiffuseLightColor*DiffuseIntensity*diffuse;
 	
 	
+	
+
+	if(Height.x!=1)
+	{
 	color=Height.x*Sand+Height.y*Grass+Height.z*Snow;
 	float3 finalColor=color*ambientColor+color*diffuseColor;
 	return float4(finalColor, 1);
 	}
 	else
 	{
-	return 0;
+	color=Sand;
+	float3 finalColor=color*ambientColor+color*diffuseColor;
+	return float4(finalColor, 1);
 	}
 	
 	

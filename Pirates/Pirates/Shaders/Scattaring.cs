@@ -7,8 +7,9 @@ namespace Pirates.Shaders
 {
     public class Scattaring : BaseShader
     {
-        private Vector4 lightDirection = Vector4.Normalize(new Vector4(100.0f, 100.0f, 100.0f, 1.0f));
+        private readonly float SKYDOMESIZE = 1200;
 
+        private Vector4 lightDirection = new Vector4(0, 0, 0, 1);
         public Vector4 LightDirection
         {
             get { return lightDirection; }
@@ -70,7 +71,7 @@ namespace Pirates.Shaders
             float z = (float)(Math.Sin((double)Theta) * Math.Sin(Phi));
             float w = 1.0f;
 
-            return new Vector4(x, y, z, w) * 1200;
+            return new Vector4(x, y, z, w) * SKYDOMESIZE;
         }
 
         private double Thera = 0;
@@ -78,14 +79,16 @@ namespace Pirates.Shaders
 
         public override void Update(float time)
         {
-            Thera += 0.01;
-            
+            Thera += 0.1;
+
             LightDirection = GetDirection(Thera, Phi);
-            Console.WriteLine(LightDirection.ToString());
+
+            //Console.WriteLine(LightDirection.ToString());
             Technique.Parameters["LightDirection"].SetValue(Vector4.Normalize(LightDirection));
 
             Technique.Parameters["WorldViewProj"].SetValue(worldMatrix * viewMatrix * projectionMatrix);
             InverseTransposeWorld();
+            viewMatrix.Translation = new Vector3(0, 0, 0);
             Technique.Parameters["ViewInv"].SetValue(Matrix.Invert(viewMatrix));
             Technique.Parameters["World"].SetValue(worldMatrix);
         }

@@ -11,6 +11,7 @@ namespace Pirates.Loaders
             get { return modelMatrix; }
             set { modelMatrix = value; }
         }
+
         private Matrix scaleMatrix = Matrix.Identity;
         private Matrix rotateMatrix = Matrix.Identity;
         private Matrix translateMatrix = Matrix.Identity;
@@ -18,29 +19,26 @@ namespace Pirates.Loaders
         public void Scale(float scale)
         {
             Matrix.CreateScale(scale, out scaleMatrix);
-           
         }
 
         public void Rotate(float angle, Vector3 axis)
         {
             Matrix.CreateFromAxisAngle(ref axis, MathHelper.ToRadians(angle), out rotateMatrix);
-           
         }
 
         public void Rotate(float yaw, float pitch, float roll)
         {
             Matrix.CreateFromYawPitchRoll(yaw, pitch, roll, out rotateMatrix);
-           
         }
 
         public void Rotate(Quaternion q)
         {
-           // Matrix.CreateFromQuaternion(ref q, out modelMatrix);
+            Matrix.CreateFromQuaternion(ref q, out rotateMatrix);
         }
 
         public void Translate(Vector3 translation)
         {
-           // Matrix.CreateTranslation(ref translation, out modelMatrix);
+            Matrix.CreateTranslation(ref translation, out translateMatrix);
         }
 
         public void Translate(float x, float y, float z)

@@ -1,29 +1,19 @@
 Content\Font\mono.xnb
 Content\Texture\d0.xnb
 Content\Texture\n0.xnb
-Content\Shader\Basic.xnb
 Content\Texture\water2.xnb
 Content\Texture\waterNormal.xnb
-Content\Shader\JustMVP.xnb
 Content\Heightmap\map2.xnb
-Content\Fbx\ship.xnb
-Content\dark_teak_0.xnb
-Content\sails1_0.xnb
-Content\flag_0.xnb
-Content\Map__5_Tiles_0.xnb
-Content\dark_wood_planks_0.xnb
-Content\Wood floor ffs062_0.xnb
 Content\Texture\BlueSky.xnb
 Content\Texture\Sky.xnb
-Content\Shader\MultiTexturing.xnb
 Content\Heightmap\Coastal Shelf.xnb
 Content\Heightmap\Island, Crecent.xnb
+Content\Heightmap\island3.xnb
 Content\Heightmap\Island, Rocky.xnb
 Content\Heightmap\Islands, Leafy.xnb
 Content\Heightmap\Islands.xnb
 Content\Heightmap\RiverBed.xnb
 Content\Heightmap\Wetlands, Rugged.xnb
-Content\Heightmap\island3.xnb
 Content\Heightmap\island4.xnb
 Content\Texture\sand.xnb
 Content\Texture\grass.xnb
@@ -32,12 +22,22 @@ Content\Texture\island4.xnb
 Content\Texture\seamwater8.xnb
 Content\Texture\seamwater6.xnb
 Content\Texture\normalwater6.xnb
-Content\Model\ship.xnb
 Content\Texture\sky2.xnb
+Content\Texture\sunrise.xnb
+Content\Texture\night.xnb
+Content\Shader\Basic.xnb
+Content\Shader\JustMVP.xnb
+Content\Shader\MultiTexturing.xnb
+Content\Shader\Scattaring.xnb
+Content\Fbx\ship.xnb
+Content\Model\ship.xnb
 Content\Fbx\skydome.xnb
 Content\Fbx\skydome2.xnb
 Content\Fbx\skydome3.xnb
-Content\Shader\Scattaring.xnb
 Content\Fbx\skydome4.xnb
-Content\Texture\sunrise.xnb
-Content\Texture\night.xnb
+Content\dark_teak_0.xnb
+Content\sails1_0.xnb
+Content\flag_0.xnb
+Content\Map__5_Tiles_0.xnb
+Content\dark_wood_planks_0.xnb
+Content\Wood floor ffs062_0.xnb

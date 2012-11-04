@@ -13,6 +13,12 @@ namespace Pirates.Shaders
         private Effect fx;
         protected Matrix worldMatrix = Matrix.Identity;
 
+        public Effect Technique
+        {
+            get { return fx; }
+            set { fx = value; }
+        }
+
         public BaseShader(string path)
         {
             fx = ContentLoader.Load<Effect>(ContentType.SHADER, path);
@@ -54,11 +60,5 @@ namespace Pirates.Shaders
         }
 
         public abstract void Update(float time);
-
-        public Effect Technique
-        {
-            get { return fx; }
-            set { fx = value; }
-        }
     }
 }

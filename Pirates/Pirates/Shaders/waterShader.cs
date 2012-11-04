@@ -4,22 +4,20 @@ using Pirates.Loaders;
 
 namespace Pirates.Shaders
 {
-    public class Basic : BaseShader
+    public class waterShader : BaseShader
     {
         private EffectParameter fx_world;
 
         private EffectParameter fx_d0;
         private EffectParameter fx_n0;
 
+        private Vector4 lightPosition;
 
-        private Vector3 lightPosition;
-
-        public Vector3 LightPosition
+        public Vector4 LightPosition
         {
             get { return lightPosition; }
             set { lightPosition = value; }
         }
-
 
         private EffectParameter fx_LightPosition;
 
@@ -37,7 +35,7 @@ namespace Pirates.Shaders
         private Texture2D color = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "seamwater6");
         private Texture2D normal = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "normalwater6");
 
-        public Basic()
+        public waterShader()
             : base("basic")
         {
             this.Technique.CurrentTechnique = this.Technique.Techniques["Basic"];
@@ -58,7 +56,6 @@ namespace Pirates.Shaders
         public void InitParameters()
         {
             fx_world.SetValue(worldMatrix);
-         
 
             fx_d0.SetValue(color);
             fx_n0.SetValue(normal);
@@ -71,12 +68,13 @@ namespace Pirates.Shaders
             InverseTransposeWorld();
             InverseTransposeView();
         }
-        
-        int x = -1000;
+
         public override void Update(float time)
         {
-            fx_LightPosition.SetValue(new Vector3(x++, 300, 0));
-            
+            lightPosition.Y *= -1;
+            lightPosition.X *= -1;
+            fx_LightPosition.SetValue(new Vector3(lightPosition.X, lightPosition.Y, lightPosition.Z));
+
             InverseTransposeWorld();
             InverseTransposeView();
 

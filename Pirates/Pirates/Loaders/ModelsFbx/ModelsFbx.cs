@@ -1,10 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Runtime.Serialization;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Shaders;
 
 namespace Pirates.Loaders
 {
-    public class GameObject : BaseObject
+    [Serializable()]
+    public class GameObject : BaseObject, ISerializable
     {
         private Model fbx;
 
@@ -45,9 +48,18 @@ namespace Pirates.Loaders
 
             foreach (ModelMesh mesh in fbx.Meshes)
             {
-                
                 mesh.Draw();
             }
+        }
+
+        public GameObject(SerializationInfo info, StreamingContext ctxt)
+        {
+            this.ModelMatrix = (Matrix)info.GetValue(("modelMatrix"), typeof(Matrix));
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        {
+            info.AddValue("modelMatrix", this.ModelMatrix);
         }
     }
 }

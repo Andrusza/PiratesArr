@@ -10,7 +10,7 @@ namespace Pirates.Screens.Scene
     public partial class SceneScreen : BaseMode
     {
         private Terrain tera;
-        private Basic water;
+        private waterShader water;
 
         private FirstPersonCamera camera;
         private float aspectRatio = BaseClass.GetInstance().AspectRatio;
@@ -24,7 +24,7 @@ namespace Pirates.Screens.Scene
 
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 10000);
 
-            water = new Basic();
+            water = new waterShader();
             {
                 water.ProjectionMatrix = projectionMatrix;
                 water.ViewMatrix = camera.View;

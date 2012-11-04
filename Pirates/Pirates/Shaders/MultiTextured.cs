@@ -14,9 +14,9 @@ namespace Pirates.Shaders
             set { fx_LightPosition = value; }
         }
 
-        private Vector3 lightPosition;
+        private Vector4 lightPosition;
 
-        public Vector3 LightPosition
+        public Vector4 LightPosition
         {
             get { return lightPosition; }
             set { lightPosition = value; }
@@ -44,14 +44,17 @@ namespace Pirates.Shaders
             Technique.Parameters["Projection"].SetValue(projectionMatrix);
             Technique.Parameters["View"].SetValue(viewMatrix);
 
-          
-
             //fx_LightPosition.SetValue(new Vector3(0, 0, 0));
         }
-        int x = -1000;
+
+        private int x = -1000;
+
         public override void Update(float time)
         {
-            fx_LightPosition.SetValue(new Vector3(x++, 300, 0));
+            lightPosition.Y *= -1;
+            lightPosition.X *= -1;
+            fx_LightPosition.SetValue(new Vector3(lightPosition.X, lightPosition.Y, lightPosition.Z));
+
             Technique.Parameters["World"].SetValue(worldMatrix);
             Technique.Parameters["View"].SetValue(viewMatrix);
         }

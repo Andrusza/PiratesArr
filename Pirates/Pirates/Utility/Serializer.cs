@@ -15,6 +15,7 @@ namespace Pirates.Utility
             {
                 BinaryFormatter bFormatter = new BinaryFormatter();
                 bFormatter.Serialize(stream, objectToSerialize);
+                stream.Close();
             }
         }
 
@@ -25,6 +26,7 @@ namespace Pirates.Utility
             {
                 BinaryFormatter bFormatter = new BinaryFormatter();
                 objectToSerialize = (T)bFormatter.Deserialize(stream);
+                stream.Close();
             }
             return objectToSerialize;
         }
