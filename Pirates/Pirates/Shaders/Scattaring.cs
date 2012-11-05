@@ -10,6 +10,7 @@ namespace Pirates.Shaders
         private readonly float SKYDOMESIZE = 1200;
 
         private Vector4 lightDirection = new Vector4(0, 0, 0, 1);
+
         public Vector4 LightDirection
         {
             get { return lightDirection; }

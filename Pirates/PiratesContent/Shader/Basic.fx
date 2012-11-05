@@ -37,6 +37,7 @@ struct VertexShaderOutput
 float4x4 World;
 float4x4 WorldInverseTranspose;
 float4x4 ViewInverseTranspose;
+float4x4 ReflectionView;
 
 float4x4 MVP;
 
@@ -52,6 +53,33 @@ float3 SpecularLightColor=float3(0.98,0.97,0.7);
 float AmbientIntensity;
 float DiffuseIntensity;
 float SpecularIntensity;
+
+bool Clipping;
+float4 ClipPlane0;
+
+Texture xReflectionMap;
+
+sampler ReflectionSampler = sampler_state 
+{ 
+	texture = <xReflectionMap> ; 
+	magfilter = LINEAR; 
+	minfilter = LINEAR; 
+	mipfilter=LINEAR; 
+	AddressU = mirror; 
+	AddressV = mirror;
+};
+
+Texture xRefractionMap;
+sampler RefractionSampler = sampler_state 
+{ 	
+	texture = <xRefractionMap> ; 
+	magfilter = LINEAR; 
+	minfilter = LINEAR; 
+	mipfilter=LINEAR; 
+	AddressU = mirror; 
+	AddressV = mirror;
+};
+
 
 float3 eyeFromViewInverseTranspose()
 {

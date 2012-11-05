@@ -28,6 +28,7 @@ namespace Pirates.Screens.Scene
         private Terrain island;
         private Terrain water;
         private GameObject skydome;
+        private GameObject ship;
 
         private RenderTarget2D refractionRenderTarget;
         private Texture2D refractionMap;
@@ -35,7 +36,7 @@ namespace Pirates.Screens.Scene
         private RenderTarget2D reflectionRenderTarget;
         private Texture2D reflectionMap;
 
-        private const float waterHeight = 5.0f;
+        private const float waterHeight = 30.0f;
 
         public TerrainScreen()
         {
@@ -84,6 +85,12 @@ namespace Pirates.Screens.Scene
             skydome.Rotate(-90, new Vector3(1, 0, 0));
             skydome.Translate(0, 30, 0);
             skydome.Update();
+
+            ship = new GameObject("ship", mvpshader);
+            ship.Scale(0.3f);
+            ship.Rotate(-90, new Vector3(0, 0, 1));
+            ship.Translate(500, 39, 500);
+            ship.Update();
         }
 
         public TerrainScreen(SerializationInfo info, StreamingContext ctxt)
@@ -122,12 +129,25 @@ namespace Pirates.Screens.Scene
                 waterShader.InitParameters();
             }
 
+            rs = new RasterizerState();
+            rs.CullMode = CullMode.None;
+
             island = new Terrain("island4", 2, 1);
             water = new Terrain("map2", 10, 1);
             water.Translate(0, 30, 0);
             water.Update();
 
-            this.skydome = (GameObject)info.GetValue("Skydome", typeof(GameObject));
+            skydome = new GameObject("skydome4", scattering);
+            skydome.Scale(1200);
+            skydome.Rotate(-90, new Vector3(1, 0, 0));
+            skydome.Translate(0, 30, 0);
+            skydome.Update();
+
+            ship = new GameObject("ship", mvpshader);
+            ship.Scale(0.3f);
+            ship.Rotate(-90, new Vector3(0, 0, 1));
+            ship.Translate(500, 39, 500);
+            ship.Update();
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext ctxt)

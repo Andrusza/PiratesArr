@@ -5,12 +5,17 @@ namespace Pirates.Screens.Scene
     public partial class TerrainScreen : BaseMode
     {
         private Matrix view;
+        private Matrix reflectionMatrix;
         private Vector4 lightPosition;
 
         public override void Update(GameTime gameTime)
         {
             Input();
             view = camera.Update();
+
+            mvpshader.ViewMatrix = view;
+            mvpshader.WorldMatrix = ship.ModelMatrix;
+            mvpshader.Update(0);
 
             scattering.ViewMatrix = view;
             scattering.WorldMatrix = skydome.ModelMatrix;

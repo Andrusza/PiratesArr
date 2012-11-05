@@ -54,11 +54,11 @@ namespace Pirates
             //renderMode = new SceneScreen();
             //renderMode = new SkyDomeScreen();
 
-            //try
-            //{
-            //   // renderMode = TerrainScreen.FromFile();
-            //}
-            //catch (Exception e)
+            try
+            {
+                renderMode = TerrainScreen.FromFile();
+            }
+            catch (Exception e)
             {
                 renderMode = new TerrainScreen();
             }

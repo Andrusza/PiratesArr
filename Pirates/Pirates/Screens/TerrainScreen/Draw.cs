@@ -12,6 +12,9 @@ namespace Pirates.Screens.Scene
             island.Draw(effect);
             water.Draw(waterShader);
 
+            //ship.Update(mvpshader.Technique);
+            ship.DrawModel(view, projectionMatrix);
+
             skydome.Update(scattering.Technique);
             skydome.DrawModel();
         }
