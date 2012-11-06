@@ -143,9 +143,9 @@ namespace Pirates.Screens.Scene
             skydome.Translate(0, 30, 0);
             skydome.Update();
 
-            ship = new GameObject("ship", mvpshader);
+            ship = new GameObject("ship2", mvpshader);
             ship.Scale(0.3f);
-            ship.Rotate(-90, new Vector3(0, 0, 1));
+            ship.Rotate(-90, new Vector3(1, 0, 0));
             ship.Translate(500, 39, 500);
             ship.Update();
         }

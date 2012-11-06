@@ -80,7 +80,7 @@ namespace Pirates.Shaders
 
         public override void Update(float time)
         {
-            Thera += 0.1;
+            Thera += 0.005;
 
             LightDirection = GetDirection(Thera, Phi);
 

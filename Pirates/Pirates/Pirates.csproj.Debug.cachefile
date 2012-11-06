@@ -29,15 +29,14 @@ Content\Shader\Basic.xnb
 Content\Shader\JustMVP.xnb
 Content\Shader\MultiTexturing.xnb
 Content\Shader\Scattaring.xnb
-Content\Fbx\ship.xnb
-Content\Model\ship.xnb
 Content\Fbx\skydome.xnb
 Content\Fbx\skydome2.xnb
 Content\Fbx\skydome3.xnb
 Content\Fbx\skydome4.xnb
-Content\dark_teak_0.xnb
-Content\sails1_0.xnb
-Content\flag_0.xnb
-Content\Map__5_Tiles_0.xnb
-Content\dark_wood_planks_0.xnb
-Content\Wood floor ffs062_0.xnb
+Content\Fbx\dark_teak.xnb
+Content\Fbx\dark_wood_planks.xnb
+Content\Fbx\flag.xnb
+Content\Fbx\sails1.xnb
+Content\Fbx\Wood floor ffs062.xnb
+Content\Fbx\Map__5_Tiles.xnb
+Content\Fbx\ship2.xnb
