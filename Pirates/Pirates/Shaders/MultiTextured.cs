@@ -47,7 +47,7 @@ namespace Pirates.Shaders
             //fx_LightPosition.SetValue(new Vector3(0, 0, 0));
         }
 
-        private int x = -1000;
+       
 
         public override void Update(float time)
         {

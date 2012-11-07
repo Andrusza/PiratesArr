@@ -9,19 +9,18 @@ namespace Pirates.Screens.Scene
         {
             BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
-            island.Draw(effect);
-            water.Draw(waterShader);
+            //island.Draw(effect);
+            //water.Draw(waterShader);
 
             //ship.Update(mvpshader.Technique);
-            ship.DrawModel(view, projectionMatrix);
+            //ship.DrawModel(view, projectionMatrix);
 
-            skydome.Update(scattering.Technique);
-            skydome.DrawModel();
+            skydome.Draw(scattering);
         }
 
         private void DrawRefractionMap()
         {
-            Plane refractionPlane = CreatePlane(waterHeight + 1.5f, new Vector3(0, -1, 0), view, false);
+            Plane refractionPlane = CreatePlane(waterHeight + 1.5f, new Vector3(0, -1, 0), false);
 
             waterShader.Technique.Parameters["ClipPlane0"].SetValue(new Vector4(refractionPlane.Normal, refractionPlane.D));
             waterShader.Technique.Parameters["Clipping"].SetValue(true);
@@ -42,28 +41,30 @@ namespace Pirates.Screens.Scene
 
         private void DrawReflectionMap()
         {
-            Plane reflectionPlane = CreatePlane(waterHeight - 0.5f, new Vector3(0, -1, 0), reflectionViewMatrix, true);
+            Plane reflectionPlane = CreatePlane(100 - 0.5f, new Vector3(0, -1, 0), true);
 
-            effect.Technique.Parameters["ClipPlane0"].SetValue(new Vector4(reflectionPlane.Normal, reflectionPlane.D));
-            scattering.Technique.Parameters["ClipPlane0"].SetValue(new Vector4(reflectionPlane.Normal, reflectionPlane.D));
+            Matrix temp = Matrix.CreateReflection(reflectionPlane);
+            Matrix reflectionViewMatrix = temp * camera.View * temp;
 
-            effect.Technique.Parameters["ClipPlane0"].SetValue(true);
-            scattering.Technique.Parameters["ClipPlane0"].SetValue(true);
-            BaseClass.GetInstance().GraphicsDevice.SetRenderTarget(reflectionRenderTarget);
+            scattering.plane = new Vector4(reflectionPlane.Normal, reflectionPlane.D);
+            scattering.Clipping = true;
 
-            BaseClass.GetInstance().GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
+            scattering.ViewMatrix = reflectionViewMatrix;
+            scattering.Update(0);
 
-            skydome.Update(scattering.Technique);
-            skydome.DrawModel(); ///////////////////WHERE IS REFLECTION MATRIX?????////////////////
-            island.Draw(effect);
+            BaseClass.Device.SetRenderTarget(reflectionRenderTarget);
+            BaseClass.GetInstance().GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Aqua, 1.0f, 0);
 
-            effect.Technique.Parameters["ClipPlane0"].SetValue(false);
-            scattering.Technique.Parameters["ClipPlane0"].SetValue(false);
+            skydome.Draw(scattering);
 
-            BaseClass.GetInstance().GraphicsDevice.SetRenderTarget(null);
+            BaseClass.Device.SetRenderTarget(null);
+
+            scattering.Clipping = false;
+            scattering.ViewMatrix = camera.View;
+            scattering.Update(0);
 
             reflectionMap = reflectionRenderTarget;
-            //System.IO.Stream ss = System.IO.File.OpenWrite("C:\Test\Reflection.jpg");
+            //System.IO.Stream ss = System.IO.File.Create("D:\\Reflection.jpg");
             //reflectionRenderTarget.SaveAsJpeg(ss, 500, 500);
             //ss.Close();
         }

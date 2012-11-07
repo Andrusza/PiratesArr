@@ -32,24 +32,27 @@ struct vertexOutput {
   	half2 Altitudes 			: TEXCOORD7; 
 };
 
-float4 LightDirection = {100.0f, 100.0f, 100.0f, 1.0f};
-float4 LightColor = {1.0f, 1.0f, 1.0f, 1.0f};
-float4 LightColorAmbient = {0.0f, 0.0f, 0.0f, 1.0f};
+bool Clipping;
+float4 ClipPlane0;
 
-float4 FogColor = {1.0f, 1.0f, 1.0f, 1.0f};
+float4 LightDirection;
+float4 LightColor;
+float4 LightColorAmbient;
 
-float fDensity ;
+float4 FogColor;
 
-bool isSkydome;
+float fDensity;
 
-float SunLightness = 0.2; 
+bool isSkydome=true;
 
-float sunRadiusAttenuation = 256;
+float SunLightness;
 
-float largeSunLightness = 0.2;
-float largeSunRadiusAttenuation = 3;
-float dayToSunsetSharpness = 1.5;
-float hazeTopAltitude = 20; 
+float sunRadiusAttenuation;
+
+float largeSunLightness;
+float largeSunRadiusAttenuation;
+float dayToSunsetSharpness;
+float hazeTopAltitude;
 
 texture DiffuseTexture;
 
@@ -131,7 +134,7 @@ vertexOutput mainVS (appdata IN)
 float4 mainPS(vertexOutput IN) : COLOR0
 {	
 	float4 colorOutput = float4(0,0,0,1);
-	float4 DiffuseColor = tex2D( SurfSamplerDiffuse, float2( IN.UV.x, 1-IN.UV.y));
+	float4 DiffuseColor = tex2D( SurfSamplerDiffuse, float2( IN.UV.x, IN.UV.y));
 	float4 colorAmbient = DiffuseColor;
 		
 	// Calculate light/eye/normal vectors
@@ -148,7 +151,8 @@ float4 mainPS(vertexOutput IN) : COLOR0
 	colorOutput.a = 1.0f;
 	
 	// Calculate sun highlight...	
-	float sunHighlight = pow(max(0, dot(lightVec, -eyeVec)), sunRadiusAttenuation) * SunLightness;	
+	float sunHighlight = pow(max(0, dot(lightVec, -eyeVec)), sunRadiusAttenuation) * SunLightness;
+	
 	// Calculate a wider sun highlight 
 	float largeSunHighlight = pow(max(0, dot(lightVec, -eyeVec)), largeSunRadiusAttenuation) * largeSunLightness;
 	
@@ -196,6 +200,7 @@ float4 mainPS(vertexOutput IN) : COLOR0
 	// Make sun brighter for the skybox...
 	if (isSkydome)
 		colorOutput = fogColor + sunHighlight;
+		
 		
 	return colorOutput;
 }

@@ -5,10 +5,7 @@ namespace Pirates.Utility
 {
     public class Serializer
     {
-        public Serializer()
-        {
-        }
-
+       
         public void SerializeObject<T>(string filename, T objectToSerialize)
         {
             using (Stream stream = File.Open(filename, FileMode.Create))

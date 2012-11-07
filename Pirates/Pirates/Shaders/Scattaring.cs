@@ -7,9 +7,47 @@ namespace Pirates.Shaders
 {
     public class Scattaring : BaseShader
     {
-        private readonly float SKYDOMESIZE = 1200;
+        public float skydomeSize;
+        public float dayToSunsetSharpness;
+        public Vector4 fogColor;
+        public float fogDensity;
+        public float hazeTopAltitude;
+        public float largeSunLightness;
+        public float largeSunRadiusAttenuation;
+        public Vector4 lightColor;
+        public Vector4 lightColorAmbient;
+        public Vector4 lightDirection;
+        public Vector4 lightPosition;
+        public double phi;
+        public float sunLightness;
+        public float sunRadiusAttenuation;
+        public double theta;
 
-        private Vector4 lightDirection = new Vector4(0, 0, 0, 1);
+        public Matrix viewProjection;
+        public Matrix invertView;
+        public Matrix invertTransposeWorld;
+
+        public bool Clipping;
+        public Vector4 plane;
+
+        public Scattaring(): base("Scattaring")
+        {
+            this.Technique.CurrentTechnique = this.Technique.Techniques["Scattaring"];
+
+            dayToSunsetSharpness = 0.8f;
+            fogColor = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+            fogDensity = 0.000028f;
+            hazeTopAltitude = 100.0f;
+            largeSunLightness = 0.8f;
+            largeSunRadiusAttenuation = 100.0f;
+            lightColor = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+            lightColorAmbient = new Vector4(0.1f, 0.1f, 0.1f, 1.0f);
+            lightDirection = new Vector4(0, 0, 0, 1);
+            phi = 0;
+            sunLightness = 0.9f;
+            sunRadiusAttenuation = 150.0f;
+            theta = 0;
+        }
 
         public Vector4 LightDirection
         {
@@ -17,30 +55,8 @@ namespace Pirates.Shaders
             set { lightDirection = value; }
         }
 
-        private Vector4 lightColor = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-        private Vector4 lightColorAmbient = new Vector4(0.1f, 0.1f, 0.1f, 1.0f);
-        private Vector4 fogColor = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-        private float fogDensity = 0.000028f;
-        private float sunLightness = 0.2f;
-        private float sunRadiusAttenuation = 150.0f;
-        private float largeSunLightness = 0.2f;
-        private float largeSunRadiusAttenuation = 1.0f;
-        private float dayToSunsetSharpness = 0.8f;
-        private float hazeTopAltitude = 100.0f;
-
-        public Scattaring()
-            : base("Scattaring")
-        {
-            this.Technique.CurrentTechnique = this.Technique.Techniques["Scattaring"];
-        }
-
         public void InitParameters()
         {
-            Technique.Parameters["WorldViewProj"].SetValue(worldMatrix * viewMatrix * projectionMatrix);
-            InverseTransposeWorld();
-            Technique.Parameters["ViewInv"].SetValue(Matrix.Invert(viewMatrix));
-            Technique.Parameters["World"].SetValue(worldMatrix);
-
             Texture2D night = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "night");
             Technique.Parameters["SkyTextureNight"].SetValue(night);
 
@@ -63,35 +79,34 @@ namespace Pirates.Shaders
             Technique.Parameters["largeSunRadiusAttenuation"].SetValue(largeSunRadiusAttenuation);
             Technique.Parameters["dayToSunsetSharpness"].SetValue(dayToSunsetSharpness);
             Technique.Parameters["hazeTopAltitude"].SetValue(hazeTopAltitude);
+
+            Technique.Parameters["Clipping"].SetValue(false);
+            Technique.Parameters["ClipPlane0"].SetValue(new Vector4());
         }
 
-        private Vector4 GetDirection(double Theta, double Phi)
+        private Vector4 GetLightPosition(double Theta, double Phi)
         {
             float y = (float)Math.Cos((double)Theta);
             float x = (float)(Math.Sin((double)Theta) * Math.Cos(Phi));
             float z = (float)(Math.Sin((double)Theta) * Math.Sin(Phi));
             float w = 1.0f;
 
-            return new Vector4(x, y, z, w) * SKYDOMESIZE;
+            return new Vector4(x, y, z, w) * skydomeSize;
         }
-
-        private double Thera = 0;
-        private double Phi = 0;
 
         public override void Update(float time)
         {
-            Thera += 0.005;
+            theta += 0.0005;
+            lightPosition = GetLightPosition(theta, phi);
+            lightDirection = Vector4.Normalize(lightPosition);
 
-            LightDirection = GetDirection(Thera, Phi);
+            viewProjection = viewMatrix * projectionMatrix;
 
-            //Console.WriteLine(LightDirection.ToString());
-            Technique.Parameters["LightDirection"].SetValue(Vector4.Normalize(LightDirection));
+            Matrix temp = Matrix.Invert(worldMatrix);
+            invertTransposeWorld = Matrix.Transpose(temp);
 
-            Technique.Parameters["WorldViewProj"].SetValue(worldMatrix * viewMatrix * projectionMatrix);
-            InverseTransposeWorld();
             viewMatrix.Translation = new Vector3(0, 0, 0);
-            Technique.Parameters["ViewInv"].SetValue(Matrix.Invert(viewMatrix));
-            Technique.Parameters["World"].SetValue(worldMatrix);
+            invertView = Matrix.Invert(viewMatrix);
         }
     }
 }

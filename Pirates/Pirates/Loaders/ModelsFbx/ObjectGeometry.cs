@@ -2,7 +2,7 @@
 
 namespace Pirates.Loaders
 {
-    abstract public class BaseObject
+    abstract public class ObjectGeometry
     {
         protected Matrix modelMatrix = Matrix.Identity;
 

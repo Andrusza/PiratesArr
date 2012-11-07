@@ -16,7 +16,7 @@ namespace Pirates.Screens.Scene
         {
         }
 
-        private Plane CreatePlane(float height, Vector3 planeNormalDirection, Matrix currentViewMatrix, bool clipSide)
+        private Plane CreatePlane(float height, Vector3 planeNormalDirection, bool clipSide)
         {
             planeNormalDirection.Normalize();
             Vector4 planeCoeffs = new Vector4(planeNormalDirection, height);

@@ -36,6 +36,7 @@ namespace Pirates.Shaders
 
         public Matrix WorldMatrix
         {
+            get { return worldMatrix; }
             set { worldMatrix = value; }
         }
 

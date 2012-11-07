@@ -96,7 +96,7 @@ float3 shade(float3 Ln, float3 Nn, float3 Vn, float2 UV){
 	// phong specular
 	float3 Rn = reflect(-Ln, Nn);
 	float  RV = saturate(dot(Rn, Vn));
-	float  specContrib = pow(RV, Shininess);	
+	float  specContrib = pow(RV, 60);	
 	float3 spec = float3(1,1,1)*specContrib;
 	float3 ambient=	color*AmbientLightColor*AmbientIntensity;
 	

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Screens;
@@ -51,22 +52,22 @@ namespace Pirates
             Device = this.GraphicsDevice;
             fps = new FPScounter(Device);
             AspectRatio = this.GraphicsDevice.Viewport.AspectRatio;
-            //renderMode = new SceneScreen();
-            //renderMode = new SkyDomeScreen();
 
-            try
-            {
-                renderMode = TerrainScreen.FromFile();
-            }
-            catch (Exception e)
-            {
-                renderMode = new TerrainScreen();
-            }
-            //renderMode = new SceneScreen();
+            //if (File.Exists("save.txt"))
+            //{
+            //    renderMode = TerrainScreen.FromFile();
+            //}
+            //else
+            //{
+            //    renderMode = new TerrainScreen();
+            //}
+            renderMode = new TerrainScreen();
+            this.renderMode.LoadContent();
         }
 
         protected override void LoadContent()
         {
+           
         }
 
         protected override void UnloadContent()

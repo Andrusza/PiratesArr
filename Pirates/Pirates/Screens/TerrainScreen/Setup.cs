@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Pirates.Loaders;
 using Pirates.Shaders;
 using Pirates.Utility;
+using Pirates.Loaders.ModelsFbx;
 
 namespace Pirates.Screens.Scene
 {
@@ -14,9 +15,7 @@ namespace Pirates.Screens.Scene
     {
         private FirstPersonCamera camera;
         private float aspectRatio = BaseClass.GetInstance().AspectRatio;
-
         private Matrix projectionMatrix;
-        private Matrix reflectionViewMatrix;
 
         private RasterizerState rs;
 
@@ -27,8 +26,8 @@ namespace Pirates.Screens.Scene
 
         private Terrain island;
         private Terrain water;
-        private GameObject skydome;
-        private GameObject ship;
+        private ObjectSkydome skydome;
+        private ObjectMesh ship;
 
         private RenderTarget2D refractionRenderTarget;
         private Texture2D refractionMap;
@@ -80,17 +79,17 @@ namespace Pirates.Screens.Scene
             water.Translate(0, 30, 0);
             water.Update();
 
-            skydome = new GameObject("skydome4", scattering);
+            skydome = new ObjectSkydome(scattering);
             skydome.Scale(1200);
             skydome.Rotate(-90, new Vector3(1, 0, 0));
             skydome.Translate(0, 30, 0);
             skydome.Update();
 
-            ship = new GameObject("ship", mvpshader);
-            ship.Scale(0.3f);
-            ship.Rotate(-90, new Vector3(0, 0, 1));
-            ship.Translate(500, 39, 500);
-            ship.Update();
+            //ship = new ObjectMesh("ship2", mvpshader);
+            //ship.Scale(0.3f);
+            //ship.Rotate(-90, new Vector3(0, 0, 1));
+            //ship.Translate(500, 39, 500);
+            //ship.Update();
         }
 
         public TerrainScreen(SerializationInfo info, StreamingContext ctxt)
@@ -137,17 +136,17 @@ namespace Pirates.Screens.Scene
             water.Translate(0, 30, 0);
             water.Update();
 
-            skydome = new GameObject("skydome4", scattering);
-            skydome.Scale(1200);
-            skydome.Rotate(-90, new Vector3(1, 0, 0));
-            skydome.Translate(0, 30, 0);
-            skydome.Update();
+            //skydome = new ObjectMesh("skydome4", scattering);
+            //skydome.Scale(1200);
+            //skydome.Rotate(-90, new Vector3(1, 0, 0));
+            //skydome.Translate(0, 30, 0);
+            //skydome.Update();
 
-            ship = new GameObject("ship2", mvpshader);
-            ship.Scale(0.3f);
-            ship.Rotate(-90, new Vector3(1, 0, 0));
-            ship.Translate(500, 39, 500);
-            ship.Update();
+            //ship = new ObjectMesh("ship2", mvpshader);
+            //ship.Scale(0.3f);
+            //ship.Rotate(-90, new Vector3(1, 0, 0));
+            //ship.Translate(500, 39, 500);
+            //ship.Update();
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext ctxt)
@@ -155,7 +154,6 @@ namespace Pirates.Screens.Scene
             info.AddValue("AspectRatio", this.aspectRatio);
             info.AddValue("ProjectionMatrix", this.projectionMatrix);
             info.AddValue("Camera", this.camera);
-            info.AddValue("Skydome", this.skydome);
         }
 
         public override void ToFile()

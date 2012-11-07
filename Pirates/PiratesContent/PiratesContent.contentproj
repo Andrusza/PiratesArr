@@ -112,20 +112,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Texture\water2.jpg">
-      <Name>water2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Texture\waterNormal.jpg">
-      <Name>waterNormal</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Heightmap\map2.jpg">
       <Name>map2</Name>
       <Importer>TextureImporter</Importer>
@@ -147,13 +133,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Texture\Sky.jpg">
-      <Name>Sky</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Shader\MultiTexturing.fx">
       <Name>MultiTexturing</Name>
       <Importer>EffectImporter</Importer>
@@ -161,43 +140,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Heightmap\Coastal Shelf.bmp">
-      <Name>Coastal Shelf</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Heightmap\Island, Crecent.bmp">
-      <Name>Island, Crecent</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Heightmap\island3.bmp">
       <Name>island3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Heightmap\Island, Rocky.bmp">
-      <Name>Island, Rocky</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Heightmap\Islands, Leafy.bmp">
-      <Name>Islands, Leafy</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Heightmap\Islands.bmp">
       <Name>Islands</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Heightmap\RiverBed.bmp">
-      <Name>RiverBed</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Heightmap\Wetlands, Rugged.bmp">
-      <Name>Wetlands, Rugged</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -238,13 +187,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Texture\seamwater8.jpg">
-      <Name>seamwater8</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Texture\seamwater6.jpg">
       <Name>seamwater6</Name>
       <Importer>TextureImporter</Importer>
@@ -263,27 +205,6 @@
       <Name>sky2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Fbx\skydome.fbx">
-      <Name>skydome</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Fbx\skydome2.fbx">
-      <Name>skydome2</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Fbx\skydome3.fbx">
-      <Name>skydome3</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -311,40 +232,6 @@
   <ItemGroup>
     <Compile Include="Texture\night.jpg">
       <Name>night</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Fbx\dark_teak.jpg">
-      <Name>dark_teak</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Fbx\dark_wood_planks.png">
-      <Name>dark_wood_planks</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Fbx\flag.png">
-      <Name>flag</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Fbx\sails1.png">
-      <Name>sails1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Fbx\Wood floor ffs062.jpg">
-      <Name>Wood floor ffs062</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Fbx\Map__5_Tiles.tga">
-      <Name>Map__5_Tiles</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
