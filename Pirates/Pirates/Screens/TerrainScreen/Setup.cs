@@ -76,18 +76,18 @@ namespace Pirates.Screens.Scene
 
             island = new Terrain("island4", 2, 1);
             water = new Terrain("map2", 10, 1);
-            water.Translate(0, 30, 0);
+            //water.Translate(0, 30, 0);
             water.Update();
 
             skydome = new ObjectSkydome(scattering);
             skydome.Scale(1200);
             skydome.Rotate(-90, new Vector3(1, 0, 0));
-            skydome.Translate(0, 30, 0);
+            //skydome.Translate(0, 30, 0);
             skydome.Update();
 
             ship = new ObjectShip(mvpshader);
             ship.Scale(0.3f);
-            ship.Translate(500, 39, 500);
+            ship.Translate(500, 139, 500);
             ship.Update();
         }
 

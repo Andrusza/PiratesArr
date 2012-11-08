@@ -62,6 +62,7 @@ namespace Pirates.Screens.Scene
 
             BaseClass.Device.SetRenderTarget(reflectionRenderTarget);
 
+            BaseClass.Device.Clear(Color.Aqua);
             BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
 

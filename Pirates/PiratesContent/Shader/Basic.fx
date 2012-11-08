@@ -16,9 +16,6 @@ sampler2D n0_Sampler = sampler_state
     MipFilter = linear;
 };
 
-
-
-
 struct VertexShaderInput
 {
     float4 Position      : POSITION0;
@@ -118,7 +115,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 Ln = normalize(input.ToLight);
 	float3 Vn = normalize(input.ToView);
 	
-	input.TextureCoord.x = input.reflectionPosition.x / input.reflectionPosition.w / 2.0f + 0.5f;
+	input.TextureCoord.x =  input.reflectionPosition.x / input.reflectionPosition.w / 2.0f + 0.5f;
     input.TextureCoord.y = -input.reflectionPosition.y / input.reflectionPosition.w / 2.0f + 0.5f;
 	
 	float3 pixel = shade(Ln, Nn, Vn, input.TextureCoord);
