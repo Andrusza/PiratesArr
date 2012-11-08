@@ -23,7 +23,7 @@ namespace Pirates.Loaders.ModelsFbx
             {
                 foreach (Effect currentEffect in mesh.Effects)
                 {
-                    Matrix world = fx.WorldMatrix;
+                    Matrix world = modelTansforms[mesh.ParentBone.Index] * fx.WorldMatrix;
                     currentEffect.Parameters["WorldViewProj"].SetValue(world * fx.viewProjection);
                     currentEffect.Parameters["WorldInverseTranspose"].SetValue(fx.invertTransposeWorld);
                     currentEffect.Parameters["World"].SetValue(world);
@@ -40,9 +40,6 @@ namespace Pirates.Loaders.ModelsFbx
                     currentEffect.Parameters["largeSunRadiusAttenuation"].SetValue(fx.largeSunRadiusAttenuation);
                     currentEffect.Parameters["dayToSunsetSharpness"].SetValue(fx.dayToSunsetSharpness);
                     currentEffect.Parameters["hazeTopAltitude"].SetValue(fx.hazeTopAltitude);
-
-                    currentEffect.Parameters["Clipping"].SetValue(fx.Clipping);
-                    currentEffect.Parameters["ClipPlane0"].SetValue(fx.plane);
                 }
                 mesh.Draw();
             }

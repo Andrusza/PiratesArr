@@ -6,79 +6,77 @@ namespace Pirates.Shaders
 {
     public class waterShader : BaseShader
     {
-        private EffectParameter fx_world;
+        public float shininess;
+        public float ambientIntensity;
+        public float diffuseIntensity;
+        public float specularIntensity;
 
-        private EffectParameter fx_d0;
-        private EffectParameter fx_n0;
+        public Vector3 ambientLightColor;
+        public Vector3 diffuseLightColor;
+        public Vector3 specularLightColor;
 
-        private Vector4 lightPosition;
+        public Vector4 lightPosition;
 
-        public Vector4 LightPosition
-        {
-            get { return lightPosition; }
-            set { lightPosition = value; }
-        }
+        public Texture2D color;
+        public Texture2D normal;
 
-        private EffectParameter fx_LightPosition;
+        public Texture2D reflection;
 
-        public EffectParameter Fx_LightPosition
-        {
-            get { return fx_LightPosition; }
-            set { fx_LightPosition = value; }
-        }
-
-        private EffectParameter fx_Shininess;
-        private EffectParameter fx_AmbientIntensity;
-        private EffectParameter fx_DiffuseIntensity;
-        private EffectParameter fx_SpecularIntensity;
-
-        private Texture2D color = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "seamwater6");
-        private Texture2D normal = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "normalwater6");
+        public Matrix reflectedViewMatrix;
 
         public waterShader()
             : base("basic")
         {
             this.Technique.CurrentTechnique = this.Technique.Techniques["Basic"];
 
-            fx_world = Technique.Parameters["World"];
+            color = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "seamwater6");
+            normal = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "normalwater6");
 
-            fx_d0 = Technique.Parameters["diffuseMap0"];
-            fx_n0 = Technique.Parameters["normalMap0"];
+            shininess = 60;
+            ambientIntensity = 0.2f;
+            diffuseIntensity = 0.7f;
+            specularIntensity = 0.2f;
 
-            fx_Shininess = Technique.Parameters["Shininess"];
-            fx_AmbientIntensity = Technique.Parameters["AmbientIntensity"];
-            fx_DiffuseIntensity = Technique.Parameters["DiffuseIntensity"];
-            fx_SpecularIntensity = Technique.Parameters["SpecularIntensity"];
-
-            fx_LightPosition = Technique.Parameters["LightPosition"];
+            ambientLightColor = new Vector3(1, 1, 1);
+            diffuseLightColor = new Vector3(1, 1, 1);
+            specularLightColor = new Vector3(0.98f, 0.97f, 0.7f);
         }
 
         public void InitParameters()
         {
-            fx_world.SetValue(worldMatrix);
+            Technique.Parameters["diffuseMap0"].SetValue(color);
+            Technique.Parameters["normalMap0"].SetValue(normal);
 
-            fx_d0.SetValue(color);
-            fx_n0.SetValue(normal);
+            Technique.Parameters["Shininess"].SetValue(shininess);
+            Technique.Parameters["AmbientIntensity"].SetValue(ambientIntensity);
+            Technique.Parameters["DiffuseIntensity"].SetValue(diffuseIntensity);
+            Technique.Parameters["SpecularIntensity"].SetValue(specularIntensity);
 
-            fx_AmbientIntensity.SetValue(0.2f);
-            fx_DiffuseIntensity.SetValue(0.7f);
-            fx_SpecularIntensity.SetValue(0.2f);
-            fx_Shininess.SetValue(2.0f);
-
-            InverseTransposeWorld();
-            InverseTransposeView();
+            Technique.Parameters["AmbientLightColor"].SetValue(ambientLightColor);
+            Technique.Parameters["DiffuseLightColor"].SetValue(diffuseLightColor);
+            Technique.Parameters["SpecularLightColor"].SetValue(specularLightColor);
         }
 
         public override void Update(float time)
         {
             lightPosition.Y *= -1;
             lightPosition.X *= -1;
-            fx_LightPosition.SetValue(new Vector3(lightPosition.X, lightPosition.Y, lightPosition.Z));
 
-            InverseTransposeWorld();
-            InverseTransposeView();
+            Technique.Parameters["diffuseMap0"].SetValue(reflection);
 
-            ModelViewProj();
+            Technique.Parameters["LightPosition"].SetValue(new Vector3(lightPosition.X, lightPosition.Y, lightPosition.Z));
+            Technique.Parameters["World"].SetValue(worldMatrix);
+
+            Matrix worldInverseTranspose = Matrix.Invert(worldMatrix);
+            worldInverseTranspose = Matrix.Transpose(worldInverseTranspose);
+            Technique.Parameters["WorldInverseTranspose"].SetValue(worldInverseTranspose);
+
+            Matrix viewInverseTranspose = Matrix.Invert(viewMatrix);
+            viewInverseTranspose = Matrix.Transpose(viewInverseTranspose);
+            Technique.Parameters["ViewInverseTranspose"].SetValue(viewInverseTranspose);
+
+            Technique.Parameters["MVP"].SetValue(worldMatrix * viewMatrix * projectionMatrix);
+            Technique.Parameters["ReflectedMVP"].SetValue(worldMatrix * reflectedViewMatrix * projectionMatrix);
         }
     }
 }

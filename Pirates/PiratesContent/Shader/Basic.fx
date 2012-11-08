@@ -2,9 +2,9 @@ texture2D diffuseMap0;
 sampler2D d0_Sampler = sampler_state
 {
     Texture   = <diffuseMap0>;
-    MinFilter = linear;
-    MagFilter = linear;
-    MipFilter = linear;
+    magfilter = linear; 
+	minfilter = linear; 
+	mipfilter = linear; 	
 };
 
 texture2D normalMap0;
@@ -15,6 +15,9 @@ sampler2D n0_Sampler = sampler_state
     MagFilter = linear;
     MipFilter = linear;
 };
+
+
+
 
 struct VertexShaderInput
 {
@@ -32,6 +35,7 @@ struct VertexShaderOutput
 	float3x3 WorldToTangentSpace:TEXCOORD1;
 	float3  ToLight :TEXCOORD4;
 	float3  ToView  :TEXCOORD5;
+	float4  reflectionPosition    : TEXCOORD6;
 };
 
 float4x4 World;
@@ -40,6 +44,7 @@ float4x4 ViewInverseTranspose;
 float4x4 ReflectionView;
 
 float4x4 MVP;
+float4x4 ReflectedMVP;
 
 float3 LightPosition;
 
@@ -54,31 +59,7 @@ float AmbientIntensity;
 float DiffuseIntensity;
 float SpecularIntensity;
 
-bool Clipping;
-float4 ClipPlane0;
-
 Texture xReflectionMap;
-
-sampler ReflectionSampler = sampler_state 
-{ 
-	texture = <xReflectionMap> ; 
-	magfilter = LINEAR; 
-	minfilter = LINEAR; 
-	mipfilter=LINEAR; 
-	AddressU = mirror; 
-	AddressV = mirror;
-};
-
-Texture xRefractionMap;
-sampler RefractionSampler = sampler_state 
-{ 	
-	texture = <xRefractionMap> ; 
-	magfilter = LINEAR; 
-	minfilter = LINEAR; 
-	mipfilter=LINEAR; 
-	AddressU = mirror; 
-	AddressV = mirror;
-};
 
 
 float3 eyeFromViewInverseTranspose()
@@ -108,6 +89,8 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     VertexShaderOutput output;
 
     output.Position = mul(input.Position, MVP);
+	output.reflectionPosition = mul(input.Position, ReflectedMVP);
+	
 	
 	// Matrix for transformation to tangent space
 	output.WorldToTangentSpace[0] = mul(normalize(input.Tangent), WorldInverseTranspose);
@@ -124,7 +107,6 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	// world to tangent space
 	output.ToLight = mul(output.WorldToTangentSpace, toLight);
 	output.ToView  = mul(output.WorldToTangentSpace, toViewer);
-	
 	output.TextureCoord=input.TextureCoord;
 	
     return output;
@@ -135,6 +117,9 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 Nn = 2*tex2D(n0_Sampler, input.TextureCoord)-1;
 	float3 Ln = normalize(input.ToLight);
 	float3 Vn = normalize(input.ToView);
+	
+	input.TextureCoord.x = input.reflectionPosition.x / input.reflectionPosition.w / 2.0f + 0.5f;
+    input.TextureCoord.y = -input.reflectionPosition.y / input.reflectionPosition.w / 2.0f + 0.5f;
 	
 	float3 pixel = shade(Ln, Nn, Vn, input.TextureCoord);
 	return float4(pixel,1);

@@ -19,7 +19,7 @@ namespace Pirates.Screens.Scene
 
         private RasterizerState rs;
 
-        private MultiTextured effect;
+        private MultiTextured islandShader;
         private waterShader waterShader;
         private JustMvp mvpshader;
         private Scattaring scattering;
@@ -27,7 +27,7 @@ namespace Pirates.Screens.Scene
         private Terrain island;
         private Terrain water;
         private ObjectSkydome skydome;
-        private ObjectMesh ship;
+        private ObjectShip ship;
 
         private RenderTarget2D refractionRenderTarget;
         private Texture2D refractionMap;
@@ -42,12 +42,12 @@ namespace Pirates.Screens.Scene
             camera = new FirstPersonCamera(new Vector3(0, 10, 0));
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 10000);
 
-            effect = new MultiTextured();
+            islandShader = new MultiTextured();
             {
-                effect.ProjectionMatrix = projectionMatrix;
-                effect.ViewMatrix = camera.View;
-                effect.Fx_LightPosition.SetValue(new Vector3(1000, 350, 0));
-                effect.InitParameters();
+                islandShader.ProjectionMatrix = projectionMatrix;
+                islandShader.ViewMatrix = camera.View;
+                islandShader.Fx_LightPosition.SetValue(new Vector3(1000, 350, 0));
+                islandShader.InitParameters();
             }
 
             mvpshader = new JustMvp();
@@ -85,11 +85,10 @@ namespace Pirates.Screens.Scene
             skydome.Translate(0, 30, 0);
             skydome.Update();
 
-            //ship = new ObjectMesh("ship2", mvpshader);
-            //ship.Scale(0.3f);
-            //ship.Rotate(-90, new Vector3(0, 0, 1));
-            //ship.Translate(500, 39, 500);
-            //ship.Update();
+            ship = new ObjectShip(mvpshader);
+            ship.Scale(0.3f);
+            ship.Translate(500, 39, 500);
+            ship.Update();
         }
 
         public TerrainScreen(SerializationInfo info, StreamingContext ctxt)
@@ -99,12 +98,12 @@ namespace Pirates.Screens.Scene
             this.projectionMatrix = (Matrix)info.GetValue("ProjectionMatrix", typeof(Matrix));
             this.rs = new RasterizerState();
 
-            effect = new MultiTextured();
+            islandShader = new MultiTextured();
             {
-                effect.ProjectionMatrix = projectionMatrix;
-                effect.ViewMatrix = camera.View;
-                effect.Fx_LightPosition.SetValue(new Vector3(1000, 350, 0));
-                effect.InitParameters();
+                islandShader.ProjectionMatrix = projectionMatrix;
+                islandShader.ViewMatrix = camera.View;
+                islandShader.Fx_LightPosition.SetValue(new Vector3(1000, 350, 0));
+                islandShader.InitParameters();
             }
 
             mvpshader = new JustMvp();

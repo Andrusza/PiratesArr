@@ -32,9 +32,6 @@ struct vertexOutput {
   	half2 Altitudes 			: TEXCOORD7; 
 };
 
-bool Clipping;
-float4 ClipPlane0;
-
 float4 LightDirection;
 float4 LightColor;
 float4 LightColorAmbient;

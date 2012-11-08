@@ -114,6 +114,7 @@
     <Compile Include="FirstPersonCamera\Update.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectGeometry.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectMesh.cs" />
+    <Compile Include="Loaders\ModelsFbx\ObjectShip.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectSkydome.cs" />
     <Compile Include="Loaders\Terrain\Draw.cs" />
     <Compile Include="Loaders\Terrain\GenerateTerrainIndices.cs" />

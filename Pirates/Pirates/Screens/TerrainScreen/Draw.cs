@@ -9,13 +9,20 @@ namespace Pirates.Screens.Scene
         {
             BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
-            //island.Draw(effect);
-            //water.Draw(waterShader);
+            //island.Draw(waterShader);
+            water.Draw(waterShader);
 
             //ship.Update(mvpshader.Technique);
-            //ship.DrawModel(view, projectionMatrix);
+            ship.Draw(mvpshader);
 
             skydome.Draw(scattering);
+
+            SpriteBatch spriteBatch = new SpriteBatch(BaseClass.GetInstance().GraphicsDevice);
+            spriteBatch.Begin();
+            Vector2 pos = new Vector2(400, 0);
+            //spriteBatch.Draw(reflectionMap, pos, null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
+
+            spriteBatch.End();
         }
 
         private void DrawRefractionMap()
@@ -26,7 +33,8 @@ namespace Pirates.Screens.Scene
             waterShader.Technique.Parameters["Clipping"].SetValue(true);
 
             BaseClass.GetInstance().GraphicsDevice.SetRenderTarget(refractionRenderTarget);
-            BaseClass.GetInstance().GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
+            BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
 
             island.Draw(waterShader);
 
@@ -39,34 +47,6 @@ namespace Pirates.Screens.Scene
             //ss.Close();
         }
 
-        private void DrawReflectionMap()
-        {
-            Plane reflectionPlane = CreatePlane(100 - 0.5f, new Vector3(0, -1, 0), true);
-
-            Matrix temp = Matrix.CreateReflection(reflectionPlane);
-            Matrix reflectionViewMatrix = temp * camera.View * temp;
-
-            scattering.plane = new Vector4(reflectionPlane.Normal, reflectionPlane.D);
-            scattering.Clipping = true;
-
-            scattering.ViewMatrix = reflectionViewMatrix;
-            scattering.Update(0);
-
-            BaseClass.Device.SetRenderTarget(reflectionRenderTarget);
-            BaseClass.GetInstance().GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Aqua, 1.0f, 0);
-
-            skydome.Draw(scattering);
-
-            BaseClass.Device.SetRenderTarget(null);
-
-            scattering.Clipping = false;
-            scattering.ViewMatrix = camera.View;
-            scattering.Update(0);
-
-            reflectionMap = reflectionRenderTarget;
-            //System.IO.Stream ss = System.IO.File.Create("D:\\Reflection.jpg");
-            //reflectionRenderTarget.SaveAsJpeg(ss, 500, 500);
-            //ss.Close();
-        }
+       
     }
 }

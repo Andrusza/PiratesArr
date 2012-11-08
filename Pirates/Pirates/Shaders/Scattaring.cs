@@ -27,8 +27,7 @@ namespace Pirates.Shaders
         public Matrix invertView;
         public Matrix invertTransposeWorld;
 
-        public bool Clipping;
-        public Vector4 plane;
+        
 
         public Scattaring(): base("Scattaring")
         {
@@ -80,8 +79,7 @@ namespace Pirates.Shaders
             Technique.Parameters["dayToSunsetSharpness"].SetValue(dayToSunsetSharpness);
             Technique.Parameters["hazeTopAltitude"].SetValue(hazeTopAltitude);
 
-            Technique.Parameters["Clipping"].SetValue(false);
-            Technique.Parameters["ClipPlane0"].SetValue(new Vector4());
+           
         }
 
         private Vector4 GetLightPosition(double Theta, double Phi)
@@ -96,7 +94,7 @@ namespace Pirates.Shaders
 
         public override void Update(float time)
         {
-            theta += 0.0005;
+            theta += 0.01;
             lightPosition = GetLightPosition(theta, phi);
             lightDirection = Vector4.Normalize(lightPosition);
 

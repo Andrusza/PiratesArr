@@ -11,7 +11,13 @@ namespace Pirates
 {
     public class BaseClass : Microsoft.Xna.Framework.Game
     {
-        private GraphicsDeviceManager graphics;
+        private static GraphicsDeviceManager graphics;
+
+        public static GraphicsDeviceManager Graphics
+        {
+            get { return graphics; }
+            set { graphics = value; }
+        }
         private static GraphicsDevice device;
 
         public static GraphicsDevice Device
