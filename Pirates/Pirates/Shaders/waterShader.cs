@@ -21,11 +21,12 @@ namespace Pirates.Shaders
         public Texture2D normal;
 
         public Texture2D reflection;
+        public Texture2D refraction;
 
         public Matrix reflectedViewMatrix;
 
         public waterShader()
-            : base("basic")
+         : base("basic")
         {
             this.Technique.CurrentTechnique = this.Technique.Techniques["Basic"];
 
@@ -63,7 +64,7 @@ namespace Pirates.Shaders
             lightPosition.X *= -1;
 
             Technique.Parameters["diffuseMap0"].SetValue(reflection);
-
+           
             Technique.Parameters["LightPosition"].SetValue(new Vector3(lightPosition.X, lightPosition.Y, lightPosition.Z));
             Technique.Parameters["World"].SetValue(worldMatrix);
 

@@ -55,15 +55,19 @@ struct VertexShaderOutput
 	float4 TexCoord:TEXCOORD0; 
 	float3 ToLight: TEXCOORD1;
 	float3 Normal:TEXCOORD2;
+	float4 clipDistances: TEXCOORD4;
 };
+
+bool Clipping;
+float4 ClipPlane0;
 
 float3 LightPosition;
 
-float3 AmbientLightColor=float3(1,1,1);
-float3 DiffuseLightColor=float3(1,1,1);
+float3 AmbientLightColor;
+float3 DiffuseLightColor;
 
-float AmbientIntensity=0.1;
-float DiffuseIntensity=0.9;
+float AmbientIntensity;
+float DiffuseIntensity;
 
 
 
@@ -80,6 +84,8 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     output.Position = mul(viewPosition, Projection);
 	output.TexCoord=input.TexCoord;
 	
+	output.clipDistances = dot(input.Position, ClipPlane0); //MSS - Water Refactor added
+
     return output;
 }
 
@@ -101,18 +107,18 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 diffuseColor=DiffuseLightColor*DiffuseIntensity*diffuse;
 	
 	
-	
-
 	if(Height.x!=1)
 	{
 	color=Height.x*Sand+Height.y*Grass+Height.z*Snow;
 	float3 finalColor=color*ambientColor+color*diffuseColor;
+	if (Clipping)  clip(input.clipDistances);
 	return float4(finalColor, 1);
 	}
 	else
 	{
 	color=Sand;
 	float3 finalColor=color*ambientColor+color*diffuseColor;
+	if (Clipping)  clip(input.clipDistances);
 	return float4(finalColor, 1);
 	}
 	

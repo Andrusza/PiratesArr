@@ -17,6 +17,7 @@ Content\Texture\normalwater6.xnb
 Content\Texture\sky2.xnb
 Content\Texture\sunrise.xnb
 Content\Texture\night.xnb
+Content\Texture\waterbump.xnb
 Content\Shader\Basic.xnb
 Content\Shader\JustMVP.xnb
 Content\Shader\MultiTexturing.xnb

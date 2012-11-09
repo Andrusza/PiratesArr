@@ -18,8 +18,6 @@ namespace Pirates.Screens.Scene
             Console.WriteLine(time);
             view = camera.Update();
 
-           
-
             mvpshader.ViewMatrix = view;
             mvpshader.WorldMatrix = ship.ModelMatrix;
             mvpshader.Update(0);
@@ -31,10 +29,11 @@ namespace Pirates.Screens.Scene
 
             islandShader.ViewMatrix = view;
             islandShader.WorldMatrix = island.WorldMatrix;
-            islandShader.LightPosition = lightPosition;
+            islandShader.lightPosition = lightPosition;
             islandShader.Update(0);
 
-            Matrix reflectionViewMatrix=CreateReflectionMap();
+            Matrix reflectionViewMatrix = CreateReflectionMap();
+            
 
             waterShader.ViewMatrix = view;
             waterShader.WorldMatrix = water.WorldMatrix;
@@ -43,13 +42,20 @@ namespace Pirates.Screens.Scene
             waterShader.reflectedViewMatrix = reflectionViewMatrix;
             waterShader.reflection = reflectionMap;
             waterShader.Update((float)gameTime.TotalGameTime.Milliseconds);
+        }
 
-            
+        private Plane CreatePlane(float height, Vector3 planeNormalDirection, bool clipSide)
+        {
+            planeNormalDirection.Normalize();
+            Vector4 planeCoeffs = new Vector4(planeNormalDirection, height);
+            if (clipSide) planeCoeffs *= -1;
+            Plane finalPlane = new Plane(planeCoeffs);
+            return finalPlane;
         }
 
         private Matrix CreateReflectionMap()
         {
-            Plane reflectionPlane = CreatePlane(0, new Vector3(0, -1, 0), true);
+            Plane reflectionPlane = CreatePlane(30, new Vector3(0, -1, 0), true);
 
             Matrix temp = Matrix.CreateReflection(reflectionPlane);
             Matrix reflectionViewMatrix = temp * camera.View;
@@ -60,25 +66,61 @@ namespace Pirates.Screens.Scene
             mvpshader.ViewMatrix = reflectionViewMatrix;
             mvpshader.Update(0);
 
+            islandShader.ViewMatrix = reflectionViewMatrix;
+            islandShader.clippingPlane = reflectionPlane;
+            islandShader.clipping = true;
+            islandShader.Update(0);
+
             BaseClass.Device.SetRenderTarget(reflectionRenderTarget);
 
-            BaseClass.Device.Clear(Color.Aqua);
+            BaseClass.Device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Aqua, 1.0f, 0);
             BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
 
             skydome.Draw(scattering);
+            island.Draw(islandShader);
             ship.Draw(mvpshader);
 
             BaseClass.Device.SetRenderTarget(null);
 
-            scattering.ViewMatrix = camera.View;
+            scattering.ViewMatrix = view;
             scattering.Update(0);
 
-            mvpshader.ViewMatrix = camera.View;
+            mvpshader.ViewMatrix = view;
             mvpshader.Update(0);
+
+            islandShader.ViewMatrix = view;
+            islandShader.clipping = false;
+            islandShader.Update(0);
 
             reflectionMap = reflectionRenderTarget;
             return reflectionViewMatrix;
         }
+
+        //private void CreateRefractionMap()
+        //{
+        //    Plane refractionPlane = CreatePlane(30, new Vector3(0, -1, 0), false);
+
+        //    Matrix temp = Matrix.CreateReflection(refractionPlane);
+
+        //    islandShader.clippingPlane = refractionPlane;
+        //    islandShader.clipping = true;
+        //    islandShader.Update(0);
+
+        //    BaseClass.Device.SetRenderTarget(refractionRenderTarget);
+
+        //    BaseClass.Device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Aqua, 1.0f, 0);
+        //    BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+        //    BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
+
+        //    island.Draw(islandShader);
+
+        //    BaseClass.Device.SetRenderTarget(null);
+
+        //    islandShader.clipping = false;
+        //    islandShader.Update(0);
+
+        //    refractionMap = refractionRenderTarget;
+        //}
     }
 }

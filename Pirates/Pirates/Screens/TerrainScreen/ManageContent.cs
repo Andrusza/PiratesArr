@@ -16,13 +16,6 @@ namespace Pirates.Screens.Scene
         {
         }
 
-        private Plane CreatePlane(float height, Vector3 planeNormalDirection, bool clipSide)
-        {
-            planeNormalDirection.Normalize();
-            Vector4 planeCoeffs = new Vector4(planeNormalDirection, height);
-            if (clipSide) planeCoeffs *= -1;
-            Plane finalPlane = new Plane(planeCoeffs);
-            return finalPlane;
-        }
+      
     }
 }

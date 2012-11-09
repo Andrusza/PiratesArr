@@ -34,6 +34,7 @@ namespace Pirates.Screens.Scene
 
         private RenderTarget2D reflectionRenderTarget;
         private Texture2D reflectionMap;
+       
 
         private const float waterHeight = 30.0f;
 
@@ -46,7 +47,6 @@ namespace Pirates.Screens.Scene
             {
                 islandShader.ProjectionMatrix = projectionMatrix;
                 islandShader.ViewMatrix = camera.View;
-                islandShader.Fx_LightPosition.SetValue(new Vector3(1000, 350, 0));
                 islandShader.InitParameters();
             }
 
@@ -75,19 +75,21 @@ namespace Pirates.Screens.Scene
             rs.CullMode = CullMode.None;
 
             island = new Terrain("island4", 2, 1);
+            island.Translate(0, 0, 0);
+            island.Update();
+
             water = new Terrain("map2", 10, 1);
-            //water.Translate(0, 30, 0);
+            water.Translate(0, 30, 0);
             water.Update();
 
             skydome = new ObjectSkydome(scattering);
             skydome.Scale(1200);
             skydome.Rotate(-90, new Vector3(1, 0, 0));
-            //skydome.Translate(0, 30, 0);
             skydome.Update();
-
+            
             ship = new ObjectShip(mvpshader);
             ship.Scale(0.3f);
-            ship.Translate(500, 139, 500);
+            ship.Translate(500, 30, 500);
             ship.Update();
         }
 
@@ -102,7 +104,7 @@ namespace Pirates.Screens.Scene
             {
                 islandShader.ProjectionMatrix = projectionMatrix;
                 islandShader.ViewMatrix = camera.View;
-                islandShader.Fx_LightPosition.SetValue(new Vector3(1000, 350, 0));
+
                 islandShader.InitParameters();
             }
 

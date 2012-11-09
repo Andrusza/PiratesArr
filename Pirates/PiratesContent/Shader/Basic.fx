@@ -33,6 +33,7 @@ struct VertexShaderOutput
 	float3  ToLight :TEXCOORD4;
 	float3  ToView  :TEXCOORD5;
 	float4  reflectionPosition    : TEXCOORD6;
+	float2 BumpMapSamplingPos        : TEXCOORD7;
 };
 
 float4x4 World;
@@ -47,9 +48,9 @@ float3 LightPosition;
 
 float Shininess;
 
-float3 AmbientLightColor=float3(1,1,1);
-float3 DiffuseLightColor=float3(1,1,1);
-float3 SpecularLightColor=float3(0.98,0.97,0.7);
+float3 AmbientLightColor;
+float3 DiffuseLightColor;
+float3 SpecularLightColor;
 
 
 float AmbientIntensity;
@@ -67,7 +68,7 @@ float3 eyeFromViewInverseTranspose()
 float3 shade(float3 Ln, float3 Nn, float3 Vn, float2 UV){
 	// simple lambert diffuse
 	float3 color=tex2D(d0_Sampler,UV);
-
+	
 	float diffContrib = saturate(dot(Nn, Ln));
 	float3 diffuse = color *diffContrib;
 	
@@ -75,10 +76,10 @@ float3 shade(float3 Ln, float3 Nn, float3 Vn, float2 UV){
 	float3 Rn = reflect(-Ln, Nn);
 	float  RV = saturate(dot(Rn, Vn));
 	float  specContrib = pow(RV, 60);	
-	float3 spec = float3(1,1,1)*specContrib;
+	float3 spec = SpecularLightColor*specContrib;
 	float3 ambient=	color*AmbientLightColor*AmbientIntensity;
 	
-	return ambient+spec + diffuse ;
+	return ambient + spec + diffuse ;
 }
 
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
@@ -87,8 +88,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 
     output.Position = mul(input.Position, MVP);
 	output.reflectionPosition = mul(input.Position, ReflectedMVP);
-	
-	
+
 	// Matrix for transformation to tangent space
 	output.WorldToTangentSpace[0] = mul(normalize(input.Tangent), WorldInverseTranspose);
     output.WorldToTangentSpace[1] = mul(normalize(input.Binormal), WorldInverseTranspose);
@@ -105,6 +105,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	output.ToLight = mul(output.WorldToTangentSpace, toLight);
 	output.ToView  = mul(output.WorldToTangentSpace, toViewer);
 	output.TextureCoord=input.TextureCoord;
+	output.BumpMapSamplingPos = input.TextureCoord/0.5f; ///sadas
 	
     return output;
 }
@@ -118,7 +119,14 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	input.TextureCoord.x =  input.reflectionPosition.x / input.reflectionPosition.w / 2.0f + 0.5f;
     input.TextureCoord.y = -input.reflectionPosition.y / input.reflectionPosition.w / 2.0f + 0.5f;
 	
-	float3 pixel = shade(Ln, Nn, Vn, input.TextureCoord);
+	 float4 bumpColor = tex2D(n0_Sampler, input.BumpMapSamplingPos);
+     float2 perturbation = 0.3f*(bumpColor.rg - 0.5f)*2.0f;
+     float2 perturbatedTexCoords = input.TextureCoord + perturbation;
+	 
+	 
+	
+	
+	float3 pixel = shade(Ln, Nn, Vn, perturbatedTexCoords);
 	return float4(pixel,1);
 }
 
