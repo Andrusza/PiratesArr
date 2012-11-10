@@ -41,7 +41,7 @@ namespace Pirates.Screens.Scene
 
             waterShader.reflectedViewMatrix = reflectionViewMatrix;
             waterShader.reflection = reflectionMap;
-            waterShader.Update((float)gameTime.TotalGameTime.Milliseconds);
+            waterShader.Update(time);
         }
 
         private Plane CreatePlane(float height, Vector3 planeNormalDirection, bool clipSide)

@@ -57,8 +57,8 @@ float AmbientIntensity;
 float DiffuseIntensity;
 float SpecularIntensity;
 
-Texture xReflectionMap;
-
+float waves[24];
+float time;
 
 float3 eyeFromViewInverseTranspose()
 {
@@ -82,12 +82,43 @@ float3 shade(float3 Ln, float3 Nn, float3 Vn, float2 UV){
 	return ambient + spec + diffuse ;
 }
 
+float PI = 3.14159265358979323846264;
+
+float4 Wave(float4 pos)
+{
+				//waves[i] = p.wavelength;
+                //waves[i + 1] = p.steepness;
+                //waves[i + 2] = p.speed;
+                //waves[i + 3] = p.kAmpOverLen;
+                //waves[i + 4] = p.wave_dir.X;
+                //waves[i + 5] = p.wave_dir.Y;
+	
+	float4 P = pos;
+    for(int i = 0; i < 24; i += 6) 
+	{
+        float A = waves[i] * waves[i+3];         // Amplitude
+        float omega = 2.0 * 3.14 / waves[i];      // Frequency
+        float phi = waves[i+2] * omega;          // Phase
+        float Qi = waves[i+1]/(omega * A * 4.0); // Steepness
+
+        float term = omega * dot(float2(waves[i+4], waves[i+5]), float2(pos.x, pos.z)) + phi * time;
+        float C = cos(term);
+        float S = sin(term);
+        P += float4(Qi * A * waves[i+4] * C,A * S * 10,i * A * waves[i+5] * C,0.0f);
+	}
+	P.w=1.0f;
+	return P;
+}
+
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
     VertexShaderOutput output;
 
-    output.Position = mul(input.Position, MVP);
-	output.reflectionPosition = mul(input.Position, ReflectedMVP);
+	
+	float4 a=Wave(input.Position);
+	
+    output.Position = mul(a, MVP);
+	output.reflectionPosition = mul(a, ReflectedMVP);
 
 	// Matrix for transformation to tangent space
 	output.WorldToTangentSpace[0] = mul(normalize(input.Tangent), WorldInverseTranspose);

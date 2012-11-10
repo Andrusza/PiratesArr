@@ -133,7 +133,7 @@ namespace Pirates.Screens.Scene
             rs.CullMode = CullMode.None;
 
             island = new Terrain("island4", 2, 1);
-            water = new Terrain("map2", 10, 1);
+            water = new Terrain("map2", 1, 1);
             water.Translate(0, 30, 0);
             water.Update();
 

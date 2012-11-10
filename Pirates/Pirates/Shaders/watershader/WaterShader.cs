@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Loaders;
+using System;
 
 namespace Pirates.Shaders
 {
-    public class waterShader : BaseShader
+    public partial class waterShader : BaseShader
     {
         public float shininess;
         public float ambientIntensity;
@@ -25,8 +26,11 @@ namespace Pirates.Shaders
 
         public Matrix reflectedViewMatrix;
 
+        private WaveParameters param;
+        private float[] waves;
+
         public waterShader()
-         : base("basic")
+            : base("basic")
         {
             this.Technique.CurrentTechnique = this.Technique.Techniques["Basic"];
 
@@ -41,6 +45,25 @@ namespace Pirates.Shaders
             ambientLightColor = new Vector3(1, 1, 1);
             diffuseLightColor = new Vector3(1, 1, 1);
             specularLightColor = new Vector3(0.98f, 0.97f, 0.7f);
+
+            param.wavelength = 3f;
+            param.steepness = 0.7f;
+            param.speed = 0.0085f;
+            param.kAmpOverLen = 0.03f;
+
+            waves = new float[24];
+            for (int i = 0; i < 24; i += 6)
+            {
+                WaveParameters p = GenerateWaves(param);
+                waves[i] = p.wavelength;
+                waves[i + 1] = p.steepness;
+                waves[i + 2] = p.speed;
+                waves[i + 3] = p.kAmpOverLen;
+                waves[i + 4] = p.wave_dir.X;
+                waves[i + 5] = p.wave_dir.Y;
+            }
+
+
         }
 
         public void InitParameters()
@@ -56,6 +79,9 @@ namespace Pirates.Shaders
             Technique.Parameters["AmbientLightColor"].SetValue(ambientLightColor);
             Technique.Parameters["DiffuseLightColor"].SetValue(diffuseLightColor);
             Technique.Parameters["SpecularLightColor"].SetValue(specularLightColor);
+
+            Technique.Parameters["waves"].SetValue(waves);
+            Technique.Parameters["time"].SetValue(0);
         }
 
         public override void Update(float time)
@@ -64,7 +90,7 @@ namespace Pirates.Shaders
             lightPosition.X *= -1;
 
             Technique.Parameters["diffuseMap0"].SetValue(reflection);
-           
+
             Technique.Parameters["LightPosition"].SetValue(new Vector3(lightPosition.X, lightPosition.Y, lightPosition.Z));
             Technique.Parameters["World"].SetValue(worldMatrix);
 
@@ -78,6 +104,10 @@ namespace Pirates.Shaders
 
             Technique.Parameters["MVP"].SetValue(worldMatrix * viewMatrix * projectionMatrix);
             Technique.Parameters["ReflectedMVP"].SetValue(worldMatrix * reflectedViewMatrix * projectionMatrix);
+
+            Technique.Parameters["time"].SetValue(time*0.03f);
+
+           
         }
     }
 }

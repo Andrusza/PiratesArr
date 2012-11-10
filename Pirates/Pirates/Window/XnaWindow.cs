@@ -2,8 +2,8 @@
 {
     internal class XnaWindow
     {
-        private int height = 600;
-        private int width = 800;
+        private int height = 900;
+        private int width = 1440;
 
         private bool isMouseVisible = true;
         private bool isResizing = false;

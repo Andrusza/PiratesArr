@@ -136,7 +136,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Shaders\BaseShader.cs" />
-    <Compile Include="Shaders\waterShader.cs" />
+    <Compile Include="Shaders\watershader\WaterParm.cs" />
+    <Compile Include="Shaders\watershader\WaterShader.cs" />
     <Compile Include="Shaders\JustMvp.cs" />
     <Compile Include="Shaders\MultiTextured.cs" />
     <Compile Include="Shaders\Scattaring.cs">
