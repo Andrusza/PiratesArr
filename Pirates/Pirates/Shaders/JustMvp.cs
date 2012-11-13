@@ -8,7 +8,8 @@ namespace Pirates.Shaders
     {
         public Matrix MVP;
 
-        public JustMvp(): base("JustMvp")
+        public JustMvp()
+            : base("JustMvp")
         {
             this.Technique.CurrentTechnique = this.Technique.Techniques["Basic"];
         }

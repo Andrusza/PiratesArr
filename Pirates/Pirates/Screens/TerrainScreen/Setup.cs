@@ -4,9 +4,9 @@ using Cameras;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Loaders;
+using Pirates.Loaders.ModelsFbx;
 using Pirates.Shaders;
 using Pirates.Utility;
-using Pirates.Loaders.ModelsFbx;
 
 namespace Pirates.Screens.Scene
 {
@@ -34,7 +34,6 @@ namespace Pirates.Screens.Scene
 
         private RenderTarget2D reflectionRenderTarget;
         private Texture2D reflectionMap;
-       
 
         private const float waterHeight = 30.0f;
 
@@ -86,7 +85,7 @@ namespace Pirates.Screens.Scene
             skydome.Scale(1200);
             skydome.Rotate(-90, new Vector3(1, 0, 0));
             skydome.Update();
-            
+
             ship = new ObjectShip(mvpshader);
             ship.Scale(0.3f);
             ship.Translate(500, 30, 500);

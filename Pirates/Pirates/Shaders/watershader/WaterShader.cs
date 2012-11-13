@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Loaders;
-using System;
 
 namespace Pirates.Shaders
 {
@@ -62,8 +61,6 @@ namespace Pirates.Shaders
                 waves[i + 4] = p.wave_dir.X;
                 waves[i + 5] = p.wave_dir.Y;
             }
-
-
         }
 
         public void InitParameters()
@@ -105,9 +102,7 @@ namespace Pirates.Shaders
             Technique.Parameters["MVP"].SetValue(worldMatrix * viewMatrix * projectionMatrix);
             Technique.Parameters["ReflectedMVP"].SetValue(worldMatrix * reflectedViewMatrix * projectionMatrix);
 
-            Technique.Parameters["time"].SetValue(time*0.03f);
-
-           
+            Technique.Parameters["time"].SetValue(time * 0.03f);
         }
     }
 }

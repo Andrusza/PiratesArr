@@ -33,7 +33,6 @@ namespace Pirates.Screens.Scene
             islandShader.Update(0);
 
             Matrix reflectionViewMatrix = CreateReflectionMap();
-            
 
             waterShader.ViewMatrix = view;
             waterShader.WorldMatrix = water.WorldMatrix;

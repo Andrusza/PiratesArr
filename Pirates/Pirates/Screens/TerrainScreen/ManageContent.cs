@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 
 namespace Pirates.Screens.Scene
 {
@@ -15,7 +14,5 @@ namespace Pirates.Screens.Scene
         public override void UnloadContent()
         {
         }
-
-      
     }
 }

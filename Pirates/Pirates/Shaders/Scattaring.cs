@@ -94,7 +94,7 @@ namespace Pirates.Shaders
 
         public override void Update(float time)
         {
-            theta = 3.601f;
+            theta += 0.001f;
             lightPosition = GetLightPosition(theta, phi);
            
             lightDirection = Vector4.Normalize(lightPosition);

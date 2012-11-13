@@ -6,7 +6,6 @@ namespace Pirates.Shaders
 {
     abstract public class BaseShader
     {
-        
         protected Matrix projectionMatrix;
         protected Matrix viewMatrix;
 

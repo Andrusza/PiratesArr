@@ -20,7 +20,7 @@ namespace Pirates.Shaders
         {
             float wl = p.wavelength;
             wl = (float)random.NextDouble() * (2.0f * wl - 0.7f * wl) + 0.7f * wl;
-           
+
             p.wavelength = wl;
             p.speed = (float)Math.Sqrt(9.81f * 2.0f * Math.PI / wl) * wl * p.speed;
             float theta = (float)random.NextDouble() * 2.0f * (float)Math.PI;

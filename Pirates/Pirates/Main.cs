@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Screens;
@@ -18,6 +17,7 @@ namespace Pirates
             get { return graphics; }
             set { graphics = value; }
         }
+
         private static GraphicsDevice device;
 
         public static GraphicsDevice Device
@@ -73,7 +73,6 @@ namespace Pirates
 
         protected override void LoadContent()
         {
-           
         }
 
         protected override void UnloadContent()

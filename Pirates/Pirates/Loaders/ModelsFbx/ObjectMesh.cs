@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Pirates.Shaders;
 
 namespace Pirates.Loaders
@@ -8,7 +7,8 @@ namespace Pirates.Loaders
     {
         protected Model fbx;
 
-        public ObjectMesh(string assetname, BaseShader effect): base()
+        public ObjectMesh(string assetname, BaseShader effect)
+            : base()
         {
             fbx = LoadModel(assetname, effect.Technique);
         }

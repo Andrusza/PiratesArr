@@ -8,7 +8,7 @@ namespace Pirates.Screens.Scene
         public override void Draw(GameTime gameTime)
         {
             BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            
+
             BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
             island.Draw(islandShader);
             water.Draw(waterShader);
@@ -22,9 +22,5 @@ namespace Pirates.Screens.Scene
             //spriteBatch.Draw(refractionMap, pos, null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
             //spriteBatch.End();
         }
-
-        
-
-       
     }
 }
