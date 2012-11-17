@@ -112,6 +112,9 @@
     <Compile Include="FirstPersonCamera\FirstPersonCamera.cs" />
     <Compile Include="FirstPersonCamera\Input.cs" />
     <Compile Include="FirstPersonCamera\Update.cs" />
+    <Compile Include="Loaders\Clouds\CloudInstancer.cs" />
+    <Compile Include="Loaders\Clouds\CloudManager.cs" />
+    <Compile Include="Loaders\Clouds\ObjectCloud.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectGeometry.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectMesh.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectShip.cs" />

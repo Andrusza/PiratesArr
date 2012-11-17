@@ -7,6 +7,7 @@ using Pirates.Loaders;
 using Pirates.Loaders.ModelsFbx;
 using Pirates.Shaders;
 using Pirates.Utility;
+using Pirates.Loaders.Clouds;
 
 namespace Pirates.Screens.Scene
 {
@@ -29,8 +30,10 @@ namespace Pirates.Screens.Scene
         private ObjectSkydome skydome;
         private ObjectShip ship;
 
-        private RenderTarget2D refractionRenderTarget;
-        private Texture2D refractionMap;
+        private CloudManager cloudManager;
+
+        //private RenderTarget2D refractionRenderTarget;
+        //private Texture2D refractionMap;
 
         private RenderTarget2D reflectionRenderTarget;
         private Texture2D reflectionMap;
@@ -72,6 +75,10 @@ namespace Pirates.Screens.Scene
 
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
+
+            cloudManager = new CloudManager();
+            Vector3 box=new Vector3(500f,200f,100f);
+            cloudManager.AddCloud(1, box, box, 0.25f, 1);
 
             island = new Terrain("island4", 2, 1);
             island.Translate(0, 0, 0);
