@@ -29,9 +29,9 @@ namespace Pirates.Shaders
         private float[] waves;
 
         public waterShader()
-            : base("basic")
+            : base("Water")
         {
-            this.Technique.CurrentTechnique = this.Technique.Techniques["Basic"];
+            this.Technique.CurrentTechnique = this.Technique.Techniques["Water"];
 
             color = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "seamwater6");
             normal = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "normalwater6");

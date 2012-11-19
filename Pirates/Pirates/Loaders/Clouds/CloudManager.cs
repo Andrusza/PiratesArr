@@ -1,22 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
+using Pirates.Shaders;
 
-namespace Pirates.Loaders.Clouds
+namespace Pirates.Loaders.Cloud
 {
-    class CloudManager
+    internal class CloudManager
     {
-        int[] allCloudSprites = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-        CloudInstancer clouds;
+        private int[] allCloudSprites = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+        public CloudInstancer cloudsList;
 
-        List<ObjectCloud> whisps = new List<ObjectCloud>();
-        Random rnd = new Random(DateTime.Now.Millisecond);
+        private List<ObjectCloud> whisps = new List<ObjectCloud>();
+        private Random rnd = new Random(DateTime.Now.Millisecond);
 
         public CloudManager()
         {
-            clouds = new CloudInstancer();
+            cloudsList = new CloudInstancer();
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            cloudsList.Update(gameTime);
+        }
+
+        public void Draw(CloudShader shader)
+        {
+            cloudsList.Draw(shader);
         }
 
         public void AddCloud(int whispCount, Vector3 min, Vector3 max, float colorMod, params int[] whispRange)
@@ -33,9 +42,8 @@ namespace Pirates.Loaders.Clouds
                 if (si >= whispRange.Length)
                     si = 0;
 
-                whisps.Add(new ObjectCloud(clouds));
+                whisps.Add(new ObjectCloud(cloudsList, 10, new Vector3(x, y, z)));
             }
         }
-
     }
 }

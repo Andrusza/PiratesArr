@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Pirates.Screens.Scene
@@ -8,19 +7,21 @@ namespace Pirates.Screens.Scene
     {
         private Matrix view;
         private Vector4 lightPosition;
-
         private float time = 0;
 
         public override void Update(GameTime gameTime)
         {
             Input();
             time += gameTime.TotalGameTime.Seconds;
-            Console.WriteLine(time);
             view = camera.Update();
 
             mvpshader.ViewMatrix = view;
             mvpshader.WorldMatrix = ship.ModelMatrix;
             mvpshader.Update(0);
+
+            cloudShader.ViewMatrix = view;
+            cloudShader.WorldMatrix = cloudManager.cloudsList.ModelMatrix;
+            cloudShader.Update(0);
 
             scattering.ViewMatrix = view;
             scattering.WorldMatrix = skydome.ModelMatrix;

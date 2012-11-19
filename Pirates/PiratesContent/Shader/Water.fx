@@ -161,7 +161,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	return float4(pixel,1);
 }
 
-technique Basic
+technique Water
 {
     pass Pass0
     {

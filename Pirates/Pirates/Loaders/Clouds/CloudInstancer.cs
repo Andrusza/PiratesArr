@@ -2,11 +2,12 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pirates.Loaders.Clouds;
+using Pirates.Loaders.Cloud;
+using Pirates.Shaders;
 
 namespace Pirates.Loaders
 {
-    internal class CloudInstancer
+    internal class CloudInstancer : ObjectGeometry
     {
         public BlendState thisBlendState = BlendState.NonPremultiplied;
         public DepthStencilState thisDepthStencilState = DepthStencilState.None;
@@ -27,6 +28,10 @@ namespace Pirates.Loaders
 
         public Dictionary<ObjectCloud, Matrix> instanceTransformMatrices = new Dictionary<ObjectCloud, Matrix>();
         public Dictionary<int, ObjectCloud> Instances = new Dictionary<int, ObjectCloud>();
+
+        public void Update(GameTime time)
+        {
+        }
 
         protected void LoadQuad()
         {
@@ -53,14 +58,34 @@ namespace Pirates.Loaders
             indexBuffer.SetData(indx.ToArray());
         }
 
+        public virtual void Draw(CloudShader shader)
+        {
+            if ((instanceVertexBuffer == null) || (instanceTransformMatrices.Count != instanceVertexBuffer.VertexCount))
+                CalcVertexBuffer();
+
+            BaseClass.Device.BlendState = thisBlendState;
+            BaseClass.Device.DepthStencilState = thisDepthStencilState;
+
+            shader.Technique.CurrentTechnique.Passes[0].Apply();
+
+            BaseClass.Device.SetVertexBuffers(
+                       new VertexBufferBinding(modelVertexBuffer, 0, 0),
+                       new VertexBufferBinding(instanceVertexBuffer, 0, 1)
+                   );
+
+            BaseClass.Device.Indices = indexBuffer;
+            BaseClass.Device.DrawInstancedPrimitives(PrimitiveType.TriangleList, 0, 0,
+                                                   modelVertexBuffer.VertexCount, 0,
+                                                   2,
+                                                   instanceTransformMatrices.Count);
+        }
+
         public void CalcVertexBuffer()
         {
             if (instanceVertexBuffer != null)
                 instanceVertexBuffer.Dispose();
 
             instanceVertexBuffer = new DynamicVertexBuffer(BaseClass.Device, instanceVertexDeclaration, instanceTransformMatrices.Count, BufferUsage.WriteOnly);
-
-            // Transfer the latest instance transform matrices into the instanceVertexBuffer.
             instanceVertexBuffer.SetData(instanceTransformMatrices.Values.ToArray(), 0, instanceTransformMatrices.Count, SetDataOptions.Discard);
         }
 

@@ -7,7 +7,7 @@ using Pirates.Loaders;
 using Pirates.Loaders.ModelsFbx;
 using Pirates.Shaders;
 using Pirates.Utility;
-using Pirates.Loaders.Clouds;
+using Pirates.Loaders.Cloud;
 
 namespace Pirates.Screens.Scene
 {
@@ -24,6 +24,7 @@ namespace Pirates.Screens.Scene
         private waterShader waterShader;
         private JustMvp mvpshader;
         private Scattaring scattering;
+        private CloudShader cloudShader;
 
         private Terrain island;
         private Terrain water;
@@ -42,7 +43,7 @@ namespace Pirates.Screens.Scene
 
         public TerrainScreen()
         {
-            camera = new FirstPersonCamera(new Vector3(0, 10, 0));
+            camera = new FirstPersonCamera(new Vector3(800, 0, -700));
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 10000);
 
             islandShader = new MultiTextured();
@@ -73,12 +74,20 @@ namespace Pirates.Screens.Scene
                 waterShader.InitParameters();
             }
 
+            cloudShader = new CloudShader();
+            {
+                cloudShader.ProjectionMatrix = projectionMatrix;
+                cloudShader.ViewMatrix = camera.View;
+                cloudShader.InitParameters();
+            }
+
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
 
             cloudManager = new CloudManager();
-            Vector3 box=new Vector3(500f,200f,100f);
-            cloudManager.AddCloud(1, box, box, 0.25f, 1);
+            Vector3 box = new Vector3(500f, -520f, 500f);
+            cloudManager.AddCloud(4000, box, box, 50f, 1);
+            cloudManager.cloudsList.Update();
 
             island = new Terrain("island4", 2, 1);
             island.Translate(0, 0, 0);

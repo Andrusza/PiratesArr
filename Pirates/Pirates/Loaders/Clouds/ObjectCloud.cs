@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
 
-namespace Pirates.Loaders.Clouds
+namespace Pirates.Loaders.Cloud
 {
     internal class ObjectCloud : ObjectGeometry
     {
@@ -13,12 +13,25 @@ namespace Pirates.Loaders.Clouds
         }
 
         public CloudInstancer Instancer;
-        private Random rnd;
 
-        public ObjectCloud(CloudInstancer instancer)
+        public ObjectCloud(CloudInstancer instancer, float scale, Vector3 translate)
         {
+            ID++;
+            id = ID;
+            //this.Scale(scale);
+            this.Translate(translate);
+            this.Update();
+
             Instancer = instancer;
+
+            modelMatrix.M13 = 100;
+            modelMatrix.M24 = 100;
+
+            modelMatrix.M12 = 0;
+            modelMatrix.M23 = 1;
+            modelMatrix.M34 = 0.2f;
             Instancer.instanceTransformMatrices.Add(this, ModelMatrix);
+
             Instancer.Instances.Add(myID, this);
         }
     }

@@ -7,14 +7,22 @@ namespace Pirates.Screens.Scene
     {
         public override void Draw(GameTime gameTime)
         {
+           
+          
+
             BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
-            island.Draw(islandShader);
-            water.Draw(waterShader);
 
-            ship.Draw(mvpshader);
-            skydome.Draw(scattering);
+
+
+          //  island.Draw(islandShader);
+         
+         //   water.Draw(waterShader);
+
+         //   ship.Draw(mvpshader);
+         //   skydome.Draw(scattering);
+            cloudManager.Draw(cloudShader);
 
             //SpriteBatch spriteBatch = new SpriteBatch(BaseClass.GetInstance().GraphicsDevice);
             //spriteBatch.Begin();

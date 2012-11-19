@@ -36,6 +36,8 @@ namespace Pirates.Loaders
             Matrix.CreateFromQuaternion(ref q, out rotateMatrix);
         }
 
+        
+
         public void Translate(Vector3 translation)
         {
             Matrix.CreateTranslation(ref translation, out translateMatrix);
