@@ -32,6 +32,7 @@ namespace Pirates.Screens.Scene
         private ObjectShip ship;
 
         private CloudManager cloudManager;
+        private CloudManager fogManager;
 
         //private RenderTarget2D refractionRenderTarget;
         //private Texture2D refractionMap;
@@ -85,9 +86,20 @@ namespace Pirates.Screens.Scene
             rs.CullMode = CullMode.None;
 
             cloudManager = new CloudManager();
-            Vector3 box = new Vector3(500f, -520f, 500f);
-            cloudManager.AddCloud(4000, box, box, 50f, 1);
+            fogManager = new CloudManager();
+
+            Vector3 minBox = new Vector3(-5000f, 1200f, -5000f);
+            Vector3 maxBox = new Vector3(5000f, -1200f, 5000f);
+
+            int[] allCloudSprites = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+            cloudManager.AddCloud(100, minBox, maxBox, 0.75f, allCloudSprites);
             cloudManager.cloudsList.Update();
+
+
+            minBox = new Vector3(-1500f, -5f, -1500f);
+            maxBox = new Vector3(1500f, 60f, 1500f);
+            fogManager.AddCloud(400, minBox, maxBox, 0.85f, 0);
+            fogManager.cloudsList.Update();
 
             island = new Terrain("island4", 2, 1);
             island.Translate(0, 0, 0);

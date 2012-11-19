@@ -27,10 +27,15 @@ namespace Pirates.Loaders
         );
 
         public Dictionary<ObjectCloud, Matrix> instanceTransformMatrices = new Dictionary<ObjectCloud, Matrix>();
-        public Dictionary<int, ObjectCloud> Instances = new Dictionary<int, ObjectCloud>();
 
-        public void Update(GameTime time)
+        float x = 0;
+
+        public void Update(float time)
         {
+            x += 0.0001f;
+
+            this.Rotate(x, x, 0);
+            this.Update();
         }
 
         protected void LoadQuad()

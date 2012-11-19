@@ -1,10 +1,12 @@
-float4x4 World ;
-float4x4 vp ;
-float3 EyePosition;
+float4x4 World : World;
+float4x4 vp : ViewProjection;
+float3 EyePosition : CAMERAPOSITION;
 
-float3 worldUp = float3(0,-1,0);
+float3 worldUp = float3(0,1,0);
 
-float4 lightColor = float4(1,0,1,1);
+float4 lightColor;
+
+float hour;
 
 float MistingDistance = 50;
 
@@ -60,7 +62,7 @@ VertexOut VS(VertexIn input, float4x4 instanceTransform : BLENDWEIGHT)
 	input.Position.xyz = float3(world._41,world._42,world._43);
 	
 	float3 center = mul(input.Position,World);	
-	float3 eyeVector =center - EyePosition;
+	float3 eyeVector = center - EyePosition;
 	
 	float3 finalPos = center;
 	float3 sideVector;
@@ -69,8 +71,8 @@ VertexOut VS(VertexIn input, float4x4 instanceTransform : BLENDWEIGHT)
 	sideVector = normalize(cross(eyeVector,worldUp));			
 	upVector = normalize(cross(sideVector,eyeVector));	
 	
-	finalPos += (input.TextureCoords.x - 0.5) * sideVector * 100;
-	finalPos += (0.5 - input.TextureCoords.y) * upVector * 100;
+	finalPos += (input.TextureCoords.x - 0.5) * sideVector * world._13;
+	finalPos += (0.5 - input.TextureCoords.y) * upVector * (world._24);	
 
 	float4 finalPos4 = float4(finalPos,1);	
 	
@@ -87,6 +89,7 @@ VertexOut VS(VertexIn input, float4x4 instanceTransform : BLENDWEIGHT)
 	
 	// Alpha
 	Out.Color.a = world._23;
+	
 	
 	// Misting	
 	float distVal =  length(abs(finalPos4 - EyePosition));
@@ -109,9 +112,15 @@ PixelToFrame PS(VertexOut input)
 	
 	float color = GetTexture(input.TextureCoords,input.image).rgb;	
 	
+	float4 licol = lightColor;
+	if(hour <= 12)
+		licol *= hour / 12;			
+	else
+		licol *= (hour - 24) / -12;						
 	
+	licol += .5;
 	
-	Out.Color = input.Color;
+	Out.Color = input.Color * licol;	
 	
 	Out.Color.a *= color;
 	

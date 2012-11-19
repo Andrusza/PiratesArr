@@ -7,22 +7,26 @@ namespace Pirates.Screens.Scene
     {
         public override void Draw(GameTime gameTime)
         {
+            BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
+
+            skydome.Draw(scattering);
+            cloudManager.Draw(cloudShader);
            
-          
 
             BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-
             BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
 
 
+            island.Draw(islandShader);
+            water.Draw(waterShader);
+            ship.Draw(mvpshader);
 
-          //  island.Draw(islandShader);
-         
-         //   water.Draw(waterShader);
+            //fogManager.Draw(cloudShader);
+            BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
 
-         //   ship.Draw(mvpshader);
-         //   skydome.Draw(scattering);
-            cloudManager.Draw(cloudShader);
+           
 
             //SpriteBatch spriteBatch = new SpriteBatch(BaseClass.GetInstance().GraphicsDevice);
             //spriteBatch.Begin();

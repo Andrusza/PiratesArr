@@ -14,25 +14,25 @@ namespace Pirates.Loaders.Cloud
 
         public CloudInstancer Instancer;
 
-        public ObjectCloud(CloudInstancer instancer, float scale, Vector3 translate)
+        public ObjectCloud(CloudInstancer instancer, float scale, Vector3 translate,Vector3 information)
         {
             ID++;
             id = ID;
-            //this.Scale(scale);
+            this.Scale(scale);
             this.Translate(translate);
             this.Update();
 
             Instancer = instancer;
 
-            modelMatrix.M13 = 100;
-            modelMatrix.M24 = 100;
+            modelMatrix.M13 = scale;
+            modelMatrix.M24 = scale;
 
-            modelMatrix.M12 = 0;
-            modelMatrix.M23 = 1;
-            modelMatrix.M34 = 0.2f;
+            modelMatrix.M12 = information.X;
+            modelMatrix.M23 = information.Y;
+            modelMatrix.M34 = information.Z;
             Instancer.instanceTransformMatrices.Add(this, ModelMatrix);
 
-            Instancer.Instances.Add(myID, this);
+            
         }
     }
 }

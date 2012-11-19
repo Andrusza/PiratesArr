@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Pirates.Screens.Scene
 {
@@ -8,25 +9,36 @@ namespace Pirates.Screens.Scene
         private Matrix view;
         private Vector4 lightPosition;
         private float time = 0;
+        private float x = 0;
 
         public override void Update(GameTime gameTime)
         {
             Input();
             time += gameTime.TotalGameTime.Seconds;
             view = camera.Update();
+            //Console.WriteLine(view.Translation.ToString());
 
             mvpshader.ViewMatrix = view;
             mvpshader.WorldMatrix = ship.ModelMatrix;
             mvpshader.Update(0);
 
-            cloudShader.ViewMatrix = view;
-            cloudShader.WorldMatrix = cloudManager.cloudsList.ModelMatrix;
-            cloudShader.Update(0);
+            cloudManager.cloudsList.Update(0);
 
             scattering.ViewMatrix = view;
             scattering.WorldMatrix = skydome.ModelMatrix;
             scattering.Update(time);
             lightPosition = scattering.lightPosition;
+
+            cloudShader.ViewMatrix = view;
+            cloudShader.WorldMatrix = cloudManager.cloudsList.ModelMatrix;
+            cloudShader.eyePosition = camera.Eye;
+            cloudShader.lightVector = lightPosition;
+            float hour=-lightPosition.Y * 0.01f;
+            if (hour < 0) hour = 24 + (hour * 2);
+            Console.WriteLine(hour);
+            cloudShader.hour = hour;
+           
+            cloudShader.Update(0);
 
             islandShader.ViewMatrix = view;
             islandShader.WorldMatrix = island.WorldMatrix;
@@ -66,6 +78,9 @@ namespace Pirates.Screens.Scene
             mvpshader.ViewMatrix = reflectionViewMatrix;
             mvpshader.Update(0);
 
+            cloudShader.ViewMatrix = reflectionViewMatrix;
+            cloudShader.Update(0);
+
             islandShader.ViewMatrix = reflectionViewMatrix;
             islandShader.clippingPlane = reflectionPlane;
             islandShader.clipping = true;
@@ -80,8 +95,12 @@ namespace Pirates.Screens.Scene
             skydome.Draw(scattering);
             island.Draw(islandShader);
             ship.Draw(mvpshader);
+            cloudManager.cloudsList.Draw(cloudShader);
 
             BaseClass.Device.SetRenderTarget(null);
+
+            cloudShader.ViewMatrix = view;
+            cloudShader.Update(0);
 
             scattering.ViewMatrix = view;
             scattering.Update(0);
