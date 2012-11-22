@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace Pirates.Screens.Scene
 {
@@ -33,11 +33,11 @@ namespace Pirates.Screens.Scene
             cloudShader.WorldMatrix = cloudManager.cloudsList.ModelMatrix;
             cloudShader.eyePosition = camera.Eye;
             cloudShader.lightVector = lightPosition;
-            float hour=-lightPosition.Y * 0.01f;
+            float hour = -lightPosition.Y * 0.01f;
             if (hour < 0) hour = 24 + (hour * 2);
             Console.WriteLine(hour);
             cloudShader.hour = hour;
-           
+
             cloudShader.Update(0);
 
             islandShader.ViewMatrix = view;
@@ -54,6 +54,10 @@ namespace Pirates.Screens.Scene
             waterShader.reflectedViewMatrix = reflectionViewMatrix;
             waterShader.reflection = reflectionMap;
             waterShader.Update(time);
+
+            RenderCurrentFrameToTexture();
+            rainDropsShader.currentFrame = currentFrame;
+            rainDropsShader.Update(time);
         }
 
         private Plane CreatePlane(float height, Vector3 planeNormalDirection, bool clipSide)
@@ -63,6 +67,28 @@ namespace Pirates.Screens.Scene
             if (clipSide) planeCoeffs *= -1;
             Plane finalPlane = new Plane(planeCoeffs);
             return finalPlane;
+        }
+
+        private void RenderCurrentFrameToTexture()
+        {
+            BaseClass.Device.SetRenderTarget(currentFrameRenderTarget);
+            {
+                BaseClass.Device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Aqua, 1.0f, 0);
+                BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+                BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
+
+                skydome.Draw(scattering);
+                cloudManager.Draw(cloudShader);
+
+                BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+                BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
+
+                island.Draw(islandShader);
+                water.Draw(waterShader);
+                ship.Draw(mvpshader);
+            }
+            BaseClass.Device.SetRenderTarget(null);
+            currentFrame = currentFrameRenderTarget;
         }
 
         private Matrix CreateReflectionMap()
@@ -87,16 +113,17 @@ namespace Pirates.Screens.Scene
             islandShader.Update(0);
 
             BaseClass.Device.SetRenderTarget(reflectionRenderTarget);
+            {
+                BaseClass.Device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Aqua, 1.0f, 0);
+                BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+                BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
 
-            BaseClass.Device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Aqua, 1.0f, 0);
-            BaseClass.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            BaseClass.GetInstance().GraphicsDevice.RasterizerState = rs;
+                skydome.Draw(scattering);
+                island.Draw(islandShader);
+                ship.Draw(mvpshader);
+                cloudManager.cloudsList.Draw(cloudShader);
 
-            skydome.Draw(scattering);
-            island.Draw(islandShader);
-            ship.Draw(mvpshader);
-            cloudManager.cloudsList.Draw(cloudShader);
-
+            }
             BaseClass.Device.SetRenderTarget(null);
 
             cloudShader.ViewMatrix = view;

@@ -27,9 +27,8 @@ namespace Pirates.Shaders
         public Matrix invertView;
         public Matrix invertTransposeWorld;
 
-        
-
-        public Scattaring(): base("Scattaring")
+        public Scattaring()
+            : base("Scattaring")
         {
             this.Technique.CurrentTechnique = this.Technique.Techniques["Scattaring"];
 
@@ -54,7 +53,7 @@ namespace Pirates.Shaders
             set { lightDirection = value; }
         }
 
-        public void InitParameters()
+        public override void InitParameters()
         {
             Texture2D night = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "night");
             Technique.Parameters["SkyTextureNight"].SetValue(night);
@@ -78,8 +77,6 @@ namespace Pirates.Shaders
             Technique.Parameters["largeSunRadiusAttenuation"].SetValue(largeSunRadiusAttenuation);
             Technique.Parameters["dayToSunsetSharpness"].SetValue(dayToSunsetSharpness);
             Technique.Parameters["hazeTopAltitude"].SetValue(hazeTopAltitude);
-
-           
         }
 
         private Vector4 GetLightPosition(double Theta, double Phi)
@@ -96,7 +93,7 @@ namespace Pirates.Shaders
         {
             theta += 0.001f;
             lightPosition = GetLightPosition(theta, phi);
-           
+
             lightDirection = Vector4.Normalize(lightPosition);
 
             viewProjection = viewMatrix * projectionMatrix;

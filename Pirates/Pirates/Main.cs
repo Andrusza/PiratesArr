@@ -43,8 +43,8 @@ namespace Pirates
             window = new XnaWindow();
             this.IsFixedTimeStep = false;
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = window.Height;
-            graphics.PreferredBackBufferWidth = window.Width;
+            graphics.PreferredBackBufferHeight = XnaWindow.Height;
+            graphics.PreferredBackBufferWidth = XnaWindow.Width;
 
             this.IsMouseVisible = window.IsMouseVisible;
             this.Window.AllowUserResizing = window.IsResizing;

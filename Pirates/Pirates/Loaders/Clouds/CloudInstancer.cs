@@ -28,7 +28,7 @@ namespace Pirates.Loaders
 
         public Dictionary<ObjectCloud, Matrix> instanceTransformMatrices = new Dictionary<ObjectCloud, Matrix>();
 
-        float x = 0;
+        private float x = 0;
 
         public void Update(float time)
         {

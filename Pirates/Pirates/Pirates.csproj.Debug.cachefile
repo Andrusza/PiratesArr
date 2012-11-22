@@ -24,4 +24,6 @@ Content\Shader\JustMVP.xnb
 Content\Shader\MultiTexturing.xnb
 Content\Shader\Scattaring.xnb
 Content\Shader\Cloud.xnb
-Content\Shader\Rain.xnb
+Content\Texture\waterDroplets.xnb
+Content\Shader\CurrentFrame.xnb
+Content\Shader\RainDrop.xnb

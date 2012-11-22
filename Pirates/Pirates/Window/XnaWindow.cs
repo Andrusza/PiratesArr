@@ -2,13 +2,13 @@
 {
     internal class XnaWindow
     {
-        private int height = 900;
-        private int width = 1440;
+        private static int height =900;
+        private static int width = 1440;
 
         private bool isMouseVisible = true;
         private bool isResizing = false;
 
-        public int Height
+        public static int Height
         {
             get { return height; }
             set { height = value; }
@@ -26,7 +26,7 @@
             set { isResizing = value; }
         }
 
-        public int Width
+        public static int Width
         {
             get { return width; }
             set { width = value; }

@@ -37,7 +37,7 @@ namespace Pirates.Shaders
             diffuseLightColor = new Vector3(1, 1, 1);
         }
 
-        public void InitParameters()
+        public override void InitParameters()
         {
             snow = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "snow");
             grass = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "grass");

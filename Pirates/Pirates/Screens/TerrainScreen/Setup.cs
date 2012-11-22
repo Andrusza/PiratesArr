@@ -4,10 +4,10 @@ using Cameras;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Loaders;
+using Pirates.Loaders.Cloud;
 using Pirates.Loaders.ModelsFbx;
 using Pirates.Shaders;
 using Pirates.Utility;
-using Pirates.Loaders.Cloud;
 
 namespace Pirates.Screens.Scene
 {
@@ -25,6 +25,7 @@ namespace Pirates.Screens.Scene
         private JustMvp mvpshader;
         private Scattaring scattering;
         private CloudShader cloudShader;
+        private RainDrops rainDropsShader;
 
         private Terrain island;
         private Terrain water;
@@ -32,10 +33,9 @@ namespace Pirates.Screens.Scene
         private ObjectShip ship;
 
         private CloudManager cloudManager;
-        private CloudManager fogManager;
 
-        //private RenderTarget2D refractionRenderTarget;
-        //private Texture2D refractionMap;
+        private RenderTarget2D currentFrameRenderTarget;
+        private Texture2D currentFrame;
 
         private RenderTarget2D reflectionRenderTarget;
         private Texture2D reflectionMap;
@@ -82,11 +82,15 @@ namespace Pirates.Screens.Scene
                 cloudShader.InitParameters();
             }
 
+            rainDropsShader = new RainDrops();
+            {
+                rainDropsShader.InitParameters();
+            }
+
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
 
             cloudManager = new CloudManager();
-            fogManager = new CloudManager();
 
             Vector3 minBox = new Vector3(-5000f, 1200f, -5000f);
             Vector3 maxBox = new Vector3(5000f, -1200f, 5000f);
@@ -94,12 +98,6 @@ namespace Pirates.Screens.Scene
             int[] allCloudSprites = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
             cloudManager.AddCloud(100, minBox, maxBox, 0.75f, allCloudSprites);
             cloudManager.cloudsList.Update();
-
-
-            minBox = new Vector3(-1500f, -5f, -1500f);
-            maxBox = new Vector3(1500f, 60f, 1500f);
-            fogManager.AddCloud(400, minBox, maxBox, 0.85f, 0);
-            fogManager.cloudsList.Update();
 
             island = new Terrain("island4", 2, 1);
             island.Translate(0, 0, 0);

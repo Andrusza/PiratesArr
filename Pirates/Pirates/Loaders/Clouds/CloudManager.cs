@@ -7,7 +7,6 @@ namespace Pirates.Loaders.Cloud
 {
     internal class CloudManager
     {
-       
         public CloudInstancer cloudsList;
 
         private List<ObjectCloud> whisps = new List<ObjectCloud>();
@@ -43,15 +42,15 @@ namespace Pirates.Loaders.Cloud
                     si = 0;
                 Vector3 information = new Vector3();
 
-                float whipTexture=whispRange[si++] /100.0f;
+                float whipTexture = whispRange[si++] / 100.0f;
                 information.X = whipTexture;
 
-                float color=rnd.Next(7, 10) / 10f * colorMod;
+                float color = rnd.Next(7, 10) / 10f * colorMod;
                 information.Y = 1;
                 information.Z = color;
                 float scale = 500;
 
-                whisps.Add(new ObjectCloud(cloudsList, scale, new Vector3(x, y, z),information));
+                whisps.Add(new ObjectCloud(cloudsList, scale, new Vector3(x, y, z), information));
             }
         }
     }

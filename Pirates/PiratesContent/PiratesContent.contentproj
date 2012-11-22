@@ -261,8 +261,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Shader\Rain.fx">
-      <Name>Rain</Name>
+    <Compile Include="Texture\waterDroplets.tga">
+      <Name>waterDroplets</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Shader\CurrentFrame.fx">
+      <Name>CurrentFrame</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Shader\RainDrop.fx">
+      <Name>RainDrop</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>

@@ -14,7 +14,7 @@ namespace Pirates.Loaders.Cloud
 
         public CloudInstancer Instancer;
 
-        public ObjectCloud(CloudInstancer instancer, float scale, Vector3 translate,Vector3 information)
+        public ObjectCloud(CloudInstancer instancer, float scale, Vector3 translate, Vector3 information)
         {
             ID++;
             id = ID;
@@ -31,8 +31,6 @@ namespace Pirates.Loaders.Cloud
             modelMatrix.M23 = information.Y;
             modelMatrix.M34 = information.Z;
             Instancer.instanceTransformMatrices.Add(this, ModelMatrix);
-
-            
         }
     }
 }

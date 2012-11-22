@@ -119,6 +119,7 @@
     <Compile Include="Loaders\ModelsFbx\ObjectMesh.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectShip.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectSkydome.cs" />
+    <Compile Include="Loaders\Quad\Quad.cs" />
     <Compile Include="Loaders\Terrain\Draw.cs" />
     <Compile Include="Loaders\Terrain\GenerateTerrainIndices.cs" />
     <Compile Include="Loaders\Terrain\GenerateTerrainNormals.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Shaders\BaseShader.cs" />
     <Compile Include="Shaders\CloudShader.cs" />
+    <Compile Include="Shaders\Rain\RainDrops.cs" />
     <Compile Include="Shaders\watershader\WaterParm.cs" />
     <Compile Include="Shaders\watershader\WaterShader.cs" />
     <Compile Include="Shaders\JustMvp.cs" />
@@ -149,6 +151,9 @@
     </Compile>
     <Compile Include="Utility\FpsCounter.cs" />
     <Compile Include="Utility\Serializer.cs" />
+    <Compile Include="Weather\Fog.cs" />
+    <Compile Include="Weather\Rain.cs" />
+    <Compile Include="Weather\Wind.cs" />
     <Compile Include="Window\XnaWindow.cs" />
   </ItemGroup>
   <ItemGroup>

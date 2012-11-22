@@ -40,5 +40,6 @@ namespace Pirates.Shaders
         }
 
         public abstract void Update(float time);
+        public abstract void InitParameters();
     }
 }

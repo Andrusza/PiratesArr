@@ -9,8 +9,8 @@ namespace Pirates.Utility
         {
             using (Stream stream = File.Open(filename, FileMode.Create))
             {
-                BinaryFormatter bFormatter = new BinaryFormatter();
-                bFormatter.Serialize(stream, objectToSerialize);
+                BinaryFormatter Formatter = new BinaryFormatter();
+                Formatter.Serialize(stream, objectToSerialize);
                 stream.Close();
             }
         }
@@ -20,8 +20,8 @@ namespace Pirates.Utility
             T objectToSerialize;
             using (Stream stream = File.Open(filename, FileMode.Open))
             {
-                BinaryFormatter bFormatter = new BinaryFormatter();
-                objectToSerialize = (T)bFormatter.Deserialize(stream);
+                BinaryFormatter Formatter = new BinaryFormatter();
+                objectToSerialize = (T)Formatter.Deserialize(stream);
                 stream.Close();
             }
             return objectToSerialize;

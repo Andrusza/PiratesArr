@@ -63,7 +63,7 @@ namespace Pirates.Shaders
             }
         }
 
-        public void InitParameters()
+        public override void InitParameters()
         {
             Technique.Parameters["diffuseMap0"].SetValue(color);
             Technique.Parameters["normalMap0"].SetValue(normal);

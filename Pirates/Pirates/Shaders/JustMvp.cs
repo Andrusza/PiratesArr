@@ -14,7 +14,7 @@ namespace Pirates.Shaders
             this.Technique.CurrentTechnique = this.Technique.Techniques["Basic"];
         }
 
-        public void InitParameters()
+        public override void InitParameters()
         {
             Texture2D color = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "Sky2");
             Technique.Parameters["diffuseMap0"].SetValue(color);

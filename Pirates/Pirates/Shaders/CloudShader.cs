@@ -22,7 +22,7 @@ namespace Pirates.Shaders
             cloudsParts = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "clouds");
         }
 
-        public void InitParameters()
+        public override void InitParameters()
         {
             Technique.Parameters["lightColor"].SetValue(lightColor);
             Technique.Parameters["partTexture"].SetValue(cloudsParts);
