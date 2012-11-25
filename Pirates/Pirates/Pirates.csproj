@@ -114,12 +114,15 @@
     <Compile Include="FirstPersonCamera\Update.cs" />
     <Compile Include="Loaders\Clouds\CloudInstancer.cs" />
     <Compile Include="Loaders\Clouds\CloudManager.cs" />
-    <Compile Include="Loaders\Clouds\ObjectCloud.cs" />
+    <Compile Include="Loaders\Instancing\Instancer.cs" />
+    <Compile Include="Loaders\Instancing\Manager.cs" />
+    <Compile Include="Loaders\Instancing\Instance.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectGeometry.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectMesh.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectShip.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectSkydome.cs" />
     <Compile Include="Loaders\Quad\Quad.cs" />
+    <Compile Include="Loaders\Rain\RainManager.cs" />
     <Compile Include="Loaders\Terrain\Draw.cs" />
     <Compile Include="Loaders\Terrain\GenerateTerrainIndices.cs" />
     <Compile Include="Loaders\Terrain\GenerateTerrainNormals.cs" />
@@ -141,7 +144,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Shaders\BaseShader.cs" />
     <Compile Include="Shaders\CloudShader.cs" />
+    <Compile Include="Shaders\Fog.cs" />
     <Compile Include="Shaders\Rain\RainDrops.cs" />
+    <Compile Include="Shaders\Rain\RainShader.cs" />
     <Compile Include="Shaders\watershader\WaterParm.cs" />
     <Compile Include="Shaders\watershader\WaterShader.cs" />
     <Compile Include="Shaders\JustMvp.cs" />

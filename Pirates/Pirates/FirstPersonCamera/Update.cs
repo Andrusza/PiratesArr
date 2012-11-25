@@ -68,9 +68,9 @@ namespace Cameras
 
             dir = -zAxis;
 
-            view.M41 = Vector3.Dot(xAxis, eye);
-            view.M42 = Vector3.Dot(yAxis, eye);
-            view.M43 = Vector3.Dot(zAxis, eye);
+            view.M41 = -Vector3.Dot(xAxis, eye);
+            view.M42 = -Vector3.Dot(yAxis, eye);
+            view.M43 = -Vector3.Dot(zAxis, eye);
         }
     }
 }

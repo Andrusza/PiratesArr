@@ -2,41 +2,36 @@
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Loaders;
 
-namespace Pirates.Shaders
+namespace Pirates.Shaders.Rain
 {
-    public class CloudShader : BaseShader
+    internal class RainShader : BaseShader
     {
         public Vector4 lightColor;
 
         public Vector3 eyePosition;
-        
         public Vector4 lightVector;
-        private Texture2D cloudsParts;
-        public float hour;
+        private Texture2D drops;
 
-        public CloudShader()
-            : base("Cloud")
+        public RainShader()
+            : base("Rain")
         {
-            this.Technique.CurrentTechnique = this.Technique.Techniques["Clouds"];
+            this.Technique.CurrentTechnique = this.Technique.Techniques["Rain"];
             lightColor = Color.White.ToVector4();
-            cloudsParts = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "clouds");
+            drops = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "drop1");
         }
 
         public override void InitParameters()
         {
             Technique.Parameters["lightColor"].SetValue(lightColor);
-            Technique.Parameters["partTexture"].SetValue(cloudsParts);
-            Technique.Parameters["hour"].SetValue(0);
+            Technique.Parameters["dropTexture"].SetValue(drops);
         }
 
         public override void Update(float time)
         {
-          
-
-            Technique.Parameters["hour"].SetValue(hour);
             Technique.Parameters["EyePosition"].SetValue(eyePosition);
             Technique.Parameters["vp"].SetValue(viewMatrix * projectionMatrix);
             Technique.Parameters["World"].SetValue(WorldMatrix);
+            Technique.Parameters["time"].SetValue(time);
         }
     }
 }

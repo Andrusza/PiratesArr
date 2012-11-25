@@ -1,56 +1,95 @@
+float4x4 World : World;
+float4x4 vp : ViewProjection;
+float3 EyePosition : CAMERAPOSITION;
+float time;
 
-//float time;
-//float4x4 viewInverse;
-//float4x4 vp;
-//float4x4 World;
+float3 worldUp = float3(0,1,0);
 
-//struct VertexShaderInput
-//{
-//    float4 Position      : POSITION0;
-//    float2 TextureCoord  : TEXCOORD0;
-//    float3 Tangent       : TANGENT0;
-//    float3 Binormal      : BINORMAL0;
-//};
+float4 lightColor=float4(1,1,1,1);
 
-//struct VertexOut
-//{
-//	float4 Position:POSITION0;
-//};
+texture dropTexture;
+sampler dropTextureSampler = sampler_state 
+{ 
+	Texture = <dropTexture>; 
+	MinFilter = Linear;
+    MagFilter = Linear;
+    MipFilter = Linear;
+};
 
+struct VertexIn
+{
+	float4 Position   	: POSITION0;         	
+    float2 TextureCoords: TEXCOORD0; 
+};
+struct VertexOut
+{
+    float4 Position   	: POSITION0;      
+	float4 sPos   	: TEXCOORD1;      
+    float2 TextureCoords: TEXCOORD0;
+    float4  Color		: COLOR0;
+    float image : COLOR1;
+    float lightLerp : TEXCOORD2;
+};
 
-//VertexOut VertexShaderFunction(VertexShaderInput input, float4x4 instanceTransform : BLENDWEIGHT)
-//{
-//	VertexOut output = (VertexOut)0;
+struct PixelToFrame
+{
+    float4 Color : COLOR0;
+};
 
-//	float4x4 world = transpose(instanceTransform);
-//	input.Position.xyz = float3(world._41,world._42,world._43);
+VertexOut VS(VertexIn input, float4x4 instanceTransform : BLENDWEIGHT)
+{
+	VertexOut Out = (VertexOut)0;
+
+	float4x4 world = transpose(instanceTransform);
+	input.Position.xyz = float3(world._41,world._42,world._43);
+	input.Position.y =(input.Position.y- (time*world._23) % 320 );
 	
-//	float4 position = mul(input.Position,World);
-    
-//float localTime = time + 0.1f; 
-//float4 base_position = position + 0.1 * localTime;
+	float3 center = mul(input.Position,World);	
+	float3 eyeVector = center - EyePosition;
+	
+	float3 finalPos = center;
+	float3 sideVector;
+	float3 upVector;	
+	
+	sideVector = normalize(cross(eyeVector,worldUp));			
+	upVector = normalize(cross(sideVector,eyeVector));	
+	
+	finalPos += (input.TextureCoords.x - 0.5) * sideVector * world._13;
+	finalPos += (0.5 - input.TextureCoords.y) * upVector * (world._24);	
 
+	float4 finalPos4 = float4(finalPos,1);	
+	
+	Out.Position = mul(finalPos4,vp);
 
-//float4 quadX = viewInverse[0] * input.Position.x;
-//float4 quadZ = viewInverse[1] * input.Position.y;
+	Out.sPos = Out.Position;
+	
+	Out.TextureCoords = input.TextureCoords;
+	
+	Out.Color = float4(.9,.9,.9,1);
+	Out.Color.a = 1.0f;
+	
+	return Out;
+}
 
-//position += + quadX + quadZ;
+PixelToFrame PS(VertexOut input)
+{
+	PixelToFrame Out = (PixelToFrame)0;
+	
+	Out.Color = tex2D(dropTextureSampler, input.TextureCoords);
+	
+	Out.Color.a *= Out.Color;
+	
+	// Draw lighter as we go down the texture.
+	Out.Color.a *= 1-input.TextureCoords.y;
 
-//output.Position = mul(position,vp);
+	return Out;
+}
 
-//    return output;
-//}
-
-//float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
-//{
-//    return float4(1,1,1,1);
-//}
-
-//technique Rain
-//{
-//    pass Pass0
-//    {
-//        VertexShader = compile vs_2_0 VertexShaderFunction();
-//        PixelShader = compile ps_2_0 PixelShaderFunction();
-//    }
-//}
+technique Rain
+{
+	pass P0 
+	{
+		VertexShader = compile vs_3_0 VS();
+		PixelShader  = compile ps_3_0 PS();
+	}
+}

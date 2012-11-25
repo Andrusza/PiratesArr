@@ -2,7 +2,7 @@
 
 namespace Pirates.Loaders.Cloud
 {
-    internal class ObjectCloud : ObjectGeometry
+    public class Instance: ObjectGeometry
     {
         private static int ID;
         private int id;
@@ -12,9 +12,9 @@ namespace Pirates.Loaders.Cloud
             get { return id; }
         }
 
-        public CloudInstancer Instancer;
+        public Instancer Instancer;
 
-        public ObjectCloud(CloudInstancer instancer, float scale, Vector3 translate, Vector3 information)
+        public Instance(Instancer instancer, float scale, Vector3 translate, Vector3 information)
         {
             ID++;
             id = ID;

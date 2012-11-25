@@ -27,3 +27,7 @@ Content\Shader\Cloud.xnb
 Content\Texture\waterDroplets.xnb
 Content\Shader\CurrentFrame.xnb
 Content\Shader\RainDrop.xnb
+Content\Shader\Rain.xnb
+Content\Texture\drop1.xnb
+Content\Texture\rain2.xnb
+Content\Shader\Fog.xnb

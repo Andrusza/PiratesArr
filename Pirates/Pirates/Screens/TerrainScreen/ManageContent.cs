@@ -8,7 +8,9 @@ namespace Pirates.Screens.Scene
         {
             PresentationParameters pp = BaseClass.GetInstance().GraphicsDevice.PresentationParameters;
             currentFrameRenderTarget = new RenderTarget2D(BaseClass.GetInstance().GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, false, pp.BackBufferFormat, pp.DepthStencilFormat);
-            reflectionRenderTarget = new RenderTarget2D(BaseClass.GetInstance().GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight-700, false, pp.BackBufferFormat, pp.DepthStencilFormat);
+            reflectionRenderTarget = new RenderTarget2D(BaseClass.GetInstance().GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, false, pp.BackBufferFormat, pp.DepthStencilFormat);
+            shadowRenderTarget = new RenderTarget2D(BaseClass.GetInstance().GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, false, pp.BackBufferFormat, pp.DepthStencilFormat);
+
         }
 
         public override void UnloadContent()

@@ -8,6 +8,8 @@ using Pirates.Loaders.Cloud;
 using Pirates.Loaders.ModelsFbx;
 using Pirates.Shaders;
 using Pirates.Utility;
+using Pirates.Loaders.Rain;
+using Pirates.Shaders.Rain;
 
 namespace Pirates.Screens.Scene
 {
@@ -23,9 +25,11 @@ namespace Pirates.Screens.Scene
         private MultiTextured islandShader;
         private waterShader waterShader;
         private JustMvp mvpshader;
-        private Scattaring scattering;
+        private Scattaring scatteringShader;
         private CloudShader cloudShader;
-        private RainDrops rainDropsShader;
+        private RainDropsShader rainDropsShader;
+        private RainShader rainShader;
+        private Fog fogShader;
 
         private Terrain island;
         private Terrain water;
@@ -33,12 +37,16 @@ namespace Pirates.Screens.Scene
         private ObjectShip ship;
 
         private CloudManager cloudManager;
+        private RainManager rainManager;
 
         private RenderTarget2D currentFrameRenderTarget;
         private Texture2D currentFrame;
 
         private RenderTarget2D reflectionRenderTarget;
         private Texture2D reflectionMap;
+
+        private RenderTarget2D shadowRenderTarget;
+        private Texture2D shadowMap;
 
         private const float waterHeight = 30.0f;
 
@@ -61,11 +69,11 @@ namespace Pirates.Screens.Scene
                 mvpshader.InitParameters();
             }
 
-            scattering = new Scattaring();
+            scatteringShader = new Scattaring();
             {
-                scattering.ProjectionMatrix = projectionMatrix;
-                scattering.ViewMatrix = camera.View;
-                scattering.InitParameters();
+                scatteringShader.ProjectionMatrix = projectionMatrix;
+                scatteringShader.ViewMatrix = camera.View;
+                scatteringShader.InitParameters();
             }
 
             waterShader = new waterShader();
@@ -82,22 +90,41 @@ namespace Pirates.Screens.Scene
                 cloudShader.InitParameters();
             }
 
-            rainDropsShader = new RainDrops();
+            rainShader = new RainShader();
+            {
+                rainShader.ProjectionMatrix = projectionMatrix;
+                rainShader.ViewMatrix = camera.View;
+                rainShader.InitParameters();
+            }
+
+            rainDropsShader = new RainDropsShader();
             {
                 rainDropsShader.InitParameters();
+            }
+
+            fogShader = new Fog();
+            {
+                fogShader.InitParameters();
             }
 
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
 
             cloudManager = new CloudManager();
+            rainManager = new RainManager();
 
             Vector3 minBox = new Vector3(-5000f, 1200f, -5000f);
             Vector3 maxBox = new Vector3(5000f, -1200f, 5000f);
 
             int[] allCloudSprites = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
             cloudManager.AddCloud(100, minBox, maxBox, 0.75f, allCloudSprites);
-            cloudManager.cloudsList.Update();
+            cloudManager.Instancer.Update();
+
+
+            minBox = new Vector3(-800, 320f, -800f);
+            maxBox = new Vector3(800f, 0f, 800f);
+            rainManager.AddDrop(250000, minBox, maxBox);
+            cloudManager.Instancer.Update();
 
             island = new Terrain("island4", 2, 1);
             island.Translate(0, 0, 0);
@@ -107,7 +134,7 @@ namespace Pirates.Screens.Scene
             water.Translate(0, 30, 0);
             water.Update();
 
-            skydome = new ObjectSkydome(scattering);
+            skydome = new ObjectSkydome(scatteringShader);
             skydome.Scale(1200);
             skydome.Rotate(-90, new Vector3(1, 0, 0));
             skydome.Update();
@@ -140,11 +167,11 @@ namespace Pirates.Screens.Scene
                 mvpshader.InitParameters();
             }
 
-            scattering = new Scattaring();
+            scatteringShader = new Scattaring();
             {
-                scattering.ProjectionMatrix = projectionMatrix;
-                scattering.ViewMatrix = camera.View;
-                scattering.InitParameters();
+                scatteringShader.ProjectionMatrix = projectionMatrix;
+                scatteringShader.ViewMatrix = camera.View;
+                scatteringShader.InitParameters();
             }
 
             waterShader = new waterShader();
@@ -162,17 +189,9 @@ namespace Pirates.Screens.Scene
             water.Translate(0, 30, 0);
             water.Update();
 
-            //skydome = new ObjectMesh("skydome4", scattering);
-            //skydome.Scale(1200);
-            //skydome.Rotate(-90, new Vector3(1, 0, 0));
-            //skydome.Translate(0, 30, 0);
-            //skydome.Update();
-
-            //ship = new ObjectMesh("ship2", mvpshader);
-            //ship.Scale(0.3f);
-            //ship.Rotate(-90, new Vector3(1, 0, 0));
-            //ship.Translate(500, 39, 500);
-            //ship.Update();
+            DepthStencilState depthStencilState = new DepthStencilState();
+            depthStencilState.DepthBufferFunction = CompareFunction.LessEqual;
+            BaseClass.Device.DepthStencilState = depthStencilState;
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext ctxt)

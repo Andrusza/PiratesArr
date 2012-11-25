@@ -3,13 +3,13 @@ using Pirates.Loaders;
 
 namespace Pirates.Shaders
 {
-    public class RainDrops : BaseShader
+    public class RainDropsShader : BaseShader
     {
         public Texture2D waterNormal;
         public Texture2D currentFrame;
         
 
-        public RainDrops()
+        public RainDropsShader()
             : base("RainDrop")
         {
             waterNormal = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "waterDroplets");
@@ -24,7 +24,7 @@ namespace Pirates.Shaders
         {
             Technique.Parameters["waterNormal"].SetValue(waterNormal);
             Technique.Parameters["currentFrame"].SetValue(currentFrame);
-            Technique.Parameters["time"].SetValue(time*0.001f);
+            Technique.Parameters["time"].SetValue(time * 0.001f);
         }
     }
 }
