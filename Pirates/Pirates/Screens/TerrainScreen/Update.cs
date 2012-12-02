@@ -100,7 +100,7 @@ namespace Pirates.Screens.Scene
                 island.Draw(islandShader);
                 water.Draw(waterShader);
 
-                rainManager.Draw(rainShader);
+                //rainManager.Draw(rainShader);
             }
             BaseClass.Device.SetRenderTarget(null);
             currentFrame = currentFrameRenderTarget;
