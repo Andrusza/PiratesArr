@@ -57,9 +57,9 @@ namespace Pirates.Loaders.Rain
                 Vector3 information = new Vector3();
 
                 float scale = 6.5f;
-                Random rnd=new Random();
+                Random rnd = new Random();
 
-                information.Y = (float)rnd.NextDouble()+0.01f;
+                information.Y = (float)rnd.NextDouble() + 0.01f;
 
                 InstancesList.Add(new Instance(Instancer, scale, new Vector3(x, y, z), information));
             }

@@ -9,7 +9,7 @@ namespace Pirates.Screens.Scene
         public override void Draw(GameTime gameTime)
         {
             SpriteBatch spriteBatch = new SpriteBatch(BaseClass.GetInstance().GraphicsDevice);
-            //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone,fogShader.Technique);
+            //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, rainDropsShader.Technique);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
 
             spriteBatch.Draw(currentFrame, new Rectangle(0, 0, XnaWindow.Width, XnaWindow.Height), Color.White);

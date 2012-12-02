@@ -2,7 +2,7 @@
 {
     internal class XnaWindow
     {
-        private static int height =900;
+        private static int height = 900;
         private static int width = 1440;
 
         private bool isMouseVisible = true;

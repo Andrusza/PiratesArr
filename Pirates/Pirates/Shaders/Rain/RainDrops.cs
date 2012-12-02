@@ -7,7 +7,6 @@ namespace Pirates.Shaders
     {
         public Texture2D waterNormal;
         public Texture2D currentFrame;
-        
 
         public RainDropsShader()
             : base("RainDrop")

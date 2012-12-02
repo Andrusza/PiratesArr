@@ -9,7 +9,7 @@ namespace Pirates.Shaders
         public Vector4 lightColor;
 
         public Vector3 eyePosition;
-        
+
         public Vector4 lightVector;
         private Texture2D cloudsParts;
         public float hour;
@@ -31,8 +31,6 @@ namespace Pirates.Shaders
 
         public override void Update(float time)
         {
-          
-
             Technique.Parameters["hour"].SetValue(hour);
             Technique.Parameters["EyePosition"].SetValue(eyePosition);
             Technique.Parameters["vp"].SetValue(viewMatrix * projectionMatrix);

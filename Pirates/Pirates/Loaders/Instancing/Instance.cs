@@ -2,7 +2,7 @@
 
 namespace Pirates.Loaders.Cloud
 {
-    public class Instance: ObjectGeometry
+    public class Instance : ObjectGeometry
     {
         private static int ID;
         private int id;

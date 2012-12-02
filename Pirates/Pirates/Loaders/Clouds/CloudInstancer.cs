@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Pirates.Loaders.Clouds
+﻿namespace Pirates.Loaders.Clouds
 {
-    class CloudInstancer:Instancer
+    internal class CloudInstancer : Instancer
     {
         private float x = 0;
 

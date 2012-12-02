@@ -1,12 +1,6 @@
 float time;
-float amount=0.6;
-float viscosity=0.02;
-
-const float EtaR = 0.65;
-const float EtaG = 0.67;         // Ratio of indices of refraction
-const float EtaB = 0.69;
-const float FresnelPower = 5.0;
-
+float amount=0.9;
+float viscosity=0.2;
 
 texture currentFrame : POSTEFFECTINPUT;
 sampler currentFrameSampler = sampler_state

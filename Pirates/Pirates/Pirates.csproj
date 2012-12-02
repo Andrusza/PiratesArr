@@ -119,8 +119,8 @@
     <Compile Include="Loaders\Instancing\Instance.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectGeometry.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectMesh.cs" />
-    <Compile Include="Loaders\ModelsFbx\ObjectShip.cs" />
-    <Compile Include="Loaders\ModelsFbx\ObjectSkydome.cs" />
+    <Compile Include="Loaders\ModelsFbx\Ship\ObjectShip.cs" />
+    <Compile Include="Loaders\ModelsFbx\Skydome\ObjectSkydome.cs" />
     <Compile Include="Loaders\Quad\Quad.cs" />
     <Compile Include="Loaders\Rain\RainManager.cs" />
     <Compile Include="Loaders\Terrain\Draw.cs" />

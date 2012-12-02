@@ -14,7 +14,6 @@ namespace Pirates.Shaders
 
         public override void InitParameters()
         {
-            
         }
 
         public override void Update(float time)

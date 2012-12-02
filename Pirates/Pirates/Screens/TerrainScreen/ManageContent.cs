@@ -10,7 +10,6 @@ namespace Pirates.Screens.Scene
             currentFrameRenderTarget = new RenderTarget2D(BaseClass.GetInstance().GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, false, pp.BackBufferFormat, pp.DepthStencilFormat);
             reflectionRenderTarget = new RenderTarget2D(BaseClass.GetInstance().GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, false, pp.BackBufferFormat, pp.DepthStencilFormat);
             shadowRenderTarget = new RenderTarget2D(BaseClass.GetInstance().GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, false, pp.BackBufferFormat, pp.DepthStencilFormat);
-
         }
 
         public override void UnloadContent()

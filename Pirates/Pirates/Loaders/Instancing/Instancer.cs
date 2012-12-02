@@ -32,7 +32,6 @@ namespace Pirates.Loaders
 
         public virtual void Update(float time)
         {
-           
         }
 
         protected void LoadQuad()

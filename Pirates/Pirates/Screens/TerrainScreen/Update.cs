@@ -21,6 +21,8 @@ namespace Pirates.Screens.Scene
             mvpshader.WorldMatrix = ship.ModelMatrix;
             mvpshader.Update(0);
 
+            shipShader.View = view;
+            
             cloudManager.Instancer.Update(0);
 
             scatteringShader.ViewMatrix = view;
@@ -94,22 +96,14 @@ namespace Pirates.Screens.Scene
                 BaseClass.Device.DepthStencilState = DepthStencilState.Default;
                 BaseClass.Device.RasterizerState = rs;
 
-
-
+                ship.Draw(shipShader);
                 island.Draw(islandShader);
                 water.Draw(waterShader);
 
                 rainManager.Draw(rainShader);
-
-
-
-                //ship.Draw(mvpshader);
             }
             BaseClass.Device.SetRenderTarget(null);
             currentFrame = currentFrameRenderTarget;
-
-           
-           
         }
 
         private Matrix CreateReflectionMap()
@@ -141,7 +135,7 @@ namespace Pirates.Screens.Scene
 
                 skydome.Draw(scatteringShader);
                 island.Draw(islandShader);
-                //ship.Draw(mvpshader);
+                ship.Draw(shipShader);
                 cloudManager.Instancer.Draw(cloudShader);
             }
             BaseClass.Device.SetRenderTarget(null);

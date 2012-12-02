@@ -6,10 +6,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Pirates.Loaders;
 using Pirates.Loaders.Cloud;
 using Pirates.Loaders.ModelsFbx;
-using Pirates.Shaders;
-using Pirates.Utility;
 using Pirates.Loaders.Rain;
+using Pirates.Shaders;
 using Pirates.Shaders.Rain;
+using Pirates.Utility;
 
 namespace Pirates.Screens.Scene
 {
@@ -25,6 +25,7 @@ namespace Pirates.Screens.Scene
         private MultiTextured islandShader;
         private waterShader waterShader;
         private JustMvp mvpshader;
+        private BasicEffect shipShader;
         private Scattaring scatteringShader;
         private CloudShader cloudShader;
         private RainDropsShader rainDropsShader;
@@ -67,6 +68,12 @@ namespace Pirates.Screens.Scene
                 mvpshader.ProjectionMatrix = projectionMatrix;
                 mvpshader.ViewMatrix = camera.View;
                 mvpshader.InitParameters();
+            }
+
+            shipShader = new BasicEffect(BaseClass.Device);
+            {
+                shipShader.Projection = projectionMatrix;
+                shipShader.View = camera.View;
             }
 
             scatteringShader = new Scattaring();
@@ -120,7 +127,6 @@ namespace Pirates.Screens.Scene
             cloudManager.AddCloud(100, minBox, maxBox, 0.75f, allCloudSprites);
             cloudManager.Instancer.Update();
 
-
             minBox = new Vector3(-800, 320f, -800f);
             maxBox = new Vector3(800f, 0f, 800f);
             rainManager.AddDrop(250000, minBox, maxBox);
@@ -139,9 +145,9 @@ namespace Pirates.Screens.Scene
             skydome.Rotate(-90, new Vector3(1, 0, 0));
             skydome.Update();
 
-            ship = new ObjectShip(mvpshader);
+            ship = new ObjectShip();
             ship.Scale(0.3f);
-            ship.Translate(500, 30, 500);
+            ship.Translate(500, 20, 500);
             ship.Update();
         }
 

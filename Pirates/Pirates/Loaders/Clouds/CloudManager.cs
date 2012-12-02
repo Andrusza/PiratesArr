@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Pirates.Shaders;
 using Pirates.Loaders.Clouds;
+using Pirates.Shaders;
 
 namespace Pirates.Loaders.Cloud
 {
-    internal class CloudManager:IManager
+    internal class CloudManager : IManager
     {
         private CloudInstancer cloudsList;
 
         public Instancer Instancer
         {
             get { return cloudsList; }
-            
         }
 
         private List<Instance> whisps = new List<Instance>();
@@ -23,6 +22,7 @@ namespace Pirates.Loaders.Cloud
             get { return whisps; }
             set { whisps = value; }
         }
+
         private Random rnd = new Random(DateTime.Now.Millisecond);
 
         public Random Rnd
