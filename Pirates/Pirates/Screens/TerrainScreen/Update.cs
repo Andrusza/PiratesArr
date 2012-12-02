@@ -90,15 +90,15 @@ namespace Pirates.Screens.Scene
                 BaseClass.Device.DepthStencilState = DepthStencilState.Default;
                 BaseClass.Device.RasterizerState = rs;
 
-                skydome.Draw(scatteringShader);
-                cloudManager.Draw(cloudShader);
+                //skydome.Draw(scatteringShader);
+                //cloudManager.Draw(cloudShader);
 
                 BaseClass.Device.DepthStencilState = DepthStencilState.Default;
                 BaseClass.Device.RasterizerState = rs;
 
                 ship.Draw(shipShader);
-                island.Draw(islandShader);
-                water.Draw(waterShader);
+                //island.Draw(islandShader);
+                //water.Draw(waterShader);
 
                 //rainManager.Draw(rainShader);
             }

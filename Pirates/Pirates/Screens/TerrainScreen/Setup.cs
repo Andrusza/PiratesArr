@@ -53,7 +53,7 @@ namespace Pirates.Screens.Scene
 
         public TerrainScreen()
         {
-            camera = new FirstPersonCamera(new Vector3(800, 0, -700));
+            camera = new FirstPersonCamera(new Vector3(0, 0, 50));
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 10000);
 
             islandShader = new MultiTextured();
@@ -147,7 +147,7 @@ namespace Pirates.Screens.Scene
 
             ship = new ObjectShip();
             ship.Scale(0.3f);
-            ship.Translate(500, 20, 500);
+            ship.Translate(0, 0, 0);
             ship.Update();
         }
 
