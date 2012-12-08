@@ -7,12 +7,6 @@ namespace Pirates.Loaders
     {
         private Texture2D heightMapTexture;
 
-        public Matrix WorldMatrix
-        {
-            get { return ModelMatrix; }
-            set { ModelMatrix = value; }
-        }
-
         private uint vertexCountX;
         private uint vertexCountZ;
 
@@ -28,6 +22,14 @@ namespace Pirates.Loaders
         private IndexBuffer ibo;
 
         private Color[] heightMap;
+
+        private VertexPositionNormalTangentBinormalTexture[] vertices;
+
+        public VertexPositionNormalTangentBinormalTexture[] Vertices
+        {
+            get { return vertices; }
+            set { vertices = value; }
+        }
 
         public Terrain(string assetName, uint blockScale, uint heightScale)
         {
@@ -54,12 +56,12 @@ namespace Pirates.Loaders
             uint[] indices = GenerateTerrainIndices();
             numIndices = indices.Length;
 
-            VertexPositionNormalTangentBinormalTexture[] vertices = GenerateTerrainVertices();
-            GenerateTerrainNormals(vertices, indices);
-            GenerateTerrainTangentBinormal(vertices, indices);
+            Vertices = GenerateTerrainVertices();
+            GenerateTerrainNormals(Vertices, indices);
+            GenerateTerrainTangentBinormal(Vertices, indices);
 
-            vbo = new VertexBuffer(BaseClass.GetInstance().GraphicsDevice, VertexPositionNormalTangentBinormalTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
-            vbo.SetData(vertices);
+            vbo = new VertexBuffer(BaseClass.GetInstance().GraphicsDevice, VertexPositionNormalTangentBinormalTexture.VertexDeclaration, Vertices.Length, BufferUsage.WriteOnly);
+            vbo.SetData(Vertices);
 
             ibo = new IndexBuffer(BaseClass.GetInstance().GraphicsDevice, typeof(uint), indices.Length, BufferUsage.WriteOnly);
             ibo.SetData(indices);

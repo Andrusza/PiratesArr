@@ -4,16 +4,40 @@ using Pirates.Shaders;
 
 namespace Pirates.Loaders.Cloud
 {
-    public interface IManager
+    public abstract class Manager
     {
-        Instancer Instancer { get; }
+        private Instancer instancer;
 
-        List<Instance> InstancesList { get; set; }
+        public Instancer Instancer
+        {
+            get { return instancer; }
+            set { instancer = value; }
+        }
 
-        Random Rnd { get; set; }
+        private List<Instance> list = new List<Instance>();
 
-        void Update(float gameTime);
+        public List<Instance> InstancesList
+        {
+            get { return list; }
+            set { list = value; }
+        }
 
-        void Draw(BaseShader shader);
+        private Random rnd = new Random(DateTime.Now.Millisecond);
+
+        public Random Rnd
+        {
+            get { return rnd; }
+            set { rnd = value; }
+        }
+
+        public void Update(float gameTime)
+        {
+            Instancer.Update(gameTime);
+        }
+
+        public void Draw(BaseShader shader)
+        {
+            Instancer.Draw(shader);
+        }
     }
 }

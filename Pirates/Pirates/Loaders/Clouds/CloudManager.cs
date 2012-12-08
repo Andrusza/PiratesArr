@@ -1,49 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Pirates.Loaders.Clouds;
-using Pirates.Shaders;
 
 namespace Pirates.Loaders.Cloud
 {
-    internal class CloudManager : IManager
+    internal class CloudManager : Manager
     {
-        private CloudInstancer cloudsList;
-
-        public Instancer Instancer
-        {
-            get { return cloudsList; }
-        }
-
-        private List<Instance> whisps = new List<Instance>();
-
-        public List<Instance> InstancesList
-        {
-            get { return whisps; }
-            set { whisps = value; }
-        }
-
-        private Random rnd = new Random(DateTime.Now.Millisecond);
-
-        public Random Rnd
-        {
-            get { return rnd; }
-            set { rnd = value; }
-        }
-
         public CloudManager()
         {
-            cloudsList = new CloudInstancer();
-        }
-
-        public void Update(float gameTime)
-        {
-            Instancer.Update(gameTime);
-        }
-
-        public void Draw(BaseShader shader)
-        {
-            Instancer.Draw(shader);
+            Instancer = new CloudInstancer();
         }
 
         public void AddCloud(int whispCount, Vector3 min, Vector3 max, float colorMod, params int[] whispRange)

@@ -1,32 +1,42 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pirates.Shaders;
 
 namespace Pirates.Loaders.ModelsFbx
 {
-    public class ObjectShip : ObjectGeometry
+    public class ObjectShip : ObjectMesh
     {
-        Model fbx;
+        private BoundingBoxRenderer bbRenderer;
+
         public ObjectShip()
+            : base("model")
         {
-            fbx = ContentLoader.Load<Model>(ContentType.FBX, "model");
+            UpdateBoundingBox();
+            bbRenderer = new BoundingBoxRenderer();
+        }
+
+        public void Update()
+        {
+            base.Update();
+            UpdateBoundingBox();
         }
 
         public void Draw(BasicEffect fx)
         {
-            Matrix[] modelTansforms = new Matrix[fbx.Bones.Count];
-            fbx.CopyAbsoluteBoneTransformsTo(modelTansforms);
+            Matrix[] modelTansforms = new Matrix[Fbx.Bones.Count];
+            Fbx.CopyAbsoluteBoneTransformsTo(modelTansforms);
+            int i = 0;
 
-            foreach (ModelMesh mesh in fbx.Meshes)
+            foreach (ModelMesh mesh in Fbx.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
-                    effect.World = modelTansforms[mesh.ParentBone.Index] * modelMatrix;
+                    effect.World = modelTansforms[mesh.ParentBone.Index] * ModelMatrix;
                     effect.View = fx.View;
                     effect.Projection = fx.Projection;
                 }
                 mesh.Draw();
+                bbRenderer.Render(BoundingBoxes[i++], ModelMatrix, fx.View, fx.Projection);
             }
         }
     }

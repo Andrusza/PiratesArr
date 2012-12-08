@@ -1,49 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Pirates.Loaders.Cloud;
-using Pirates.Shaders;
 
 namespace Pirates.Loaders.Rain
 {
-    internal class RainManager : IManager
+    internal class RainManager : Manager
     {
-        private Instancer dropsList;
-
-        public Instancer Instancer
-        {
-            get { return dropsList; }
-        }
-
-        private List<Instance> drops = new List<Instance>();
-
-        public List<Instance> InstancesList
-        {
-            get { return drops; }
-            set { drops = value; }
-        }
-
-        private Random rnd = new Random(DateTime.Now.Millisecond);
-
-        public Random Rnd
-        {
-            get { return rnd; }
-            set { rnd = value; }
-        }
-
         public RainManager()
         {
-            dropsList = new Instancer();
-        }
-
-        public void Update(float gameTime)
-        {
-            Instancer.Update(gameTime);
-        }
-
-        public void Draw(BaseShader shader)
-        {
-            Instancer.Draw(shader);
+            Instancer = new Instancer();
         }
 
         public void AddDrop(int dropsCount, Vector3 min, Vector3 max)

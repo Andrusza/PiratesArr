@@ -6,9 +6,9 @@
 
         public override void Update(float time)
         {
-            x += 0.001f;
+            x += 0.0001f;
 
-            this.Rotate(x, x, 0);
+            this.Rotate(x, 0, 0);
             this.Update();
         }
     }

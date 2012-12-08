@@ -26,7 +26,6 @@ namespace Pirates.Loaders.Cloud
 
             modelMatrix.M13 = scale;
             modelMatrix.M24 = scale;
-
             modelMatrix.M12 = information.X;
             modelMatrix.M23 = information.Y;
             modelMatrix.M34 = information.Z;

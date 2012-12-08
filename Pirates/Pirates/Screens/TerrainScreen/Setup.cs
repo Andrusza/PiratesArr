@@ -49,6 +49,9 @@ namespace Pirates.Screens.Scene
         private RenderTarget2D shadowRenderTarget;
         private Texture2D shadowMap;
 
+        private Plane reflectionPlane;
+        private Matrix reflectionMatrix;
+
         private const float waterHeight = 30.0f;
 
         public TerrainScreen()
@@ -116,15 +119,16 @@ namespace Pirates.Screens.Scene
 
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
+            rs.FillMode = FillMode.WireFrame;
 
             cloudManager = new CloudManager();
             rainManager = new RainManager();
 
-            Vector3 minBox = new Vector3(-5000f, 1200f, -5000f);
-            Vector3 maxBox = new Vector3(5000f, -1200f, 5000f);
+            Vector3 minBox = new Vector3(-5000f, 300f, -5000f);
+            Vector3 maxBox = new Vector3(5000f, 1500f, 5000f);
 
             int[] allCloudSprites = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-            cloudManager.AddCloud(100, minBox, maxBox, 0.75f, allCloudSprites);
+            cloudManager.AddCloud(1000, minBox, maxBox, 0.75f, allCloudSprites);
             cloudManager.Instancer.Update();
 
             minBox = new Vector3(-800, 320f, -800f);
@@ -139,6 +143,8 @@ namespace Pirates.Screens.Scene
             water = new Terrain("map2", 10, 1);
             water.Translate(0, 30, 0);
             water.Update();
+            reflectionPlane = CreatePlane(30, new Vector3(0, -1, 0), true);
+            reflectionMatrix = Matrix.CreateReflection(reflectionPlane);
 
             skydome = new ObjectSkydome(scatteringShader);
             skydome.Scale(1200);
@@ -146,7 +152,8 @@ namespace Pirates.Screens.Scene
             skydome.Update();
 
             ship = new ObjectShip();
-            ship.Scale(0.3f);
+            ship.Scale(0.5f);
+            ship.Rotate(2, new Vector3(0, 1, 0));
             ship.Translate(500, 20, 500);
             ship.Update();
         }
@@ -189,6 +196,7 @@ namespace Pirates.Screens.Scene
 
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
+            rs.FillMode = FillMode.WireFrame;
 
             island = new Terrain("island4", 2, 1);
             water = new Terrain("map2", 1, 1);

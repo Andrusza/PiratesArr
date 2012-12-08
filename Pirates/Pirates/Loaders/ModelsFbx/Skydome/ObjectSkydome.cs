@@ -16,10 +16,10 @@ namespace Pirates.Loaders.ModelsFbx
 
         public void Draw(Scattaring fx)
         {
-            Matrix[] modelTansforms = new Matrix[fbx.Bones.Count];
-            fbx.CopyAbsoluteBoneTransformsTo(modelTansforms);
+            Matrix[] modelTansforms = new Matrix[Fbx.Bones.Count];
+            Fbx.CopyAbsoluteBoneTransformsTo(modelTansforms);
 
-            foreach (ModelMesh mesh in fbx.Meshes)
+            foreach (ModelMesh mesh in Fbx.Meshes)
             {
                 foreach (Effect currentEffect in mesh.Effects)
                 {

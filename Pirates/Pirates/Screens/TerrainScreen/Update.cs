@@ -8,21 +8,16 @@ namespace Pirates.Screens.Scene
         private Matrix view;
         private Vector4 lightPosition;
         private float time = 0;
-        private float x = 0;
 
         public override void Update(GameTime gameTime)
         {
             Input();
             time += gameTime.TotalGameTime.Seconds;
             view = camera.Update();
-            //Console.WriteLine(view.Translation.ToString());
-
-            mvpshader.ViewMatrix = view;
-            mvpshader.WorldMatrix = ship.ModelMatrix;
-            mvpshader.Update(0);
+            //Console.WriteLine(camera.Eye.ToString());
 
             shipShader.View = view;
-            
+
             cloudManager.Instancer.Update(0);
 
             scatteringShader.ViewMatrix = view;
@@ -50,14 +45,14 @@ namespace Pirates.Screens.Scene
             rainShader.Update(time);
 
             islandShader.ViewMatrix = view;
-            islandShader.WorldMatrix = island.WorldMatrix;
+            islandShader.WorldMatrix = island.ModelMatrix;
             islandShader.lightPosition = lightPosition;
             islandShader.Update(0);
 
             Matrix reflectionViewMatrix = CreateReflectionMap();
 
             waterShader.ViewMatrix = view;
-            waterShader.WorldMatrix = water.WorldMatrix;
+            waterShader.WorldMatrix = water.ModelMatrix;
             waterShader.lightPosition = lightPosition;
 
             waterShader.reflectedViewMatrix = reflectionViewMatrix;
@@ -70,6 +65,10 @@ namespace Pirates.Screens.Scene
 
             fogShader.currentFrame = currentFrame;
             fogShader.Update(0);
+
+           
+            ship.Rotate(time * 0.01f, time * 0.001f, 0);
+            ship.Update();
         }
 
         private Plane CreatePlane(float height, Vector3 planeNormalDirection, bool clipSide)
@@ -86,19 +85,18 @@ namespace Pirates.Screens.Scene
             BaseClass.Device.SetRenderTarget(currentFrameRenderTarget);
             {
                 BaseClass.Device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
-
                 BaseClass.Device.DepthStencilState = DepthStencilState.Default;
                 BaseClass.Device.RasterizerState = rs;
 
-                skydome.Draw(scatteringShader);
-                cloudManager.Draw(cloudShader);
+                //skydome.Draw(scatteringShader);
+                //cloudManager.Draw(cloudShader);
 
                 BaseClass.Device.DepthStencilState = DepthStencilState.Default;
                 BaseClass.Device.RasterizerState = rs;
 
                 ship.Draw(shipShader);
-                island.Draw(islandShader);
-                water.Draw(waterShader);
+                //island.Draw(islandShader);
+                //water.Draw(waterShader);
 
                 //rainManager.Draw(rainShader);
             }
@@ -108,10 +106,7 @@ namespace Pirates.Screens.Scene
 
         private Matrix CreateReflectionMap()
         {
-            Plane reflectionPlane = CreatePlane(30, new Vector3(0, -1, 0), true);
-
-            Matrix temp = Matrix.CreateReflection(reflectionPlane);
-            Matrix reflectionViewMatrix = temp * camera.View;
+            Matrix reflectionViewMatrix = reflectionMatrix * camera.View;
 
             scatteringShader.ViewMatrix = reflectionViewMatrix;
             scatteringShader.Update(0);
