@@ -123,7 +123,6 @@
     <Compile Include="Loaders\ModelsFbx\ObjectMesh.cs" />
     <Compile Include="Loaders\ModelsFbx\Ship\ObjectShip.cs" />
     <Compile Include="Loaders\ModelsFbx\Skydome\ObjectSkydome.cs" />
-    <Compile Include="Loaders\Quad\Quad.cs" />
     <Compile Include="Loaders\Rain\RainManager.cs" />
     <Compile Include="Loaders\Terrain\Draw.cs" />
     <Compile Include="Loaders\Terrain\GenerateTerrainIndices.cs" />
@@ -135,6 +134,7 @@
     <Compile Include="Main.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="QuadTree\QuadTree.cs" />
     <Compile Include="Screens\BaseMode.cs" />
     <Compile Include="Screens\TerrainScreen\Draw.cs" />
     <Compile Include="Screens\TerrainScreen\Input.cs" />
@@ -196,9 +196,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="QuadTree\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

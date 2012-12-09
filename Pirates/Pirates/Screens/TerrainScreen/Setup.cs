@@ -10,6 +10,7 @@ using Pirates.Loaders.Rain;
 using Pirates.Shaders;
 using Pirates.Shaders.Rain;
 using Pirates.Utility;
+using Pirates.Colision;
 
 namespace Pirates.Screens.Scene
 {
@@ -139,6 +140,8 @@ namespace Pirates.Screens.Scene
             island = new Terrain("island4", 2, 1);
             island.Translate(0, 0, 0);
             island.Update();
+            island.CreateQuadTree();
+            
 
             water = new Terrain("map2", 10, 1);
             water.Translate(0, 30, 0);

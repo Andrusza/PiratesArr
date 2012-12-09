@@ -1,11 +1,24 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pirates.Colision;
 
 namespace Pirates.Loaders
 {
     public partial class Terrain : ObjectGeometry
     {
         private Texture2D heightMapTexture;
+        private QuadTree quadTree;
+
+        public QuadTree QuadTree
+        {
+            get { return quadTree; }
+            set { quadTree = value; }
+        }
+
+        public void CreateQuadTree()
+        {
+            quadTree = new QuadTree(this.GetVertices());
+        }
 
         private uint vertexCountX;
         private uint vertexCountZ;
@@ -46,6 +59,17 @@ namespace Pirates.Loaders
             this.heightScale = heightScale;
 
             GenerateTerrainMesh();
+        }
+
+        public Vector3[] GetVertices()
+        {
+            Vector3[] list = new Vector3[this.Vertices.Length];
+            int x = 0;
+            foreach (VertexPositionNormalTangentBinormalTexture v in this.Vertices)
+            {
+                list[x++] = v.Position;
+            }
+            return list;
         }
 
         private void GenerateTerrainMesh()
