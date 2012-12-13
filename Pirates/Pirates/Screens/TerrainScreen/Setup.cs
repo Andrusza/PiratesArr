@@ -10,7 +10,6 @@ using Pirates.Loaders.Rain;
 using Pirates.Shaders;
 using Pirates.Shaders.Rain;
 using Pirates.Utility;
-using Pirates.Colision;
 
 namespace Pirates.Screens.Scene
 {
@@ -57,7 +56,7 @@ namespace Pirates.Screens.Scene
 
         public TerrainScreen()
         {
-            camera = new FirstPersonCamera(new Vector3(800, 0, -700));
+            camera = new FirstPersonCamera(new Vector3(800, 0, -515));
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 10000);
 
             islandShader = new MultiTextured();
@@ -138,10 +137,6 @@ namespace Pirates.Screens.Scene
             cloudManager.Instancer.Update();
 
             island = new Terrain("island4", 2, 1);
-            island.Translate(0, 0, 0);
-            island.Update();
-            island.CreateQuadTree();
-            
 
             water = new Terrain("map2", 10, 1);
             water.Translate(0, 30, 0);

@@ -17,8 +17,11 @@ namespace Pirates.Loaders
 
         public void CreateQuadTree()
         {
-            quadTree = new QuadTree(this.GetVertices());
+            //quadTree = new QuadTree(this.GetVertices());
         }
+
+        private float realWidth;
+        private float realHeight;
 
         private uint vertexCountX;
         private uint vertexCountZ;
@@ -55,21 +58,27 @@ namespace Pirates.Loaders
 
             vertexCountX = (uint)heightMapTexture.Width;
             vertexCountZ = (uint)heightMapTexture.Height;
+
             this.blockScale = blockScale;
             this.heightScale = heightScale;
 
+            realHeight = this.blockScale * vertexCountX;
+            realWidth = this.blockScale * vertexCountZ;
+
             GenerateTerrainMesh();
+            GetVerticesAndNormals(out verticesArrray, out normalArray);
         }
 
-        public Vector3[] GetVertices()
+        public void GetVerticesAndNormals(out Vector3[] verticesArray, out Vector3[] normalsArray)
         {
-            Vector3[] list = new Vector3[this.Vertices.Length];
+            verticesArray = new Vector3[this.Vertices.Length];
+            normalsArray = new Vector3[this.Vertices.Length];
             int x = 0;
             foreach (VertexPositionNormalTangentBinormalTexture v in this.Vertices)
             {
-                list[x++] = v.Position;
+                verticesArray[x] = v.Position;
+                normalsArray[x++] = v.Normal;
             }
-            return list;
         }
 
         private void GenerateTerrainMesh()

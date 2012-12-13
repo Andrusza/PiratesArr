@@ -130,6 +130,7 @@
     <Compile Include="Loaders\Terrain\GenerateTerrainTangentBinormal.cs" />
     <Compile Include="Loaders\Terrain\GenerateTerrainVertices.cs" />
     <Compile Include="Loaders\Terrain\Terrain.cs" />
+    <Compile Include="Loaders\Terrain\TerrainColision.cs" />
     <Compile Include="Loaders\Terrain\VertexPositionNormalTangentBinormalTexture.cs" />
     <Compile Include="Main.cs">
       <SubType>Code</SubType>

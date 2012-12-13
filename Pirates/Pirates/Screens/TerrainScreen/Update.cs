@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Pirates.Screens.Scene
 {
@@ -66,6 +67,19 @@ namespace Pirates.Screens.Scene
             fogShader.currentFrame = currentFrame;
             fogShader.Update(0);
 
+            float height;
+            Vector3 normal;
+
+            if (island.IsOnHeightmap(camera.Eye))
+            {
+                island.GetHeightAndNormal(camera.Eye, out height, out normal);
+                Console.WriteLine(height);
+            }
+            else
+            {
+                Console.WriteLine(camera.Eye.ToString());
+            }
+
            
             ship.Rotate(time * 0.01f, time * 0.001f, 0);
             ship.Update();
@@ -95,7 +109,7 @@ namespace Pirates.Screens.Scene
                 BaseClass.Device.RasterizerState = rs;
 
                 ship.Draw(shipShader);
-                //island.Draw(islandShader);
+                island.Draw(islandShader);
                 //water.Draw(waterShader);
 
                 //rainManager.Draw(rainShader);

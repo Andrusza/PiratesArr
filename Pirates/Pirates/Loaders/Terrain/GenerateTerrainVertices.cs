@@ -4,12 +4,16 @@ namespace Pirates.Loaders
 {
     public partial class Terrain
     {
+       
+        private float halfTerrainWidth;
+        private float halfTerrainDepth;
+
         private VertexPositionNormalTangentBinormalTexture[] GenerateTerrainVertices()
         {
             float terrainWidth = (vertexCountX - 1) * blockScale;
             float terrainDepth = (vertexCountZ - 1) * blockScale;
-            float halfTerrainWidth = terrainWidth * 0.5f;
-            float halfTerrainDepth = terrainDepth * 0.5f;
+            halfTerrainWidth = terrainWidth * 0.5f;
+            halfTerrainDepth = terrainDepth * 0.5f;
 
             float tu = 0;
             float tv = 0;
