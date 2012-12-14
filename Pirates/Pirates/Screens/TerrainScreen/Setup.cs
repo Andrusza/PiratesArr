@@ -119,7 +119,7 @@ namespace Pirates.Screens.Scene
 
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
-            rs.FillMode = FillMode.WireFrame;
+            //rs.FillMode = FillMode.WireFrame;
 
             cloudManager = new CloudManager();
             rainManager = new RainManager();
@@ -136,7 +136,7 @@ namespace Pirates.Screens.Scene
             rainManager.AddDrop(250000, minBox, maxBox);
             cloudManager.Instancer.Update();
 
-            island = new Terrain("island4", 2, 1);
+            island = new Terrain("island4", 10, 1);
 
             water = new Terrain("map2", 10, 1);
             water.Translate(0, 30, 0);

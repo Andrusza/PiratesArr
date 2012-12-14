@@ -74,6 +74,7 @@ namespace Pirates.Screens.Scene
             {
                 island.GetHeightAndNormal(camera.Eye, out height, out normal);
                 Console.WriteLine(height);
+                camera.Eye = new Vector3(camera.Eye.X, height, camera.Eye.Z);
             }
             else
             {

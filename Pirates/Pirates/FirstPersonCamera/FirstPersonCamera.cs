@@ -20,9 +20,9 @@ namespace Cameras
         }
 
         private Vector3 eye = new Vector3();
-        private Vector3 xAxis = new Vector3();
-        private Vector3 yAxis = new Vector3();
-        private Vector3 zAxis = new Vector3();
+        private Vector3 xAxis = new Vector3(1,0,0);
+        private Vector3 yAxis = new Vector3(0,1,0);
+        private Vector3 zAxis = new Vector3(0,0,1);
 
         public FirstPersonCamera(Vector3 position)
         {

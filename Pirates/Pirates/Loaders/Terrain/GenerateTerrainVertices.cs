@@ -33,7 +33,7 @@ namespace Pirates.Loaders
 
                     tu += tuDerivative;
                     count++;
-                }
+                 }
                 tv += tvDerivative;
             }
             return vertices;

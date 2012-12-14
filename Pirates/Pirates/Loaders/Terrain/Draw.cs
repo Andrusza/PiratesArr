@@ -7,7 +7,7 @@ namespace Pirates.Loaders
     {
         public void Draw(BaseShader effect)
         {
-            vbo.SetData(this.Vertices);
+          
             foreach (EffectPass pass in effect.Technique.CurrentTechnique.Passes)
             {
                 pass.Apply();

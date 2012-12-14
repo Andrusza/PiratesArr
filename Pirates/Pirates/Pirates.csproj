@@ -114,8 +114,8 @@
     <Compile Include="FirstPersonCamera\Update.cs" />
     <Compile Include="Keyboard\SpecialKeys.cs" />
     <Compile Include="Loaders\ModelsFbx\BoundingBoxRendering.cs" />
-    <Compile Include="Loaders\Clouds\CloudInstancer.cs" />
-    <Compile Include="Loaders\Clouds\CloudManager.cs" />
+    <Compile Include="Loaders\Instancing\Clouds\CloudInstancer.cs" />
+    <Compile Include="Loaders\Instancing\Clouds\CloudManager.cs" />
     <Compile Include="Loaders\Instancing\Instancer.cs" />
     <Compile Include="Loaders\Instancing\Manager.cs" />
     <Compile Include="Loaders\Instancing\Instance.cs" />

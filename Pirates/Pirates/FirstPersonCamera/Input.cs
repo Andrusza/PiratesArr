@@ -19,22 +19,22 @@ namespace Cameras
 
             if (keyState.IsKeyDown(Keys.A))
             {
-                direction += new Vector3(-10.3f, 0, 0);
+                direction += new Vector3(-1f, 0, 0);
             }
 
             if (keyState.IsKeyDown(Keys.D))
             {
-                direction += new Vector3(10.3f, 0, 0);
+                direction += new Vector3(1f, 0, 0);
             }
 
             if (keyState.IsKeyDown(Keys.W))
             {
-                direction += new Vector3(0, 0, 10.3f);
+                direction += new Vector3(0, 0, 1f);
             }
 
             if (keyState.IsKeyDown(Keys.S))
             {
-                direction += new Vector3(0, 0, -10.3f);
+                direction += new Vector3(0, 0, -1f);
             }
             CameraTranslate(direction);
         }
