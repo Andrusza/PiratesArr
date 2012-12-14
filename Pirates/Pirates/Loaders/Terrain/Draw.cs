@@ -10,8 +10,7 @@ namespace Pirates.Loaders
           
             foreach (EffectPass pass in effect.Technique.CurrentTechnique.Passes)
             {
-                pass.Apply();
-                
+                pass.Apply(); 
                 ContentLoader.SetBuffers(ibo, vbo);
             }
         }

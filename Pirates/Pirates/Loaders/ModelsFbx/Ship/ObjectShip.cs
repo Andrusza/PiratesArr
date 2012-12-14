@@ -36,7 +36,7 @@ namespace Pirates.Loaders.ModelsFbx
                     effect.Projection = fx.Projection;
                 }
                 mesh.Draw();
-                bbRenderer.Render(BoundingBoxes[i++], ModelMatrix, fx.View, fx.Projection);
+                //bbRenderer.Render(BoundingBoxes[i++], ModelMatrix, fx.View, fx.Projection);
             }
         }
     }

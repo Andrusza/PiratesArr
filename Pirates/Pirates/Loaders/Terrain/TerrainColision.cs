@@ -35,7 +35,7 @@ namespace Pirates.Loaders
 
             float xNormalized = ((positionOnHeightmap.X + halfTerrainWidth) % blockScale) / blockScale;
             float zNormalized = ((positionOnHeightmap.Z + halfTerrainDepth) % blockScale) / blockScale;
-            Console.WriteLine(PlaceInArray(bottom, left));
+           
 
             float bottomHeight = MathHelper.Lerp(
                 verticesArrray[PlaceInArray(bottom, left)].Y,
@@ -47,7 +47,7 @@ namespace Pirates.Loaders
                 verticesArrray[PlaceInArray(bottom + 1, left + 1)].Y,
                 xNormalized);
 
-            height = MathHelper.Lerp(topHeight, bottomHeight, zNormalized);
+            height = MathHelper.Lerp(bottomHeight, topHeight, zNormalized);
 
             Vector3 bottomNormal = Vector3.Lerp(
                normalArray[PlaceInArray(bottom, left)],
@@ -59,7 +59,7 @@ namespace Pirates.Loaders
                normalArray[PlaceInArray(bottom + 1, left + 1)],
                xNormalized);
 
-            normal = Vector3.Lerp(topNormal, bottomNormal, zNormalized);
+            normal = Vector3.Lerp(bottomNormal, topNormal, zNormalized);
             normal.Normalize();
         }
     }

@@ -11,7 +11,7 @@ namespace Cameras
         private Vector3 dir;
 
         private Quaternion orientation;
-        private Matrix view;
+        public Matrix view;
 
         public Matrix View
         {

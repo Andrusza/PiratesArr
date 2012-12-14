@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace Pirates.Screens.Scene
 {
@@ -70,20 +70,24 @@ namespace Pirates.Screens.Scene
             float height;
             Vector3 normal;
 
-            if (island.IsOnHeightmap(camera.Eye))
+            if (island.IsOnHeightmap(camera.Eye + new Vector3(630, 0, 0)))
             {
-                island.GetHeightAndNormal(camera.Eye, out height, out normal);
+                island.GetHeightAndNormal(camera.Eye + new Vector3(630, 0, 0), out height, out normal);
                 Console.WriteLine(height);
-                camera.Eye = new Vector3(camera.Eye.X, height, camera.Eye.Z);
+                ship.Translate(camera.Eye.X + 630, height, camera.Eye.Z + 0);
+                ship.Update();
+
+                ship.UpVector = normal;
+                ship.RightVector = Vector3.Cross(ship.ForwardVector, ship.UpVector);
+                ship.RightVector = Vector3.Normalize(ship.RightVector);
+
+                ship.ForwardVector = Vector3.Cross(ship.UpVector, ship.RightVector);
+                ship.ForwardVector = Vector3.Normalize(ship.ForwardVector);
             }
             else
             {
                 Console.WriteLine(camera.Eye.ToString());
             }
-
-           
-            ship.Rotate(time * 0.01f, time * 0.001f, 0);
-            ship.Update();
         }
 
         private Plane CreatePlane(float height, Vector3 planeNormalDirection, bool clipSide)
@@ -99,7 +103,7 @@ namespace Pirates.Screens.Scene
         {
             BaseClass.Device.SetRenderTarget(currentFrameRenderTarget);
             {
-                BaseClass.Device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
+                BaseClass.Device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.AliceBlue, 1.0f, 0);
                 BaseClass.Device.DepthStencilState = DepthStencilState.Default;
                 BaseClass.Device.RasterizerState = rs;
 
