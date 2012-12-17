@@ -30,6 +30,11 @@ namespace Pirates.Loaders
             set { modelMatrix.Forward = value; }
         }
 
+        public Matrix RotationMatrix
+        {
+            get { return rotateMatrix; }
+        }
+
         private Matrix scaleMatrix = Matrix.Identity;
         private Matrix rotateMatrix = Matrix.Identity;
         private Matrix translateMatrix = Matrix.Identity;
@@ -62,25 +67,6 @@ namespace Pirates.Loaders
         public void Translate(float x, float y, float z)
         {
             Matrix.CreateTranslation(x, y, z, out translateMatrix);
-        }
-
-        public void Translate(float? x, float? y, float? z)
-        {
-            Vector3 temp = Vector3.Zero;
-            if (x != null)
-            {
-                temp.X += x.Value;
-            }
-
-            if (y != null)
-            {
-                temp.Y += y.Value;
-            }
-
-            if (z != null)
-            {
-                temp.Z += z.Value;
-            }
         }
 
         public void Update()

@@ -70,24 +70,41 @@ namespace Pirates.Screens.Scene
             float height;
             Vector3 normal;
 
-            if (island.IsOnHeightmap(camera.Eye + new Vector3(630, 0, 0)))
-            {
-                island.GetHeightAndNormal(camera.Eye + new Vector3(630, 0, 0), out height, out normal);
-                Console.WriteLine(height);
-                ship.Translate(camera.Eye.X + 630, height, camera.Eye.Z + 0);
-                ship.Update();
+            //if (island.IsOnHeightmap(camera.Eye + new Vector3(630, 0, 0)))
+            //{
+            //    island.GetHeightAndNormal(camera.Eye + new Vector3(630, 0, 0), out height, out normal);
+            //    Console.WriteLine(height);
+            //    ship.Translate(camera.Eye.X + 630, height, camera.Eye.Z + 0);
+            //    ship.Update();
 
-                ship.UpVector = normal;
-                ship.RightVector = Vector3.Cross(ship.ForwardVector, ship.UpVector);
-                ship.RightVector = Vector3.Normalize(ship.RightVector);
+            //ship.UpVector = normal;
+            //ship.RightVector = Vector3.Cross(ship.ForwardVector, ship.UpVector);
+            //ship.RightVector = Vector3.Normalize(ship.RightVector);
 
-                ship.ForwardVector = Vector3.Cross(ship.UpVector, ship.RightVector);
-                ship.ForwardVector = Vector3.Normalize(ship.ForwardVector);
-            }
-            else
-            {
-                Console.WriteLine(camera.Eye.ToString());
-            }
+            //ship.ForwardVector = Vector3.Cross(ship.UpVector, ship.RightVector);
+            //ship.ForwardVector = Vector3.Normalize(ship.ForwardVector);
+            //}
+            //else
+            //{
+            //    Console.WriteLine(camera.Eye.ToString());
+            //}
+
+            Vector3 newPos = Vector3.Zero;
+
+            ship.Rotate(time*0.03f, new Vector3(0, 1, 0));
+            water.GetObjectPositionOnWater(ship, waterShader, out newPos, out normal);
+
+            ship.Translate(newPos);
+            ship.Update();
+
+            ship.UpVector = normal;
+            ship.RightVector = Vector3.Cross(ship.ForwardVector, ship.UpVector);
+            ship.RightVector = Vector3.Normalize(ship.RightVector);
+
+            ship.ForwardVector = Vector3.Cross(ship.UpVector, ship.RightVector);
+            ship.ForwardVector = Vector3.Normalize(ship.ForwardVector);
+
+            Console.WriteLine(newPos.ToString());
         }
 
         private Plane CreatePlane(float height, Vector3 planeNormalDirection, bool clipSide)
@@ -114,8 +131,8 @@ namespace Pirates.Screens.Scene
                 BaseClass.Device.RasterizerState = rs;
 
                 ship.Draw(shipShader);
-                island.Draw(islandShader);
-                //water.Draw(waterShader);
+                //island.Draw(islandShader);
+                water.Draw(waterShader);
 
                 //rainManager.Draw(rainShader);
             }
@@ -135,6 +152,8 @@ namespace Pirates.Screens.Scene
 
             cloudShader.ViewMatrix = reflectionViewMatrix;
             cloudShader.Update(0);
+
+            shipShader.View = reflectionViewMatrix;
 
             islandShader.ViewMatrix = reflectionViewMatrix;
             islandShader.clippingPlane = reflectionPlane;
@@ -166,6 +185,8 @@ namespace Pirates.Screens.Scene
             islandShader.ViewMatrix = view;
             islandShader.clipping = false;
             islandShader.Update(0);
+
+            shipShader.View = view;
 
             reflectionMap = reflectionRenderTarget;
             return reflectionViewMatrix;

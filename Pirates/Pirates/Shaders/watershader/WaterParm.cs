@@ -12,7 +12,7 @@ namespace Pirates.Shaders
         public Vector2 wave_dir;
     };
 
-    public partial class waterShader : BaseShader
+    public partial class WaterShader : BaseShader
     {
         private static Random random = new Random();
 
@@ -26,6 +26,21 @@ namespace Pirates.Shaders
             float theta = (float)random.NextDouble() * 2.0f * (float)Math.PI;
 
             p.wave_dir = new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta));
+            return p;
+        }
+
+        public WaveParameters GenerateNormals(WaveParameters p)
+        {
+            for (int i = 0; i < 300; i++)
+            {
+                float wl = p.wavelength = ((float)random.NextDouble() * 0.5f + 0.3f);
+                float theta = (float)random.NextDouble() * 2.0f * (float)Math.PI;
+
+                p.wave_dir = new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta));
+                p.steepness = 5.0f * ((float)random.NextDouble() * 2.0f + 1.0f);
+                p.speed = 0.05f * (float)Math.Sqrt(MathHelper.Pi / wl);
+                p.kAmpOverLen = 0.03f;
+            }
             return p;
         }
     }

@@ -4,7 +4,7 @@ using Pirates.Loaders;
 
 namespace Pirates.Shaders
 {
-    public partial class waterShader : BaseShader
+    public partial class WaterShader : BaseShader
     {
         public float shininess;
         public float ambientIntensity;
@@ -28,7 +28,21 @@ namespace Pirates.Shaders
         private WaveParameters param;
         private float[] waves;
 
-        public waterShader()
+        public float[] Waves
+        {
+            get { return waves; }
+            set { waves = value; }
+        }
+
+        private float time;
+
+        public float Time
+        {
+            get { return time; }
+            set { time = value * 0.03f; }
+        }
+
+        public WaterShader()
             : base("Water")
         {
             this.Technique.CurrentTechnique = this.Technique.Techniques["Water"];
@@ -77,7 +91,7 @@ namespace Pirates.Shaders
             Technique.Parameters["DiffuseLightColor"].SetValue(diffuseLightColor);
             Technique.Parameters["SpecularLightColor"].SetValue(specularLightColor);
 
-            Technique.Parameters["waves"].SetValue(waves);
+            Technique.Parameters["waves"].SetValue(Waves);
             Technique.Parameters["time"].SetValue(0);
         }
 
@@ -102,7 +116,8 @@ namespace Pirates.Shaders
             Technique.Parameters["MVP"].SetValue(worldMatrix * viewMatrix * projectionMatrix);
             Technique.Parameters["ReflectedMVP"].SetValue(worldMatrix * reflectedViewMatrix * projectionMatrix);
 
-            Technique.Parameters["time"].SetValue(time * 0.03f);
+            this.Time = time;
+            Technique.Parameters["time"].SetValue(this.Time);
         }
     }
 }

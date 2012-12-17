@@ -124,13 +124,14 @@
     <Compile Include="Loaders\ModelsFbx\Ship\ObjectShip.cs" />
     <Compile Include="Loaders\ModelsFbx\Skydome\ObjectSkydome.cs" />
     <Compile Include="Loaders\Rain\RainManager.cs" />
+    <Compile Include="Loaders\Terrain\Colision\WaterColision.cs" />
     <Compile Include="Loaders\Terrain\Draw.cs" />
     <Compile Include="Loaders\Terrain\GenerateTerrainIndices.cs" />
     <Compile Include="Loaders\Terrain\GenerateTerrainNormals.cs" />
     <Compile Include="Loaders\Terrain\GenerateTerrainTangentBinormal.cs" />
     <Compile Include="Loaders\Terrain\GenerateTerrainVertices.cs" />
     <Compile Include="Loaders\Terrain\Terrain.cs" />
-    <Compile Include="Loaders\Terrain\TerrainColision.cs" />
+    <Compile Include="Loaders\Terrain\Colision\TerrainColision.cs" />
     <Compile Include="Loaders\Terrain\VertexPositionNormalTangentBinormalTexture.cs" />
     <Compile Include="Main.cs">
       <SubType>Code</SubType>
