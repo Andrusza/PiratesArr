@@ -73,5 +73,10 @@ namespace Pirates.Loaders
         {
             ModelMatrix = scaleMatrix * rotateMatrix * translateMatrix;
         }
+
+        public void UpdateCenterOfMass()
+        {
+            //ModelMatrix = scaleMatrix * translateMatrix * rotateMatrix  ;
+        }
     }
 }

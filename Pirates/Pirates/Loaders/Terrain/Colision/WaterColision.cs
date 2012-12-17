@@ -45,33 +45,34 @@ namespace Pirates.Loaders
             v3.Normal += normal;
         }
 
-        public void GetObjectPositionOnWater(ObjectGeometry ship, WaterShader shader, out Vector3 height,out Vector3 normal)
+        float x = 0;
+
+        public void GetObjectPositionOnWater(ObjectGeometry obj, WaterShader shader)
         {
-            
-            PositionNormal p11=new PositionNormal();
-            PositionNormal p12=new PositionNormal();
-            PositionNormal p13=new PositionNormal();
-            PositionNormal p21=new PositionNormal();
-            PositionNormal p22=new PositionNormal();
-            PositionNormal p23=new PositionNormal();
-            PositionNormal p31=new PositionNormal();
-            PositionNormal p32=new PositionNormal();
-            PositionNormal p33=new PositionNormal();
+            PositionNormal p11 = new PositionNormal();
+            PositionNormal p12 = new PositionNormal();
+            PositionNormal p13 = new PositionNormal();
+            PositionNormal p21 = new PositionNormal();
+            PositionNormal p22 = new PositionNormal();
+            PositionNormal p23 = new PositionNormal();
+            PositionNormal p31 = new PositionNormal();
+            PositionNormal p32 = new PositionNormal();
+            PositionNormal p33 = new PositionNormal();
 
-            Vector3 position=new Vector3(50,20,100);
-            
+            x+=0.6f;
+            Vector3 position = new Vector3(x, 25, 100);
 
-            p11.Position = CalculatePosition(Vector3.Transform(position + new Vector3(-10, 0, 10),ship.RotationMatrix), shader);
-            p12.Position = CalculatePosition(Vector3.Transform(position + new Vector3(0, 0, 10),ship.RotationMatrix), shader);
-            p13.Position = CalculatePosition(Vector3.Transform(position + new Vector3(10, 0, 10),ship.RotationMatrix), shader);
+            p11.Position = CalculatePosition(Vector3.Transform(position + new Vector3(-10, 0, 10), obj.RotationMatrix), shader);
+            p12.Position = CalculatePosition(Vector3.Transform(position + new Vector3(0, 0, 10), obj.RotationMatrix), shader);
+            p13.Position = CalculatePosition(Vector3.Transform(position + new Vector3(10, 0, 10), obj.RotationMatrix), shader);
 
-            p21.Position = CalculatePosition(Vector3.Transform(position + new Vector3(-10, 0, 0),ship.RotationMatrix), shader);
-            p22.Position = CalculatePosition(Vector3.Transform(position + new Vector3(0, 0, 0),ship.RotationMatrix), shader);
-            p23.Position = CalculatePosition(Vector3.Transform(position + new Vector3(10, 0, 0),ship.RotationMatrix), shader);
+            p21.Position = CalculatePosition(Vector3.Transform(position + new Vector3(-10, 0, 0), obj.RotationMatrix), shader);
+            p22.Position = CalculatePosition(Vector3.Transform(position + new Vector3(0, 0, 0), obj.RotationMatrix), shader);
+            p23.Position = CalculatePosition(Vector3.Transform(position + new Vector3(10, 0, 0), obj.RotationMatrix), shader);
 
-            p31.Position = CalculatePosition(Vector3.Transform(position + new Vector3(-10, 0, -10),ship.RotationMatrix), shader);
-            p32.Position = CalculatePosition(Vector3.Transform(position + new Vector3(0, 0, -10),ship.RotationMatrix), shader);
-            p33.Position = CalculatePosition(Vector3.Transform(position + new Vector3(10, 0, -10),ship.RotationMatrix), shader);
+            p31.Position = CalculatePosition(Vector3.Transform(position + new Vector3(-10, 0, -10), obj.RotationMatrix), shader);
+            p32.Position = CalculatePosition(Vector3.Transform(position + new Vector3(0, 0, -10), obj.RotationMatrix), shader);
+            p33.Position = CalculatePosition(Vector3.Transform(position + new Vector3(10, 0, -10), obj.RotationMatrix), shader);
 
             CalculateNormal(p11, p22, p23);
             CalculateNormal(p11, p12, p23);
@@ -85,10 +86,20 @@ namespace Pirates.Loaders
             CalculateNormal(p22, p32, p33);
             CalculateNormal(p22, p23, p33);
 
-            //height = Vector3.Lerp(p11.Position, p33.Position, 0.5f);
-            height = p22.Position;
-            normal = Vector3.Lerp(p22.Normal, p32.Normal, 0.9f);
-          normal.Normalize();
+            Vector3 newPos = p22.Position;
+            obj.Rotate(shader.Time, new Vector3(0, 1, 0));
+            obj.Translate(newPos);
+            Vector3 normal = p32.Normal;
+            normal.Normalize();
+
+            obj.Update();
+
+            obj.UpVector = normal;
+            obj.RightVector = Vector3.Cross(obj.ForwardVector, obj.UpVector);
+            obj.RightVector = Vector3.Normalize(obj.RightVector);
+
+            obj.ForwardVector = Vector3.Cross(obj.UpVector, obj.RightVector);
+            obj.ForwardVector = Vector3.Normalize(obj.ForwardVector);
         }
     }
 }

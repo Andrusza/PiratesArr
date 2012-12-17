@@ -119,7 +119,7 @@ namespace Pirates.Screens.Scene
 
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
-           // rs.FillMode = FillMode.WireFrame;
+            //rs.FillMode = FillMode.WireFrame;
 
             cloudManager = new CloudManager();
             rainManager = new RainManager();
@@ -150,9 +150,7 @@ namespace Pirates.Screens.Scene
             skydome.Update();
 
             ship = new ObjectShip();
-            //ship.Scale(0.1f);
-            
-            //ship.Translate(--, 130, 0);
+            ship.Scale(0.11f);
             ship.Update();
         }
 
@@ -194,7 +192,7 @@ namespace Pirates.Screens.Scene
 
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
-            //rs.FillMode = FillMode.WireFrame;
+            rs.FillMode = FillMode.WireFrame;
 
             island = new Terrain("island4", 2, 1);
             water = new Terrain("map2", 1, 1);
