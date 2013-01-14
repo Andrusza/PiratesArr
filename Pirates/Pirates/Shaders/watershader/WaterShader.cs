@@ -59,10 +59,10 @@ namespace Pirates.Shaders
             diffuseLightColor = new Vector3(1, 1, 1);
             specularLightColor = new Vector3(0.98f, 0.97f, 0.7f);
 
-            param.wavelength = 175f;
-            param.steepness = 0.5f;
+            param.wavelength = 675f;
+            param.steepness = 0.4f;
             param.speed = 0.0099f;
-            param.kAmpOverLen = 0.002f;
+            param.kAmpOverLen = 0.0009f;
 
             waves = new float[24];
             for (int i = 0; i < 24; i += 6)

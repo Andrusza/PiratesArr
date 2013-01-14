@@ -109,9 +109,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FirstPersonCamera\FirstPersonCamera.cs" />
-    <Compile Include="FirstPersonCamera\Input.cs" />
-    <Compile Include="FirstPersonCamera\Update.cs" />
+    <Compile Include="Copy of FirstPersonCamera\FirstPersonCamera.cs" />
+    <Compile Include="Copy of FirstPersonCamera\Input.cs" />
+    <Compile Include="Copy of FirstPersonCamera\Update.cs" />
+    <Compile Include="Loaders\ModelsFbx\ObjectPhysics.cs" />
+    <Compile Include="Locked3rdPersonCamera\FirstPersonCamera.cs" />
+    <Compile Include="Locked3rdPersonCamera\Input.cs" />
+    <Compile Include="Locked3rdPersonCamera\Update.cs" />
     <Compile Include="Keyboard\SpecialKeys.cs" />
     <Compile Include="Loaders\ModelsFbx\BoundingBoxRendering.cs" />
     <Compile Include="Loaders\Instancing\Clouds\CloudInstancer.cs" />

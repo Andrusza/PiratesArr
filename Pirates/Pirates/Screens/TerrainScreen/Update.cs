@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Pirates.Screens.Scene
@@ -9,11 +8,14 @@ namespace Pirates.Screens.Scene
         private Matrix view;
         private Vector4 lightPosition;
         private float time = 0;
+        private float dt = 0;
 
         public override void Update(GameTime gameTime)
         {
             Input();
             time += gameTime.TotalGameTime.Seconds;
+            
+
             view = camera.Update();
             //Console.WriteLine(camera.Eye.ToString());
 
@@ -58,6 +60,7 @@ namespace Pirates.Screens.Scene
 
             waterShader.reflectedViewMatrix = reflectionViewMatrix;
             waterShader.reflection = reflectionMap;
+
             waterShader.Update(time);
 
             RenderCurrentFrameToTexture();
@@ -67,9 +70,10 @@ namespace Pirates.Screens.Scene
             fogShader.currentFrame = currentFrame;
             fogShader.Update(0);
 
+            ship.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             water.GetObjectPositionOnWater(ship, waterShader);
 
-            Console.WriteLine(camera.Eye.ToString());
+            //Console.WriteLine(camera.Eye.ToString());
         }
 
         private Plane CreatePlane(float height, Vector3 planeNormalDirection, bool clipSide)

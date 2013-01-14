@@ -150,7 +150,7 @@ namespace Pirates.Screens.Scene
             skydome.Update();
 
             ship = new ObjectShip();
-            ship.Scale(0.11f);
+            ship.Translate(100, 20, 100);
             ship.Update();
         }
 

@@ -6,16 +6,22 @@ namespace Pirates.Loaders.ModelsFbx
     public class ObjectShip : ObjectMesh
     {
         private BoundingBoxRenderer bbRenderer;
+        private ObjectPhysics physics;
+        private Vector2 direction = new Vector2(0, 1);
 
         public ObjectShip()
             : base("model")
         {
             UpdateBoundingBox();
             bbRenderer = new BoundingBoxRenderer();
+            physics = new ObjectPhysics(12200);
         }
 
-        public void Update()
+        public void Update(float time)
         {
+            direction = physics.Update(Position2D(), new Vector2(0, 1), direction, time);
+            this.Rotate(ObjectPhysics.VectorToAngle(direction), 0f, 0f);
+            //this.Translate(newPos);
             base.Update();
             UpdateBoundingBox();
         }
@@ -36,7 +42,7 @@ namespace Pirates.Loaders.ModelsFbx
                     effect.Projection = fx.Projection;
                 }
                 mesh.Draw();
-                //bbRenderer.Render(BoundingBoxes[i++], ModelMatrix, fx.View, fx.Projection);
+                // bbRenderer.Render(BoundingBoxes[i++], ModelMatrix, fx.View, fx.Projection);
             }
         }
     }
