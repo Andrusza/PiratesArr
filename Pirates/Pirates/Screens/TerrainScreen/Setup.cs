@@ -10,6 +10,8 @@ using Pirates.Loaders.Rain;
 using Pirates.Shaders;
 using Pirates.Shaders.Rain;
 using Pirates.Utility;
+using Pirates.Weather;
+using Pirates.Physics;
 
 namespace Pirates.Screens.Scene
 {
@@ -30,7 +32,7 @@ namespace Pirates.Screens.Scene
         private CloudShader cloudShader;
         private RainDropsShader rainDropsShader;
         private RainShader rainShader;
-        private Fog fogShader;
+        private Pirates.Shaders.Fog fogShader;
 
         private Terrain island;
         private Terrain water;
@@ -112,7 +114,7 @@ namespace Pirates.Screens.Scene
                 rainDropsShader.InitParameters();
             }
 
-            fogShader = new Fog();
+            fogShader = new Pirates.Shaders.Fog();
             {
                 fogShader.InitParameters();
             }
@@ -137,21 +139,40 @@ namespace Pirates.Screens.Scene
             cloudManager.Instancer.Update();
 
             island = new Terrain("island4", 10, 1);
+           
 
-            water = new Terrain("map2", 10, 1);
-            water.Translate(0, 30, 0);
+            water = new Terrain("map2", 30, 1);
+            water.Translate(0, 40, 0);
             water.Update();
-            reflectionPlane = CreatePlane(30, new Vector3(0, -1, 0), true);
+            reflectionPlane = CreatePlane(40, new Vector3(0, -1, 0), true);
             reflectionMatrix = Matrix.CreateReflection(reflectionPlane);
 
             skydome = new ObjectSkydome(scatteringShader);
-            skydome.Scale(1200);
+            skydome.Scale(3200);
             skydome.Rotate(-90, new Vector3(1, 0, 0));
             skydome.Update();
 
+            Wind.Direction = MathFunctions.AngleToVector(45);
+            Wind.Force = new Vector2(0,0f);
+
             ship = new ObjectShip();
-            ship.Translate(100, 20, 100);
+            ship.Physics.material = MaterialType.Island;
+            ship.Translate(-500, 20, 100);
             ship.Update();
+
+            if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
+            {
+                ship.Physics.material = MaterialType.Island;
+                island.ColisionWithTerrain(ship);
+            }
+            else
+            {
+                ship.Physics.material = MaterialType.Water;
+                water.GetObjectPositionOnWater(ship, waterShader);
+            }
+
+
+            ship.Physics.StartPosition(ship.ModelMatrix.Translation);
         }
 
         public TerrainScreen(SerializationInfo info, StreamingContext ctxt)

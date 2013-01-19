@@ -6,7 +6,7 @@ namespace Pirates.Loaders.ModelsFbx
 {
     public class ObjectSkydome : ObjectMesh
     {
-        private static float SKYDOMESIZE = 1200;
+        private static float SKYDOMESIZE = 3200;
 
         public ObjectSkydome(Scattaring fx)
             : base("skydome4", fx)

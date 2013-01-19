@@ -7,8 +7,8 @@ namespace Cameras
     [Serializable()]
     public partial class FirstPersonCamera : ISerializable
     {
-        private static readonly Vector3 worldY = new Vector3(0, 1, 0);
-        private Vector3 dir;
+        private readonly Vector3 worldY = new Vector3(0, 1, 0);
+        private Vector3 dir = new Vector3(0, 0, 1);
 
         private Quaternion orientation;
         public Matrix view;
@@ -27,7 +27,6 @@ namespace Cameras
         public FirstPersonCamera(Vector3 position)
         {
             this.view = Matrix.Identity;
-            this.dir = new Vector3(0, 0, 1);
             this.orientation = new Quaternion(0, 0, 0, 1);
             this.CameraTranslate(position);
         }
@@ -35,7 +34,6 @@ namespace Cameras
         public FirstPersonCamera(Vector3 position, Quaternion orientation)
         {
             this.view = Matrix.Identity;
-            this.dir = new Vector3(0, 0, 1);
             this.orientation = orientation;
             this.CameraTranslate(position);
         }

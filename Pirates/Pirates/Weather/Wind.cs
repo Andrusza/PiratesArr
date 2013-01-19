@@ -1,6 +1,24 @@
-﻿namespace Pirates.Weather
+﻿using Microsoft.Xna.Framework;
+
+namespace Pirates.Weather
 {
-    internal class Wind
+    public static class Wind
     {
+        private static Vector2 direction;
+        private static Vector2 force;
+
+        public static Vector2 Force
+        {
+            get { return Wind.force; }
+            set { Wind.force = value; }
+        }
+
+        
+
+        public static Vector2 Direction
+        {
+            get { return Wind.direction; }
+            set { Wind.direction = value; }
+        }
     }
 }

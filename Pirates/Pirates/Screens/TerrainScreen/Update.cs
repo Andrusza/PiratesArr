@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pirates.Physics;
 
 namespace Pirates.Screens.Scene
 {
@@ -8,13 +9,13 @@ namespace Pirates.Screens.Scene
         private Matrix view;
         private Vector4 lightPosition;
         private float time = 0;
+        private float oldtime = 0;
         private float dt = 0;
 
         public override void Update(GameTime gameTime)
         {
             Input();
             time += gameTime.TotalGameTime.Seconds;
-            
 
             view = camera.Update();
             //Console.WriteLine(camera.Eye.ToString());
@@ -71,7 +72,17 @@ namespace Pirates.Screens.Scene
             fogShader.Update(0);
 
             ship.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            water.GetObjectPositionOnWater(ship, waterShader);
+            if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
+            {
+                ship.Physics.material = MaterialType.Island;
+                island.ColisionWithTerrain(ship);
+            }
+            else
+            {
+                ship.Physics.material = MaterialType.Water;
+                water.GetObjectPositionOnWater(ship, waterShader);
+            }
+           
 
             //Console.WriteLine(camera.Eye.ToString());
         }
@@ -93,14 +104,14 @@ namespace Pirates.Screens.Scene
                 BaseClass.Device.DepthStencilState = DepthStencilState.Default;
                 BaseClass.Device.RasterizerState = rs;
 
-                //skydome.Draw(scatteringShader);
+                skydome.Draw(scatteringShader);
                 //cloudManager.Draw(cloudShader);
 
                 BaseClass.Device.DepthStencilState = DepthStencilState.Default;
                 BaseClass.Device.RasterizerState = rs;
 
                 ship.Draw(shipShader);
-                //island.Draw(islandShader);
+                island.Draw(islandShader);
                 water.Draw(waterShader);
 
                 //rainManager.Draw(rainShader);

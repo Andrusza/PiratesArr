@@ -1,126 +1,144 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Pirates.Loaders.ModelsFbx;
+using Pirates.Utility;
+using Pirates.Weather;
 
-namespace Pirates.Loaders.ModelsFbx
+namespace Pirates.Physics
 {
-    internal class ObjectPhysics
+    public enum MaterialType
     {
-        private float mass;
-        private Vector3 position;
-        private Vector2 direction;
+        Water, Island
+    };
 
-        private float velocity = 0;
-        private float oldVelocity = 0;
-        private float angularOldVelocity = 0;
-        private float angularVelocity = 0;
-        private float acceleration = 0;
-        private float angularAcceleration = 0;
-        private float inertia = 0;
+    public class ObjectPhysics
+    {
+        private float mass = 0;
+        private Vector3 oldPosition;
 
-        private float thurstForce = 0;
-        private float angularForce = 0f;
+        private float elepasedTime;
+        private float lastElapsed = 1;
+        private float velocity;
 
-        private float length=100f;
-        private float width=20f;
+        public float frictionCoefficient = 0.1f;
+        public float objSlopeX = 0;
+        public float objSlopeZ = 0;
 
-        private float frictionFactor = 0.1f;
-        private Vector2 sailDirection;
-        private Vector2 windDirection = new Vector2(0, 1);
+        private float pitchForce = 0;
+        private float rollForce = 0;
 
-        private float orientationInRadians = 0;
+        private Vector2 forces = Vector2.Zero;
 
-        private float windForce = 100000f;
+        public MaterialType material;
+        public Vector2 acc;
+
+        public Vector2 sailDirection = new Vector2(0, 1);
 
         public ObjectPhysics(float mass)
         {
             this.mass = mass;
         }
 
-        public Vector2 Update(Vector2 position, Vector2 sailDirection, Vector2 direction, float deltaTime)
+        public void StartPosition(Vector3 position)
         {
-            //angularForce -= 0.2f;
-            this.sailDirection = sailDirection;
-            this.direction = direction;
-            return AngularVerlet(direction, deltaTime);
-            //return Verlet(position, deltaTime);
+            oldPosition = position;
         }
 
-        public void Velocity(float deltaTime)
+        public Vector3 Update(ObjectShip ship, float deltaTime)
         {
-            velocity = Forces() / mass * deltaTime + velocity;
+            if (deltaTime > 0.0f)
+            {
+                Vector3 rotation = MathFunctions.ToEuler(ship.ModelMatrix);
+
+                objSlopeX = rotation.Y;
+                objSlopeZ = rotation.Z;
+
+                if (oldPosition.Y < ship.ModelMatrix.Translation.Y) acc = Acceleration(1f);
+                else acc = Acceleration(-1f);
+
+                return Verlet(ship.ModelMatrix.Translation, deltaTime);
+            }
+            else
+            {
+                return ship.ModelMatrix.Translation;
+            }
         }
 
-        public float Forces()
+        public Vector3 Verlet(Vector3 position, float deltaTime)
         {
-            return WindForce() - frictionFactor - AirResistance();
-        }
+            Vector3 tempPosition = position;
 
-        private float FrictionForce()
-        {
-            return (mass * 9.81f) * frictionFactor;
-        }
+            oldPosition = position - deltaTime * (position - oldPosition) / lastElapsed;
 
-        private float AirResistance()
-        {
-            float result = -0.26f * velocity * velocity;
-            Console.WriteLine("air: " + result);
-            return result;
-        }
+            position += (position - oldPosition) + new Vector3(acc.X, 0, acc.Y) * deltaTime * deltaTime;
+            velocity = Vector3.DistanceSquared(position, oldPosition) / deltaTime;
+            Console.WriteLine(velocity);
 
-        private float WindForce()
-        {
-            float dotProduct = Vector2.Dot(windDirection, sailDirection);
-            return dotProduct * windForce;
-        }
+            lastElapsed = deltaTime;
 
-        private Vector2 AngleToVector(float angle)
-        {
-            return new Vector2((float)Math.Sin(angle), (float)Math.Cos(angle));
-        }
-
-        public static float VectorToAngle(Vector2 orientation)
-        {
-            return (float)Math.Atan2(orientation.X, orientation.Y);
-        }
-
-        public float Inertia()
-        {
-            return (mass * length * length) / 24f + (mass * width * width) / 62f;
-        }
-
-        public float AngularForces()
-        {
-            angularForce = Inertia() * angularForce / mass;
-            angularForce = -FrictionForce();
-        }
-
-        public Vector2 Verlet(Vector2 position, float dt)
-        {
-            oldVelocity = velocity;
-            velocity += Forces() / mass * dt;
-            position += direction * ((oldVelocity + velocity) * 0.5f * dt);
+            oldPosition = tempPosition;
             return position;
         }
 
-        public Vector2 AngularVerlet(Vector2 direction, float dt)
+        private Vector2 WindForce()
         {
-            float angle = VectorToAngle(direction);
-            angularOldVelocity = angularVelocity;
-            angularVelocity += AngularForces() / mass * dt;
-            angle += (angularOldVelocity + angularVelocity) * 0.5f * dt;
-            return AngleToVector(angle);
+            float dotProduct = Vector2.Dot(Wind.Direction, sailDirection);
+
+            Vector2 wind = dotProduct * Wind.Force * Wind.Direction;
+            return wind;
+        }
+
+        private Vector2 Acceleration(float x)
+        {
+            if (material == MaterialType.Water)
+            {
+                frictionCoefficient = x * 0.05f;
+                forces = Forces() / (mass);
+                return forces;
+            }
+            else
+            {
+                frictionCoefficient = x * 0.2f;
+                forces = SlopeForces() / (mass);
+                return forces;
+            }
+        }
+
+        private Vector2 Forces()
+        {
+            forces += WindForce();
+            if (forces.Length() != 0)
+            {
+                float pitchForce = 0;
+                float rollForce = 0;
+
+                pitchForce = mass * 9.81f * ((float)Math.Sin(objSlopeX) + frictionCoefficient * (float)Math.Cos(objSlopeX));
+
+                rollForce = mass * 9.81f * ((float)Math.Sin(objSlopeZ) + frictionCoefficient * (float)Math.Cos(objSlopeZ));
+
+                forces += AirResistance(forces);
+                return forces;
+            }
+            else return Vector2.Zero;
+        }
+
+        private Vector2 SlopeForces()
+        {
+            pitchForce += mass * 9.81f * ((float)Math.Sin(objSlopeX) + frictionCoefficient * (float)Math.Cos(objSlopeX));
+            rollForce += mass * 9.81f * ((float)Math.Sin(objSlopeZ) + frictionCoefficient * (float)Math.Cos(objSlopeZ));
+
+            return new Vector2(pitchForce, rollForce);
+        }
+
+        private Vector2 AirResistance(Vector2 wind)
+        {
+            float resistance = 0.00025f * velocity * velocity;
+            wind.X -= resistance;
+            wind.Y -= resistance;
+
+            if (wind.X < 0) wind.X = 0f;
+            if (wind.Y < 0) wind.Y = 0f;
+            return wind;
         }
     }
 }
-
-//velX = x - lastX
-//velY = y - lastY
-
-//nextX = x + velX + accX * timestepSq
-//nextY = y + velY + accY * timestepSq
-
-//lastX = x
-//lastY = y
-
-//x = nextX
-//y = nextY

@@ -79,11 +79,11 @@ namespace Pirates.Shaders
             Technique.Parameters["hazeTopAltitude"].SetValue(hazeTopAltitude);
         }
 
-        private Vector4 GetLightPosition(double Theta, double Phi)
+        private Vector4 GetLightPosition(double theta, double Phi)
         {
-            float y = (float)Math.Cos((double)Theta);
-            float x = (float)(Math.Sin((double)Theta) * Math.Cos(Phi));
-            float z = (float)(Math.Sin((double)Theta) * Math.Sin(Phi));
+            float y = (float)Math.Cos((double)theta);
+            float x = (float)(Math.Sin((double)theta) * Math.Cos(Phi));
+            float z = (float)(Math.Sin((double)theta) * Math.Sin(Phi));
             float w = 1.0f;
 
             return new Vector4(x, y, z, w) * skydomeSize;

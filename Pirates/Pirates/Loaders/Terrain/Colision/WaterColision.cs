@@ -59,7 +59,9 @@ namespace Pirates.Loaders
             PositionNormal p32 = new PositionNormal();
             PositionNormal p33 = new PositionNormal();
 
-            Vector3 position = new Vector3(100,20,100);
+            Vector3 position = obj.ModelMatrix.Translation;
+            position.Y = 20;
+           
 
             p11.Position = CalculatePosition(Vector3.Transform(position + new Vector3(-5, 0, 5), obj.RotationMatrix), shader);
             p12.Position = CalculatePosition(Vector3.Transform(position + new Vector3(0, 0, 5), obj.RotationMatrix), shader);
@@ -86,7 +88,7 @@ namespace Pirates.Loaders
             CalculateNormal(p22, p23, p33);
 
           
-            obj.Translate(p22.Position);
+            obj.Translate(new Vector3(position.X,p22.Position.Y,position.Z));
             obj.Update();
 
             obj.UpVector = p22.Normal;

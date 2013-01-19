@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pirates.Physics;
 
 namespace Pirates.Loaders.ModelsFbx
 {
@@ -7,21 +8,26 @@ namespace Pirates.Loaders.ModelsFbx
     {
         private BoundingBoxRenderer bbRenderer;
         private ObjectPhysics physics;
-        private Vector2 direction = new Vector2(0, 1);
+
+        public ObjectPhysics Physics
+        {
+            get { return physics; }
+            set { physics = value; }
+        }
+ 
 
         public ObjectShip()
             : base("model")
         {
             UpdateBoundingBox();
             bbRenderer = new BoundingBoxRenderer();
-            physics = new ObjectPhysics(12200);
+            physics = new ObjectPhysics(1000);
         }
 
         public void Update(float time)
         {
-            direction = physics.Update(Position2D(), new Vector2(0, 1), direction, time);
-            this.Rotate(ObjectPhysics.VectorToAngle(direction), 0f, 0f);
-            //this.Translate(newPos);
+            Vector3 newPos = Physics.Update(this, time);
+            this.Translate(newPos);
             base.Update();
             UpdateBoundingBox();
         }

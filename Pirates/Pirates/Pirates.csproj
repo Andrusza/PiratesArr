@@ -163,6 +163,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utility\FpsCounter.cs" />
+    <Compile Include="Utility\MathFunctions.cs" />
     <Compile Include="Utility\Serializer.cs" />
     <Compile Include="Weather\Fog.cs" />
     <Compile Include="Weather\Rain.cs" />
