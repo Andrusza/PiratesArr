@@ -21,7 +21,7 @@ namespace Pirates.Loaders.ModelsFbx
         {
             UpdateBoundingBox();
             bbRenderer = new BoundingBoxRenderer();
-            physics = new ObjectPhysics(1000);
+            physics = new ObjectPhysics(50000);
         }
 
         public void Update(float time)

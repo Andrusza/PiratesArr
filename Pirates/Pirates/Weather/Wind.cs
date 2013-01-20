@@ -5,9 +5,9 @@ namespace Pirates.Weather
     public static class Wind
     {
         private static Vector2 direction;
-        private static Vector2 force;
+        private static float force;
 
-        public static Vector2 Force
+        public static float Force
         {
             get { return Wind.force; }
             set { Wind.force = value; }

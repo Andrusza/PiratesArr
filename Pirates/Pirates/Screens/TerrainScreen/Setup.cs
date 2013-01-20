@@ -58,7 +58,7 @@ namespace Pirates.Screens.Scene
 
         public TerrainScreen()
         {
-            camera = new FirstPersonCamera(new Vector3(800, 0, -515));
+            camera = new FirstPersonCamera(new Vector3(867, 198, -1215));
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 10000);
 
             islandShader = new MultiTextured();
@@ -153,11 +153,10 @@ namespace Pirates.Screens.Scene
             skydome.Update();
 
             Wind.Direction = MathFunctions.AngleToVector(45);
-            Wind.Force = new Vector2(0,0f);
+            Wind.Force = 1000000f;
 
             ship = new ObjectShip();
-            ship.Physics.material = MaterialType.Island;
-            ship.Translate(-500, 20, 100);
+            ship.Translate(-288, 20, 786);
             ship.Update();
 
             if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
@@ -172,7 +171,7 @@ namespace Pirates.Screens.Scene
             }
 
 
-            ship.Physics.StartPosition(ship.ModelMatrix.Translation);
+         
         }
 
         public TerrainScreen(SerializationInfo info, StreamingContext ctxt)
