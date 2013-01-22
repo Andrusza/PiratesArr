@@ -14,20 +14,18 @@ namespace Pirates.Loaders.ModelsFbx
             get { return physics; }
             set { physics = value; }
         }
- 
 
         public ObjectShip()
             : base("model")
         {
             UpdateBoundingBox();
             bbRenderer = new BoundingBoxRenderer();
-            physics = new ObjectPhysics(50000);
         }
 
         public void Update(float time)
         {
-            Vector3 newPos = Physics.Update(this, time);
-            this.Translate(newPos);
+            Vector3 newPos = Physics.Update(this.ModelMatrix, time);
+            this.Translate(newPos.X,this.ModelMatrix.Translation.Y,newPos.Z);
             base.Update();
             UpdateBoundingBox();
         }
@@ -48,7 +46,7 @@ namespace Pirates.Loaders.ModelsFbx
                     effect.Projection = fx.Projection;
                 }
                 mesh.Draw();
-                bbRenderer.Render(BoundingBoxes[i++], ModelMatrix, fx.View, fx.Projection);
+                //bbRenderer.Render(BoundingBoxes[i++], ModelMatrix, fx.View, fx.Projection);
             }
         }
     }

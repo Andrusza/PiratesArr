@@ -40,5 +40,10 @@ namespace Pirates.Utility
             altitude = Math.Asin(m.M23);
             return new Vector3((float)heading, (float)bank, (float)altitude);
         }
+
+        public static Vector3 Abs(Vector3 vec)
+        {
+            return new Vector3(Math.Abs(vec.X), Math.Abs(vec.Y), Math.Abs(vec.Z));
+        }
     }
 }

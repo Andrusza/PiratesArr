@@ -79,8 +79,8 @@ namespace Pirates.Screens.Scene
             }
             else
             {
-                ship.Physics.material = MaterialType.Water;
-                water.GetObjectPositionOnWater(ship, waterShader);
+                //ship.Physics.material = MaterialType.Water;
+                //water.GetObjectPositionOnWater(ship, waterShader);
             }
            
 

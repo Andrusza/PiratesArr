@@ -121,7 +121,7 @@ namespace Pirates.Screens.Scene
 
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
-            rs.FillMode = FillMode.WireFrame;
+            //rs.FillMode = FillMode.WireFrame;
 
             cloudManager = new CloudManager();
             rainManager = new RainManager();
@@ -153,11 +153,12 @@ namespace Pirates.Screens.Scene
             skydome.Update();
 
             Wind.Direction = MathFunctions.AngleToVector(45);
-            Wind.Force = 1000000f;
+            //Wind.Force = 1000000f;
 
             ship = new ObjectShip();
-            ship.Translate(-288, 20, 786);
+            ship.Translate(-288, 20, -486);
             ship.Update();
+            ship.Physics = new ObjectPhysics(50, ship.ModelMatrix);
 
             if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
             {

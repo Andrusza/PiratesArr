@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Pirates.Loaders.ModelsFbx;
 using Pirates.Utility;
 using Pirates.Weather;
 
@@ -17,7 +16,7 @@ namespace Pirates.Physics
         private float objSlopeZ;
 
         private Vector3 oldPosition;
-        private Vector2 acc;
+        private Vector3 acc;
 
         private float mass;
 
@@ -28,110 +27,119 @@ namespace Pirates.Physics
         private float pitchForce = 0;
         private float rollForce = 0;
         private Vector3 velocity = Vector3.Zero;
-        private bool objStaticX = true;
-        private bool objStaticZ = true;
+        private bool objStatic = true;
+        private Vector3 forceOnObject = Vector3.Zero;
+        private Vector3 vDir = Vector3.Zero;
 
         private Vector2 wind;
 
         private Vector2 sailDirection = new Vector2(0, 1);
 
-        public void StartPosition(ObjectShip ship, float x)
-        {
-            Vector3 rotation = MathFunctions.ToEuler(ship.ModelMatrix);
-
-            objSlopeX = 0;
-            objSlopeZ = 0;
-
-            acc = Acceleration(x);
-            oldPosition = ship.ModelMatrix.Translation + new Vector3(-acc.X, 0, -acc.Y);
-            objStaticX = false;
-            objStaticZ = false;
-        }
-
-        public ObjectPhysics(float mass)
+        public ObjectPhysics(float mass, Matrix modelMatrix)
         {
             this.mass = mass;
+            frictionCoefficient = 0.35f;
         }
 
-        public Vector3 Update(ObjectShip ship, float deltaTime)
+        private Vector3 ForcesOnStatic(Vector2 forces, Matrix modelMatrix)
+        {
+            Vector3 rotation = MathFunctions.ToEuler(modelMatrix);
+            objSlopeX = rotation.Y;
+            objSlopeZ = rotation.Z;
+            forceOnObject = Vector3.Zero;
+
+            float frictionX = mass * 9.81f * frictionCoefficient * (float)Math.Cos(objSlopeX);
+            float frictionZ = mass * 9.81f * frictionCoefficient * (float)Math.Cos(objSlopeZ);
+
+            float forceX = mass * 9.81f * (float)Math.Sin(objSlopeX) + forces.X;
+            float forceZ = mass * 9.81f * (float)Math.Sin(objSlopeZ) + forces.Y;
+
+            if (Math.Abs(forceX) > Math.Abs(frictionX))
+            {
+                objStatic = false;
+                forceX += frictionX;
+            }
+            else forceX = 0;
+
+            if (Math.Abs(forceZ) > Math.Abs(frictionZ))
+            {
+                objStatic = false;
+                forceZ += frictionZ;
+            }
+            else forceZ = 0;
+
+            if (forceX < 0) vDir.X = -1; else vDir.X = 1;
+            if (forceZ < 0) vDir.Z = 1; else vDir.Z = 1;
+
+            //Console.WriteLine(forceX + " " + forceZ);
+            return new Vector3(forceX, 0, forceZ);
+        }
+
+        public Vector3 ForcesInMotion(Matrix modelmatrix)
+        {
+            Vector3 rotation = MathFunctions.ToEuler(modelmatrix);
+            objSlopeX = rotation.Y;
+            objSlopeZ = rotation.Z;
+
+            if (oldPosition.Y > modelmatrix.Translation.Y)
+            {
+                float forceX = 0;
+                float forceZ = 0;
+                if (velocity.X > 0) forceX = (mass * 9.81f * ((float)Math.Sin(objSlopeX) + frictionCoefficient * (float)Math.Cos(objSlopeX)));
+                if (velocity.Z > 0) forceZ = (mass * 9.81f * ((float)Math.Sin(objSlopeZ) + frictionCoefficient * (float)Math.Cos(objSlopeZ)));
+                //Console.WriteLine(objSlopeX);
+                return new Vector3(forceX, 0, forceZ);
+            }
+            else
+            {
+                float forceX = 0;
+                float forceZ = 0;
+                if (velocity.X > 0) forceX = (mass * 9.81f * ((float)Math.Sin(-objSlopeX) + frictionCoefficient  * (float)Math.Cos(-objSlopeX)));
+                if (velocity.Z > 0) forceZ = (mass * 9.81f * ((float)Math.Sin(-objSlopeZ) + frictionCoefficient  * (float)Math.Cos(-objSlopeZ)));
+                Console.WriteLine("UP");
+                return new Vector3(forceX, 0, forceZ);
+            }
+        }
+
+        public Vector3 Update(Matrix modelMatrix, float deltaTime)
         {
             if (deltaTime > 0.0f)
             {
-                Vector3 rotation = MathFunctions.ToEuler(ship.ModelMatrix);
-
-                //objSlopeX = Math.Abs(rotation.Y);
-                //objSlopeZ = Math.Abs(rotation.Z);
-
-                objSlopeX = 0;
-                objSlopeZ = 0;
-
-
-                if (objStaticX && objStaticZ)
+                if (objStatic)
                 {
-                    StartPosition(ship, -1f);
-                    pitchForce = 0;
-                    rollForce = 0;
-                    acc = Acceleration(-1f);
-                }
-
-                if (!objStaticX || !objStaticZ)
-                {
-                    if (oldPosition.Y < ship.ModelMatrix.Translation.Y)
+                    forceOnObject = Vector3.Zero;
+                    forceOnObject += ForcesOnStatic(new Vector2(Wind.Force, 0), modelMatrix);
+                    acc = forceOnObject / mass;
+                    oldPosition = modelMatrix.Translation - acc * deltaTime * deltaTime;
+                    if (acc.Length() != 0)
                     {
-                        acc = Acceleration(1f);
+                        return Verlet(modelMatrix.Translation, deltaTime);
                     }
-                    else
-                    {
-                        acc = Acceleration(-1f);
-                    }
+                    return modelMatrix.Translation;
                 }
-
-                if (!objStaticX || !objStaticZ)
+                else
                 {
-                    return Verlet(ship.ModelMatrix.Translation, deltaTime);
+                    if (velocity.X > 0 || velocity.Z > 0)
+                    {
+                        forceOnObject += ForcesInMotion(modelMatrix);
+                        //Console.WriteLine(forceOnObject.X);
+                        acc = forceOnObject / mass * 0.005f;
+                        return Verlet(modelMatrix.Translation, deltaTime);
+                    }
+
+                    velocity = Vector3.Zero;
+                    objStatic = true;
+                    return modelMatrix.Translation;
                 }
-                return ship.ModelMatrix.Translation;
             }
-            else
-            {
-                return ship.ModelMatrix.Translation;
-            }
-        }
-
-        public Vector2 Acceleration(float x)
-        {
-            if (material == MaterialType.Water)
-            {
-                frictionCoefficient = x * 0.05f;
-                acc = (Forces(x) / mass) * 0.005f;
-                Console.WriteLine(acc.ToString());
-                return acc;
-            }
-            else
-            {
-                frictionCoefficient = x * 0.35f;
-                acc = (SlopeForces(x) / mass) * 0.005f;
-                //Console.WriteLine(acc.ToString());
-                return acc;
-            }
-        }
-
-        public Vector2 Forces(float x)
-        {
-            Vector2 waves = SlopeForces(x) * 3f;
-            // Console.WriteLine(waves.X);
-            wind += WindForce();
-            // Console.WriteLine(waves.X);
-            Vector2 airResistance = AirResistance(wind);
-            return wind;
+            else return modelMatrix.Translation;
         }
 
         private Vector2 WindForce()
         {
             float dotProduct = Vector2.Dot(Wind.Direction, sailDirection);
-            Wind.Force -= 1000;
             float wind = dotProduct * Wind.Force;
-            return sailDirection* wind;
+            return sailDirection * wind;
         }
 
         private Vector2 AirResistance(Vector2 wind)
@@ -141,63 +149,13 @@ namespace Pirates.Physics
             return wind;
         }
 
-        public Vector2 SlopeForces(float x)
-        {
-            pitchForce += -x * (mass * 9.81f * ((float)Math.Sin(objSlopeX) + frictionCoefficient * (float)Math.Cos(objSlopeX)));
-            rollForce += -x * (mass * 9.81f * ((float)Math.Sin(objSlopeZ) + frictionCoefficient * (float)Math.Cos(objSlopeZ)));
-
-            if (objStaticX || objStaticZ)
-            {
-                if (objStaticX)
-                {
-                    if (rollForce < 0)
-                    {
-                        rollForce = 0;
-                    }
-                    else
-                    {
-                        objStaticX = false;
-                    }
-                }
-
-                if (objStaticZ)
-                {
-                    if (pitchForce < 0)
-                    {
-                        pitchForce = 0;
-                    }
-                    else
-                    {
-                        objStaticZ = false;
-                    }
-                }
-            }
-
-            if (!objStaticX || !objStaticZ)
-            {
-                if (velocity.Z < 0)
-                {
-                    objStaticX = true;
-                    rollForce = 0;
-                    velocity.Z = 0;
-                }
-
-                if (velocity.X < 0)
-                {
-                    objStaticZ = true;
-                    pitchForce = 0;
-                    velocity.X = 0;
-                }
-            }
-            return new Vector2(rollForce, pitchForce);
-        }
-
         public Vector3 Verlet(Vector3 position, float deltaTime)
         {
-            Vector3 nextPosition = position + (position - oldPosition) + new Vector3(acc.Y, 0, acc.X) * deltaTime * deltaTime;
+            Vector3 nextPosition = position + (position - oldPosition) + acc * deltaTime * deltaTime;
             oldPosition = position;
-            velocity += new Vector3(acc.Y, 0, acc.X) * deltaTime;
-            //Console.WriteLine(velocity.ToString());
+            velocity += (vDir * acc) * deltaTime;
+            Console.WriteLine(velocity.X.ToString());
+            //Console.WriteLine(position.Y);
 
             return nextPosition;
         }
