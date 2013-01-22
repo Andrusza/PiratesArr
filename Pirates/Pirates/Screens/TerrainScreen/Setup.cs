@@ -121,7 +121,7 @@ namespace Pirates.Screens.Scene
 
             rs = new RasterizerState();
             rs.CullMode = CullMode.None;
-            //rs.FillMode = FillMode.WireFrame;
+            rs.FillMode = FillMode.WireFrame;
 
             cloudManager = new CloudManager();
             rainManager = new RainManager();

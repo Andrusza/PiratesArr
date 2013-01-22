@@ -113,6 +113,7 @@
     <Compile Include="Copy of FirstPersonCamera\Input.cs" />
     <Compile Include="Copy of FirstPersonCamera\Update.cs" />
     <Compile Include="Loaders\ModelsFbx\ObjectPhysics.cs" />
+    <Compile Include="Loaders\Terrain\Colision\GJK.cs" />
     <Compile Include="Locked3rdPersonCamera\FirstPersonCamera.cs" />
     <Compile Include="Locked3rdPersonCamera\Input.cs" />
     <Compile Include="Locked3rdPersonCamera\Update.cs" />
