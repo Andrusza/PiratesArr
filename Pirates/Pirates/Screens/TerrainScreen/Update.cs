@@ -73,19 +73,19 @@ namespace Pirates.Screens.Scene
 
             if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
             {
-                ship.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-                ship.Physics.FrictionCoefficient = 0.30f;
-                Wind.Force = 0;
-                island.ColisionWithTerrain(ship);
+                //ship.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+                //ship.Physics.FrictionCoefficient = 0.30f;
+                //Wind.Force = 0;
+                //island.ColisionWithTerrain(ship);
             }
             else
             {
-                ship.Rotate(120, 0, 0);
-                ship.Update();
-                ship.Physics.FrictionCoefficient = 0.10f;
-                //Wind.Force = 1000;
+                //ship.Rotate(MathHelper.ToRadians(time*0.01f), 0, 0);
+                //ship.Update();
+                //ship.Physics.FrictionCoefficient = 0.10f;
+                Wind.Force = 1000;
                 water.GetObjectPositionOnWater(ship, waterShader);
-                ship.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+                //ship.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             //Console.WriteLine(camera.Eye.ToString());

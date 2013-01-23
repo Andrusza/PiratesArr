@@ -24,7 +24,7 @@ namespace Pirates.Loaders
 
                 Vector2 a = new Vector2(shader.Waves[i + 4], shader.Waves[i + 5]);
                 Vector2 b = new Vector2(position.X, position.Z);
-                float term = omega * Vector2.Dot(a, b) + phi * shader.Time;
+                float term = omega * Vector2.Dot(a, b) + phi * (shader.Time);
 
                 float C = (float)Math.Cos(term);
                 float S = (float)Math.Sin(term);
@@ -60,7 +60,7 @@ namespace Pirates.Loaders
             PositionNormal p33 = new PositionNormal();
 
             Vector3 position = obj.ModelMatrix.Translation;
-            position.Y = 25;
+            position.Y = 33;
            
 
             p11.Position = CalculatePosition(Vector3.Transform(position + new Vector3(-5, 0, 5), obj.RotationMatrix), shader);
@@ -89,6 +89,7 @@ namespace Pirates.Loaders
 
           
             obj.Translate(new Vector3(position.X,p22.Position.Y,position.Z));
+            obj.Rotate(shader.Time, new Vector3(0, 1, 0));
             obj.Update();
 
             obj.UpVector = p22.Normal;

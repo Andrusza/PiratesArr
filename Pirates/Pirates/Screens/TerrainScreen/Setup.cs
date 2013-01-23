@@ -7,11 +7,11 @@ using Pirates.Loaders;
 using Pirates.Loaders.Cloud;
 using Pirates.Loaders.ModelsFbx;
 using Pirates.Loaders.Rain;
+using Pirates.Physics;
 using Pirates.Shaders;
 using Pirates.Shaders.Rain;
 using Pirates.Utility;
 using Pirates.Weather;
-using Pirates.Physics;
 
 namespace Pirates.Screens.Scene
 {
@@ -139,7 +139,6 @@ namespace Pirates.Screens.Scene
             cloudManager.Instancer.Update();
 
             island = new Terrain("island4", 10, 1);
-           
 
             water = new Terrain("map2", 30, 1);
             water.Translate(0, 40, 0);
@@ -156,25 +155,20 @@ namespace Pirates.Screens.Scene
             //Wind.Force = 1000000f;
 
             ship = new ObjectShip();
-            ship.Translate(-88, 20, 286);
+            ship.Translate(488, 20, 286);
             ship.Update();
-            ship.Physics = new ObjectPhysics(50, ship.ModelMatrix);
+            //ship.Physics = new ObjectPhysics(50, ship.ModelMatrix);
 
-            if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
-            {
-                ship.Physics.FrictionCoefficient = 0.30f;
-                island.ColisionWithTerrain(ship);
-            }
-            else
-            {
-                
-                ship.Physics.FrictionCoefficient = 0.15f;
-                water.GetObjectPositionOnWater(ship, waterShader);
-            }
-           
-            
-
-         
+            //if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
+            //{
+            //    ship.Physics.FrictionCoefficient = 0.30f;
+            //    island.ColisionWithTerrain(ship);
+            //}
+            //else
+            //{
+            //    ship.Physics.FrictionCoefficient = 0.15f;
+            //    water.GetObjectPositionOnWater(ship, waterShader);
+            //}
         }
 
         public TerrainScreen(SerializationInfo info, StreamingContext ctxt)
