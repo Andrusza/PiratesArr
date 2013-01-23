@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pirates.Physics;
+using Pirates.Weather;
 
 namespace Pirates.Screens.Scene
 {
@@ -71,18 +71,22 @@ namespace Pirates.Screens.Scene
             fogShader.currentFrame = currentFrame;
             fogShader.Update(0);
 
-            ship.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
             {
-                ship.Physics.material = MaterialType.Island;
+                ship.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+                ship.Physics.FrictionCoefficient = 0.30f;
+                Wind.Force = 0;
                 island.ColisionWithTerrain(ship);
             }
             else
             {
-                //ship.Physics.material = MaterialType.Water;
-                //water.GetObjectPositionOnWater(ship, waterShader);
+                ship.Rotate(120, 0, 0);
+                ship.Update();
+                ship.Physics.FrictionCoefficient = 0.10f;
+                //Wind.Force = 1000;
+                water.GetObjectPositionOnWater(ship, waterShader);
+                ship.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
-           
 
             //Console.WriteLine(camera.Eye.ToString());
         }

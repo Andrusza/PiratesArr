@@ -20,7 +20,7 @@ namespace Pirates.Loaders
             {
                 int left = ((int)positionOnHeightmap.X + (int)halfTerrainWidth) / (int)blockScale;
                 int bottom = ((int)positionOnHeightmap.Z + (int)halfTerrainDepth) / (int)blockScale;
-                if (verticesArrray[PlaceInArray(bottom, left)].Y >= 0f)
+                if (verticesArrray[PlaceInArray(bottom, left)].Y > 0f)
                 {
                     return true;
                 }

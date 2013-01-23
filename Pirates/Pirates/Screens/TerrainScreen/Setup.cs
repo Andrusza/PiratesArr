@@ -156,21 +156,23 @@ namespace Pirates.Screens.Scene
             //Wind.Force = 1000000f;
 
             ship = new ObjectShip();
-            ship.Translate(-288, 20, -486);
+            ship.Translate(-88, 20, 286);
             ship.Update();
             ship.Physics = new ObjectPhysics(50, ship.ModelMatrix);
 
             if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
             {
-                ship.Physics.material = MaterialType.Island;
+                ship.Physics.FrictionCoefficient = 0.30f;
                 island.ColisionWithTerrain(ship);
             }
             else
             {
-                ship.Physics.material = MaterialType.Water;
+                
+                ship.Physics.FrictionCoefficient = 0.15f;
                 water.GetObjectPositionOnWater(ship, waterShader);
             }
-
+           
+            
 
          
         }

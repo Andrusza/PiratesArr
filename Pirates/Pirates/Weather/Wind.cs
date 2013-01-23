@@ -13,8 +13,6 @@ namespace Pirates.Weather
             set { Wind.force = value; }
         }
 
-        
-
         public static Vector2 Direction
         {
             get { return Wind.direction; }
