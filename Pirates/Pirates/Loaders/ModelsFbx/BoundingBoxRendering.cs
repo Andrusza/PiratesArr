@@ -22,7 +22,6 @@ namespace Pirates.Loaders
             0,3,7,
             4,6,5,
             4,7,6,
-
         };
 
         public BoundingBoxRenderer()
@@ -36,9 +35,8 @@ namespace Pirates.Loaders
             effect.LightingEnabled = false;
         }
 
-        public void Render(BoundingBoxOOB box,Matrix model,Matrix view,Matrix projection)
+        public void Render(BoundingBoxOOB box, Matrix model, Matrix view, Matrix projection)
         {
-
             Vector3[] corners = box.Corners;
             for (int i = 0; i < 8; i++)
             {

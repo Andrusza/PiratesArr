@@ -8,6 +8,8 @@ namespace Pirates.Loaders.ModelsFbx
     {
         private BoundingBoxRenderer bbRenderer;
         private ObjectPhysics physics;
+        public Vector2 sailDirection=new Vector2(0,1);
+        public float sialHeight = 0;
 
         public ObjectPhysics Physics
         {
@@ -29,7 +31,7 @@ namespace Pirates.Loaders.ModelsFbx
             base.Update();
             UpdateBoundingBox();
         }
-
+        int i=0;
         public void Draw(BasicEffect fx)
         {
             Matrix[] modelTansforms = new Matrix[Fbx.Bones.Count];
@@ -46,7 +48,7 @@ namespace Pirates.Loaders.ModelsFbx
                     effect.Projection = fx.Projection;
                 }
                 mesh.Draw();
-                //bbRenderer.Render(BoundingBoxes[i++], ModelMatrix, fx.View, fx.Projection);
+                bbRenderer.Render(BoundingBoxes[i++], ModelMatrix, fx.View, fx.Projection);
             }
         }
     }

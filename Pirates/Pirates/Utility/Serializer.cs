@@ -10,7 +10,7 @@ namespace Pirates.Utility
             using (Stream stream = File.Open(filename, FileMode.Create))
             {
                 BinaryFormatter Formatter = new BinaryFormatter();
-                Formatter.Serialize(stream, objectToSerialize);
+                //Formatter.Serialize(stream, objectToSerialize);
                 stream.Close();
             }
         }

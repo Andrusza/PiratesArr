@@ -159,7 +159,7 @@
     <Compile Include="Shaders\watershader\WaterParm.cs" />
     <Compile Include="Shaders\watershader\WaterShader.cs" />
     <Compile Include="Shaders\JustMvp.cs" />
-    <Compile Include="Shaders\MultiTextured.cs" />
+    <Compile Include="Utility\MultiTextured.cs" />
     <Compile Include="Shaders\Scattaring.cs">
       <SubType>Code</SubType>
     </Compile>

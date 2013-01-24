@@ -19,20 +19,20 @@ namespace Pirates.Loaders
 
         public Vector3 UpVector
         {
-            get { return modelMatrix.Up; }
-            set { modelMatrix.Up = value; }
+            get { return orientationMatrix.Up; }
+            set { orientationMatrix.Up = value; }
         }
 
         public Vector3 RightVector
         {
-            get { return modelMatrix.Right; }
-            set { modelMatrix.Right = value; }
+            get { return orientationMatrix.Right; }
+            set { orientationMatrix.Right = value; }
         }
 
         public Vector3 ForwardVector
         {
-            get { return modelMatrix.Forward; }
-            set { modelMatrix.Forward = value; }
+            get { return orientationMatrix.Forward; }
+            set { orientationMatrix.Forward = value; }
         }
 
         public Matrix RotationMatrix
@@ -43,6 +43,7 @@ namespace Pirates.Loaders
         private Matrix scaleMatrix = Matrix.Identity;
         private Matrix rotateMatrix = Matrix.Identity;
         private Matrix translateMatrix = Matrix.Identity;
+        private Matrix orientationMatrix = Matrix.Identity;
 
         public void Scale(float scale)
         {
@@ -79,10 +80,9 @@ namespace Pirates.Loaders
             Matrix.CreateTranslation(transaltion.X, 0, transaltion.Y, out translateMatrix);
         }
 
-
         public void Update()
         {
-            ModelMatrix = scaleMatrix * rotateMatrix * translateMatrix;
+            ModelMatrix = scaleMatrix * (orientationMatrix * rotateMatrix) * translateMatrix;
         }
 
         public void UpdateCenterOfMass()

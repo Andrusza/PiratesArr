@@ -7,11 +7,18 @@ namespace Cameras
         private int lastX;
         private int lastY;
 
-        public Matrix Update()
+        public Matrix Update(Vector3 position)
         {
-            KeyPressed();
-            //MouseEvents();
+            ShipUpdate(position);
+            MouseEvents();
+
             return view;
+        }
+
+        private void MouseFollow(int x, int y)
+        {
+            lastX = x;
+            lastY = y;
         }
 
         private void Motion(int x, int y)
@@ -34,15 +41,16 @@ namespace Cameras
             {
                 this.orientation = this.orientation * Quaternion.CreateFromYawPitchRoll(yaw, 0, 0);
             }
+
             view = Matrix.CreateFromQuaternion(orientation);
             SetViewPosition();
         }
 
         private void CameraTranslate(Vector3 direction)
         {
-            eye += xAxis * direction.X;
+            eye += xAxis * direction.Z;
             eye += worldY * direction.Y;
-            eye += dir * direction.Z;
+            eye += dir * direction.X;
             SetViewPosition();
         }
 

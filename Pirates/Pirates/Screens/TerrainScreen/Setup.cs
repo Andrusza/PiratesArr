@@ -19,6 +19,7 @@ namespace Pirates.Screens.Scene
     public partial class TerrainScreen : BaseMode
     {
         private FirstPersonCamera camera;
+        //private Locked3rdPersonCamera camera;
         private float aspectRatio = BaseClass.GetInstance().AspectRatio;
         private Matrix projectionMatrix;
 
@@ -38,6 +39,7 @@ namespace Pirates.Screens.Scene
         private Terrain water;
         private ObjectSkydome skydome;
         private ObjectShip ship;
+        private ObjectShip ship2;
 
         private CloudManager cloudManager;
         private RainManager rainManager;
@@ -58,7 +60,7 @@ namespace Pirates.Screens.Scene
 
         public TerrainScreen()
         {
-            camera = new FirstPersonCamera(new Vector3(867, 198, -1215));
+            camera = new FirstPersonCamera(new Vector3(0,100,0));
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 10000);
 
             islandShader = new MultiTextured();
@@ -151,29 +153,39 @@ namespace Pirates.Screens.Scene
             skydome.Rotate(-90, new Vector3(1, 0, 0));
             skydome.Update();
 
-            Wind.Direction = MathFunctions.AngleToVector(45);
-            //Wind.Force = 1000000f;
+            Wind.Setup();
 
             ship = new ObjectShip();
-            ship.Translate(488, 20, 286);
+            ship.Translate(0, 20, 0);
+            ship.Physics = new ObjectPhysics(50, ship.ModelMatrix);
             ship.Update();
-            //ship.Physics = new ObjectPhysics(50, ship.ModelMatrix);
 
-            //if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
-            //{
-            //    ship.Physics.FrictionCoefficient = 0.30f;
-            //    island.ColisionWithTerrain(ship);
-            //}
-            //else
-            //{
-            //    ship.Physics.FrictionCoefficient = 0.15f;
-            //    water.GetObjectPositionOnWater(ship, waterShader);
-            //}
+            ship2 = new ObjectShip();
+            ship2.Translate(480, 20, -290);
+            ship2.Physics = new ObjectPhysics(50, ship2.ModelMatrix);
+            ship2.Update();
+           
+
+
+            //ship.Translate(480, 20, -290);
+            //ship.Rotate(MathHelper.ToRadians(45),0,0);
+            
+
+            if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
+            {
+                ship.Physics.FrictionCoefficient = 0.20f;
+                island.ColisionWithTerrain(ship);
+            }
+            else
+            {
+                ship.Physics.FrictionCoefficient = 0.15f;
+                water.GetObjectPositionOnWater(ship, waterShader);
+            }
         }
 
         public TerrainScreen(SerializationInfo info, StreamingContext ctxt)
         {
-            this.camera = (FirstPersonCamera)info.GetValue("Camera", typeof(FirstPersonCamera));
+            //this.camera = (FirstPersonCamera)info.GetValue("Camera", typeof(FirstPersonCamera));
             this.aspectRatio = (float)info.GetValue("AspectRatio", typeof(float));
             this.projectionMatrix = (Matrix)info.GetValue("ProjectionMatrix", typeof(Matrix));
             this.rs = new RasterizerState();

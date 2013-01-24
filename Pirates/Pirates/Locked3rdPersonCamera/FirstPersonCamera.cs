@@ -9,6 +9,7 @@ namespace Cameras
 
         private Quaternion orientation;
         public Matrix view;
+        private Vector3 oldPosition;
 
         public Matrix View
         {
@@ -26,6 +27,8 @@ namespace Cameras
             this.view = Matrix.Identity;
             this.dir = new Vector3(0, 0, 1);
             this.orientation = new Quaternion(0, 0, 0, 1);
+            position.Y += 200;
+            oldPosition = position;
             this.CameraTranslate(position);
         }
 

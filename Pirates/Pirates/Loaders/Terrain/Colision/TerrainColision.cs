@@ -29,7 +29,6 @@ namespace Pirates.Loaders
             else return false;
         }
 
-        
         public int PlaceInArray(int top, int left)
         {
             int place = (top) * ((int)vertexCountZ) + left;
@@ -46,14 +45,15 @@ namespace Pirates.Loaders
                 GetHeightAndNormal(ship.ModelMatrix.Translation, out height, out normal);
 
                 ship.Translate(new Vector3(ship.ModelMatrix.Translation.X, height, ship.ModelMatrix.Translation.Z));
-                ship.Update();
 
                 ship.UpVector = normal;
-                ship.RightVector = Vector3.Cross(ship.ForwardVector, ship.UpVector);
+                ship.RightVector = Vector3.Cross(new Vector3(0, 0, -1f), ship.UpVector);
                 ship.RightVector = Vector3.Normalize(ship.RightVector);
 
                 ship.ForwardVector = Vector3.Cross(ship.UpVector, ship.RightVector);
                 ship.ForwardVector = Vector3.Normalize(ship.ForwardVector);
+                ship.Update();
+
                 return true;
             }
             return false;
