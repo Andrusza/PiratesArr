@@ -19,10 +19,10 @@ namespace Pirates.Screens.Scene
             Input();
             time += gameTime.TotalGameTime.Seconds;
             
-            Camera.Eye = ship.ModelMatrix.Translation + new Vector3(0,1500,0);
-            Camera.LookatPosition = ship.ModelMatrix.Translation - new Vector3(0,ship.ModelMatrix.Translation.Y,0);
+            //Camera.Eye = ship.ModelMatrix.Translation + new Vector3(0,1500,0);
+            //Camera.LookatPosition = ship.ModelMatrix.Translation - new Vector3(0,ship.ModelMatrix.Translation.Y,0);
             view = Camera.Update();
-            //Console.WriteLine(Camera.Eye.ToString());
+            ////.WriteLine(Camera.Eye.ToString());
 
             shipShader.View = view;
 
@@ -124,7 +124,7 @@ namespace Pirates.Screens.Scene
            
            
 
-            //Console.WriteLine(Camera.Eye.ToString());
+            ////.WriteLine(Camera.Eye.ToString());
         }
 
         private Plane CreatePlane(float height, Vector3 planeNormalDirection, bool clipSide)

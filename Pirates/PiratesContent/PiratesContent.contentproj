@@ -57,6 +57,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fbx\mo2del.fbx">
+      <Name>mo2del</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <Compile Include="Font\mono.spritefont">
       <Name>mono</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -272,13 +277,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fbx\model.fbx">
-      <Name>model</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Fbx\wood5.jpg">
       <Name>wood5</Name>
       <Importer>TextureImporter</Importer>
@@ -344,6 +342,34 @@
   <ItemGroup>
     <Compile Include="Heightmap\noise.jpg">
       <Name>noise</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fbx\model.fbx">
+      <Name>model</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fbx\sail3.jpg">
+      <Name>sail3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fbx\flag.jpg">
+      <Name>flag</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Texture\sail2.jpg">
+      <Name>sail2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

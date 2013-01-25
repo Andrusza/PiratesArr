@@ -7,21 +7,11 @@ namespace Pirates.Utility
     {
         public static Vector2 AngleToVector(float angle)
         {
-            angle = MathHelper.ToRadians(angle);
             Vector2 temp = new Vector2((float)Math.Sin(angle), (float)Math.Cos(angle));
+            temp.Normalize();
             return temp;
         }
 
-        //    public final void rotate(matrix  m) {
-        //// Assuming the angles are in radians.
-        //if ( m.m12 > 0.998 || m.m12 < -0.998 ) { // singularity at south or north pole
-        //    heading = Math.atan2( -m.m20, m.m00 );
-        //    bank = 0;
-        //} else {
-        //    heading = Math.atan2( m.m02, m.m22 );
-        //    bank = Math.atan2( m.m10, m.m11 );
-        //}
-        //attitude = Math.asin( m.m12 );
         public static Vector3 ToEuler(Matrix m)
         {
             double heading = 0;

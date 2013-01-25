@@ -1,4 +1,6 @@
 float4x4 MVP;
+float time;
+float power;
 
 texture2D diffuseMap0;
 sampler2D d0_Sampler = sampler_state
@@ -19,7 +21,7 @@ struct VertexShaderInput
 struct VertexShaderOutput
 {
     float4 Position : POSITION0;
-	float2  TextureCoord:TEXCOORD0;
+	float2 TextureCoord:TEXCOORD0;
   
 };
 
@@ -27,6 +29,9 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
     VertexShaderOutput output;
 
+	float y=(-71,558540 + input.Position.y)/ 43.685845;
+	
+	input.Position.x =power*sin(y)-0.64*power;
     output.Position = mul(input.Position, MVP);
 	output.TextureCoord=input.TextureCoord;
     

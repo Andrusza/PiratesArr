@@ -7,6 +7,7 @@ namespace Pirates.Shaders
     public class JustMvp : BaseShader
     {
         public Matrix MVP;
+        public float time = 0;
 
         public JustMvp()
             : base("JustMvp")
@@ -16,13 +17,13 @@ namespace Pirates.Shaders
 
         public override void InitParameters()
         {
-            Texture2D color = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "Sky2");
+            Texture2D color = ContentLoader.Load<Texture2D>(ContentType.TEXTURE, "sail2");
             Technique.Parameters["diffuseMap0"].SetValue(color);
         }
 
         public override void Update(float time)
         {
-            MVP = worldMatrix * viewMatrix * projectionMatrix;
+            this.time += time;
         }
     }
 }

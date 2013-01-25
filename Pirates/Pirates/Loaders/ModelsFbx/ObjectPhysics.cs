@@ -95,7 +95,7 @@ namespace Pirates.Physics
             if (forceX < 0) vDir.X = -1; else vDir.X = 1;
             if (forceZ < 0) vDir.Z = -1; else vDir.Z = 1;
 
-            //Console.WriteLine(forceX + " " + forceZ);
+            ////.WriteLine(forceX + " " + forceZ);
             return new Vector3(forceX, 0, forceZ);
         }
 
@@ -199,7 +199,7 @@ namespace Pirates.Physics
 
                     wind = WindForce();
                     wind = AirResistance(wind);
-                    //Console.WriteLine(wind.ToString());
+                    ////.WriteLine(wind.ToString());
 
                     ForceOnObject += ForcesOnStatic(wind, modelMatrix);
                     acc = ForceOnObject / mass;
@@ -216,11 +216,11 @@ namespace Pirates.Physics
                     {
                         Vector2 wind = WindForce();
                         wind = AirResistance(wind);
-                        //Console.WriteLine(wind.ToString());
+                        ////.WriteLine(wind.ToString());
                         Vector3 landForces = ForcesInMotion(modelMatrix, wind);
-                        //Console.WriteLine(wind.X);
+                        ////.WriteLine(wind.X);
                         ForceOnObject += landForces; //+ new Vector3(wind.X, 0, wind.Y);
-                        //Console.WriteLine(forceOnObject.ToString());
+                        ////.WriteLine(forceOnObject.ToString());
                         acc = ForceOnObject / mass * 0.005f;
                         return Verlet(modelMatrix.Translation, deltaTime);
                     }
@@ -252,8 +252,8 @@ namespace Pirates.Physics
             Vector3 nextPosition = position + (position - oldPosition) + acc * deltaTime * deltaTime;
             oldPosition = position;
             velocity += (vDir * acc) * deltaTime;
-            //Console.WriteLine(velocity.X.ToString());
-            Console.WriteLine(position.ToString());
+            ////.WriteLine(velocity.X.ToString());
+            //.WriteLine(position.ToString());
 
             return nextPosition;
         }

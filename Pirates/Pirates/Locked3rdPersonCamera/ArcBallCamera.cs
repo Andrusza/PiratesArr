@@ -104,6 +104,7 @@ namespace Pirates.Cameras
         private Vector3 GetZoomVector()
         {
             Vector3 diff = Eye - LookatPosition;
+            //.WriteLine(diff.ToString());
 
             diff.Normalize();
             diff *= _zoom;

@@ -22,10 +22,10 @@ namespace Pirates.Screens.Scene
         private FirstPersonCamera camera;
         private ArcBallCamera camera2;
 
-        public ArcBallCamera Camera
+        public FirstPersonCamera Camera
         {
-            get { return camera2; }
-            set { camera2 = value; }
+            get { return camera; }
+            set { camera = value; }
         }
 
         //private Locked3rdPersonCamera Camera;
@@ -82,8 +82,8 @@ namespace Pirates.Screens.Scene
             ship2.Update();
 
 
-            //Camera = new FirstPersonCamera(new Vector3(0,100,0));
-            camera2 = new ArcBallCamera(ship.ModelMatrix.Translation+new Vector3(0,1500,0), ship.ModelMatrix.Translation);
+            Camera = new FirstPersonCamera(new Vector3(0,100,0));
+            //camera2 = new ArcBallCamera(ship.ModelMatrix.Translation+new Vector3(0,1500,0), ship.ModelMatrix.Translation);
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 10000);
 
             islandShader = new MultiTextured();
