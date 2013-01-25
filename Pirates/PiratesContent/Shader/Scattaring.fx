@@ -158,9 +158,9 @@ float4 mainPS(vertexOutput IN) : COLOR0
 	float3 flatEyeVec = normalize(float3(eyeVec.x, 0, eyeVec.z));
 	float diff = dot(flatLightVec, -flatEyeVec);	
 	
-	// Based on camera altitude, the haze will look different and will be lower on the horizon.
+	// Based on Camera altitude, the haze will look different and will be lower on the horizon.
 	// This is simulated by raising YAngle to a certain power based on the difference between the
-	// haze top and camera altitude. 
+	// haze top and Camera altitude. 
 	// This modification of the angle will show more blue sky above the haze with a sharper separation.
 	// Lerp between 0.25 and 1.25
 	float val = lerp(0.25, 1.25, min(1, hazeTopAltitude / max(0.0001, eyeAlt)));

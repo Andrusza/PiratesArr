@@ -18,9 +18,11 @@ namespace Pirates.Screens.Scene
         {
             Input();
             time += gameTime.TotalGameTime.Seconds;
-
-            view = camera.Update();
-            //Console.WriteLine(camera.Eye.ToString());
+            
+            Camera.Eye = ship.ModelMatrix.Translation + new Vector3(0,1500,0);
+            Camera.LookatPosition = ship.ModelMatrix.Translation - new Vector3(0,ship.ModelMatrix.Translation.Y,0);
+            view = Camera.Update();
+            //Console.WriteLine(Camera.Eye.ToString());
 
             shipShader.View = view;
 
@@ -33,7 +35,7 @@ namespace Pirates.Screens.Scene
 
             cloudShader.ViewMatrix = view;
             cloudShader.WorldMatrix = cloudManager.Instancer.ModelMatrix;
-            cloudShader.eyePosition = camera.Eye;
+            cloudShader.eyePosition = Camera.Eye;
             cloudShader.lightVector = lightPosition;
 
             ////this formula is wrong./////////////////////
@@ -46,7 +48,7 @@ namespace Pirates.Screens.Scene
 
             rainShader.ViewMatrix = view;
             rainShader.WorldMatrix = rainManager.Instancer.ModelMatrix;
-            rainShader.eyePosition = camera.Eye;
+            rainShader.eyePosition = Camera.Eye;
             rainShader.lightVector = lightPosition;
             rainShader.Update(time);
 
@@ -122,7 +124,7 @@ namespace Pirates.Screens.Scene
            
            
 
-            //Console.WriteLine(camera.Eye.ToString());
+            //Console.WriteLine(Camera.Eye.ToString());
         }
 
         private Plane CreatePlane(float height, Vector3 planeNormalDirection, bool clipSide)
@@ -162,7 +164,7 @@ namespace Pirates.Screens.Scene
 
         private Matrix CreateReflectionMap()
         {
-            Matrix reflectionViewMatrix = reflectionMatrix * camera.View;
+            Matrix reflectionViewMatrix = reflectionMatrix * Camera.View;
 
             scatteringShader.ViewMatrix = reflectionViewMatrix;
             scatteringShader.Update(0);

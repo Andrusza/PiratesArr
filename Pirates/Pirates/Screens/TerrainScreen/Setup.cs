@@ -3,15 +3,16 @@ using System.Runtime.Serialization;
 using Cameras;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pirates.Cameras;
 using Pirates.Loaders;
 using Pirates.Loaders.Cloud;
 using Pirates.Loaders.ModelsFbx;
 using Pirates.Loaders.Rain;
-using Pirates.Physics;
 using Pirates.Shaders;
 using Pirates.Shaders.Rain;
 using Pirates.Utility;
 using Pirates.Weather;
+using Pirates.Physics;
 
 namespace Pirates.Screens.Scene
 {
@@ -19,8 +20,17 @@ namespace Pirates.Screens.Scene
     public partial class TerrainScreen : BaseMode
     {
         private FirstPersonCamera camera;
-        //private Locked3rdPersonCamera camera;
+        private ArcBallCamera camera2;
+
+        public ArcBallCamera Camera
+        {
+            get { return camera2; }
+            set { camera2 = value; }
+        }
+
+        //private Locked3rdPersonCamera Camera;
         private float aspectRatio = BaseClass.GetInstance().AspectRatio;
+
         private Matrix projectionMatrix;
 
         private RasterizerState rs;
@@ -60,54 +70,67 @@ namespace Pirates.Screens.Scene
 
         public TerrainScreen()
         {
-            camera = new FirstPersonCamera(new Vector3(0,100,0));
+
+            ship = new ObjectShip();
+            ship.Translate(0, 20, 0);
+            ship.Physics = new ObjectPhysics(50, ship.ModelMatrix);
+            ship.Update();
+
+            ship2 = new ObjectShip();
+            ship2.Translate(480, 20, -290);
+            ship2.Physics = new ObjectPhysics(50, ship2.ModelMatrix);
+            ship2.Update();
+
+
+            //Camera = new FirstPersonCamera(new Vector3(0,100,0));
+            camera2 = new ArcBallCamera(ship.ModelMatrix.Translation+new Vector3(0,1500,0), ship.ModelMatrix.Translation);
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 10000);
 
             islandShader = new MultiTextured();
             {
                 islandShader.ProjectionMatrix = projectionMatrix;
-                islandShader.ViewMatrix = camera.View;
+                islandShader.ViewMatrix = Camera.View;
                 islandShader.InitParameters();
             }
 
             mvpshader = new JustMvp();
             {
                 mvpshader.ProjectionMatrix = projectionMatrix;
-                mvpshader.ViewMatrix = camera.View;
+                mvpshader.ViewMatrix = Camera.View;
                 mvpshader.InitParameters();
             }
 
             shipShader = new BasicEffect(BaseClass.Device);
             {
                 shipShader.Projection = projectionMatrix;
-                shipShader.View = camera.View;
+                shipShader.View = Camera.View;
             }
 
             scatteringShader = new Scattaring();
             {
                 scatteringShader.ProjectionMatrix = projectionMatrix;
-                scatteringShader.ViewMatrix = camera.View;
+                scatteringShader.ViewMatrix = Camera.View;
                 scatteringShader.InitParameters();
             }
 
             waterShader = new WaterShader();
             {
                 waterShader.ProjectionMatrix = projectionMatrix;
-                waterShader.ViewMatrix = camera.View;
+                waterShader.ViewMatrix = Camera.View;
                 waterShader.InitParameters();
             }
 
             cloudShader = new CloudShader();
             {
                 cloudShader.ProjectionMatrix = projectionMatrix;
-                cloudShader.ViewMatrix = camera.View;
+                cloudShader.ViewMatrix = Camera.View;
                 cloudShader.InitParameters();
             }
 
             rainShader = new RainShader();
             {
                 rainShader.ProjectionMatrix = projectionMatrix;
-                rainShader.ViewMatrix = camera.View;
+                rainShader.ViewMatrix = Camera.View;
                 rainShader.InitParameters();
             }
 
@@ -155,21 +178,8 @@ namespace Pirates.Screens.Scene
 
             Wind.Setup();
 
-            ship = new ObjectShip();
-            ship.Translate(0, 20, 0);
-            ship.Physics = new ObjectPhysics(50, ship.ModelMatrix);
-            ship.Update();
-
-            ship2 = new ObjectShip();
-            ship2.Translate(480, 20, -290);
-            ship2.Physics = new ObjectPhysics(50, ship2.ModelMatrix);
-            ship2.Update();
-           
-
-
             //ship.Translate(480, 20, -290);
             //ship.Rotate(MathHelper.ToRadians(45),0,0);
-            
 
             if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
             {
@@ -185,7 +195,7 @@ namespace Pirates.Screens.Scene
 
         public TerrainScreen(SerializationInfo info, StreamingContext ctxt)
         {
-            //this.camera = (FirstPersonCamera)info.GetValue("Camera", typeof(FirstPersonCamera));
+            //this.Camera = (FirstPersonCamera)info.GetValue("Camera", typeof(FirstPersonCamera));
             this.aspectRatio = (float)info.GetValue("AspectRatio", typeof(float));
             this.projectionMatrix = (Matrix)info.GetValue("ProjectionMatrix", typeof(Matrix));
             this.rs = new RasterizerState();
@@ -193,7 +203,7 @@ namespace Pirates.Screens.Scene
             islandShader = new MultiTextured();
             {
                 islandShader.ProjectionMatrix = projectionMatrix;
-                islandShader.ViewMatrix = camera.View;
+                islandShader.ViewMatrix = Camera.View;
 
                 islandShader.InitParameters();
             }
@@ -201,21 +211,21 @@ namespace Pirates.Screens.Scene
             mvpshader = new JustMvp();
             {
                 mvpshader.ProjectionMatrix = projectionMatrix;
-                mvpshader.ViewMatrix = camera.View;
+                mvpshader.ViewMatrix = Camera.View;
                 mvpshader.InitParameters();
             }
 
             scatteringShader = new Scattaring();
             {
                 scatteringShader.ProjectionMatrix = projectionMatrix;
-                scatteringShader.ViewMatrix = camera.View;
+                scatteringShader.ViewMatrix = Camera.View;
                 scatteringShader.InitParameters();
             }
 
             waterShader = new WaterShader();
             {
                 waterShader.ProjectionMatrix = projectionMatrix;
-                waterShader.ViewMatrix = camera.View;
+                waterShader.ViewMatrix = Camera.View;
                 waterShader.InitParameters();
             }
 
@@ -237,7 +247,7 @@ namespace Pirates.Screens.Scene
         {
             info.AddValue("AspectRatio", this.aspectRatio);
             info.AddValue("ProjectionMatrix", this.projectionMatrix);
-            info.AddValue("Camera", this.camera);
+            info.AddValue("Camera", this.Camera);
         }
 
         public override void ToFile()

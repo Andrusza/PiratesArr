@@ -33,7 +33,7 @@ namespace Pirates.Loaders
 
     abstract public class ObjectMesh : ObjectGeometry
     {
-        private Model fbx;
+        protected Model fbx;
         private List<BoundingBoxOOB> boundingBoxes;
 
         public List<BoundingBoxOOB> BoundingBoxes

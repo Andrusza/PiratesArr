@@ -8,7 +8,10 @@ namespace Pirates.Loaders.ModelsFbx
     {
         private BoundingBoxRenderer bbRenderer;
         private ObjectPhysics physics;
-        public Vector2 sailDirection=new Vector2(0,1);
+        private Matrix[] boneTransforms;
+        private ModelBone sailMiddle;
+
+        public Vector2 sailDirection = new Vector2(0, 1);
         public float sialHeight = 0;
 
         public ObjectPhysics Physics
@@ -21,21 +24,26 @@ namespace Pirates.Loaders.ModelsFbx
             : base("model")
         {
             UpdateBoundingBox();
+            //meshWorldMatrices[20] = meshWorldMatrices[17] *= Matrix.CreateScale(0f);
             bbRenderer = new BoundingBoxRenderer();
+            sailMiddle = this.Fbx.Bones["zagiel2"];
+            sailMiddle.Transform *= Matrix.CreateScale(0f);
+
+            boneTransforms = new Matrix[this.Fbx.Bones.Count];
         }
 
         public void Update(float time)
         {
             Vector3 newPos = Physics.Update(this.ModelMatrix, time);
-            this.Translate(newPos.X,this.ModelMatrix.Translation.Y,newPos.Z);
+            this.Translate(newPos.X, this.ModelMatrix.Translation.Y, newPos.Z);
             base.Update();
             UpdateBoundingBox();
         }
-        int i=0;
+
         public void Draw(BasicEffect fx)
         {
-            Matrix[] modelTansforms = new Matrix[Fbx.Bones.Count];
-            Fbx.CopyAbsoluteBoneTransformsTo(modelTansforms);
+            Fbx.CopyAbsoluteBoneTransformsTo(boneTransforms);
+            
             int i = 0;
 
             foreach (ModelMesh mesh in Fbx.Meshes)
@@ -43,12 +51,12 @@ namespace Pirates.Loaders.ModelsFbx
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
-                    effect.World = modelTansforms[mesh.ParentBone.Index] * ModelMatrix;
+                    effect.World = boneTransforms[mesh.ParentBone.Index] * ModelMatrix;
                     effect.View = fx.View;
                     effect.Projection = fx.Projection;
                 }
                 mesh.Draw();
-                bbRenderer.Render(BoundingBoxes[i++], ModelMatrix, fx.View, fx.Projection);
+                //bbRenderer.Render(BoundingBoxes[i++], ModelMatrix, fx.View, fx.Projection);
             }
         }
     }

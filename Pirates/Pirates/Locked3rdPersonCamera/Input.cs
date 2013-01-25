@@ -1,36 +1,61 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Cameras
+namespace Pirates.Cameras
 {
-    public partial class Locked3rdPersonCamera
+    public partial class ArcBallCamera
     {
-        public Vector3 Eye
+        private void KeyPressed()
         {
-            get { return eye; }
-            set { eye = value; }
-        }
+            Vector3 direction = new Vector3();
 
-        private void ShipUpdate(Vector3 position)
-        {
-            position.Y -= 200;
-            Vector3 newPos = oldPosition - position;
-            oldPosition = position;
-            CameraTranslate(-newPos);
+            KeyboardState keyState = Keyboard.GetState();
+
+            if (keyState.IsKeyDown(Keys.A))
+            {
+                direction += new Vector3(-4f, 0, 0);
+            }
+
+            if (keyState.IsKeyDown(Keys.D))
+            {
+                direction += new Vector3(4f, 0, 0);
+            }
+
+            if (keyState.IsKeyDown(Keys.W))
+            {
+                direction += new Vector3(0, 0, 4f);
+            }
+
+            if (keyState.IsKeyDown(Keys.S))
+            {
+                direction += new Vector3(0, 0, -4f);
+            }
         }
 
         private void MouseEvents()
         {
-            MouseState mouseState = Mouse.GetState();
+            MouseState currentState = Mouse.GetState();
 
-            if (mouseState.LeftButton == ButtonState.Pressed)
+            this.Zoom = currentState.ScrollWheelValue * 0.5f;
+
+            // if the mouse has been held down
+            if (currentState.LeftButton == ButtonState.Pressed &&
+                _previousLeftButton == ButtonState.Pressed)
             {
-                Motion(mouseState.X, mouseState.Y);
+                Vector2 curMouse = new Vector2(currentState.X, currentState.Y);
+                Vector2 deltaMouse = _previousMousePosition - curMouse;
+
+                this.Theta += deltaMouse.X * 0.01f;
+                this.Phi -= deltaMouse.Y * 0.005f;
+                _previousMousePosition = curMouse;
             }
-            else
+            // It's implied that the leftPreviousState is unpressed in this situation.
+            else if (currentState.LeftButton == ButtonState.Pressed)
             {
-                MouseFollow(mouseState.X, mouseState.Y);
+                _previousMousePosition = new Vector2(currentState.X, currentState.Y);
             }
+
+            _previousLeftButton = currentState.LeftButton;
         }
     }
 }
