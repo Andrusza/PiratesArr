@@ -1,6 +1,6 @@
 float4x4 MVP;
 float time;
-float power;
+float power=40;
 
 texture2D diffuseMap0;
 sampler2D d0_Sampler = sampler_state

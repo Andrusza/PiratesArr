@@ -1,3 +1,6 @@
+Content\Fbx\mo2del.xnb
+Content\Fbx\skydome4.xnb
+Content\Fbx\model.xnb
 Content\Font\mono.xnb
 Content\Shader\Water.xnb
 Content\Shader\JustMVP.xnb
@@ -34,8 +37,9 @@ Content\Fbx\sail.xnb
 Content\Fbx\canons.xnb
 Content\Fbx\porecz.xnb
 Content\Heightmap\noise.xnb
-Content\Fbx\skydome4.xnb
-Content\Fbx\model.xnb
+Content\Fbx\sail3.xnb
+Content\Fbx\flag.xnb
+Content\Texture\sail2.xnb
 Content\Fbx\wood5_0.xnb
 Content\Fbx\wood3_0.xnb
 Content\Fbx\wood4_0.xnb
@@ -44,9 +48,5 @@ Content\Fbx\sail_0.xnb
 Content\Fbx\canons_0.xnb
 Content\Fbx\porecz_0.xnb
 Content\Fbx\sail2_0.xnb
-Content\Fbx\sail3.xnb
 Content\Fbx\sail3_0.xnb
-Content\Fbx\flag.xnb
 Content\Fbx\flag_0.xnb
-Content\Texture\sail2.xnb
-Content\Fbx\mo2del.xnb

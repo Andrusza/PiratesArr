@@ -8,7 +8,7 @@ namespace Pirates.Weather
     {
         private static System.Timers.Timer timer = new Timer();
         private static Random rnd=new Random();
-        private static double interval = 10000;
+        private static double interval = 1000*10;
 
         public static void Setup()
         {
@@ -20,10 +20,13 @@ namespace Pirates.Weather
 
         private static void NewWind(object sender, ElapsedEventArgs e)
         {
-            Force=rnd.Next(0, 100);
-            direction.X = (float)rnd.NextDouble() * 2 - 1;
-            direction.Y = (float)rnd.NextDouble() * 2 - 1;
-            direction.Normalize();
+            //Force=rnd.Next(100, 400);
+            //direction.X = (float)rnd.NextDouble() * 2 - 1;
+            //direction.Y = (float)rnd.NextDouble() * 2 - 1;
+            //direction.Normalize();
+            Force = 1000;
+            Direction = new Vector2(0, 1);
+            
         }
 
         private static Vector2 direction;

@@ -32,6 +32,7 @@ namespace Pirates.Physics
             get { return velocity; }
             set { velocity = value; }
         }
+
         private bool objStatic = true;
 
         public bool ObjStatic
@@ -39,6 +40,7 @@ namespace Pirates.Physics
             get { return objStatic; }
             set { objStatic = value; }
         }
+
         private Vector3 forceOnObject = Vector3.Zero;
 
         public Vector3 ForceOnObject
@@ -58,6 +60,12 @@ namespace Pirates.Physics
         private Vector2 wind;
 
         private Vector2 sailDirection = new Vector2(0, 1);
+
+        public Vector2 SailDirection
+        {
+            get { return sailDirection; }
+            set { sailDirection = value; }
+        }
 
         public ObjectPhysics(float mass, Matrix modelMatrix)
         {
@@ -216,11 +224,12 @@ namespace Pirates.Physics
                     {
                         Vector2 wind = WindForce();
                         wind = AirResistance(wind);
-                        ////.WriteLine(wind.ToString());
+                        //Console.WriteLine(wind.ToString());
                         Vector3 landForces = ForcesInMotion(modelMatrix, wind);
+                        //Console.WriteLine(landForces.ToString());
                         ////.WriteLine(wind.X);
                         ForceOnObject += landForces; //+ new Vector3(wind.X, 0, wind.Y);
-                        ////.WriteLine(forceOnObject.ToString());
+                        //Console.WriteLine(forceOnObject.ToString());
                         acc = ForceOnObject / mass * 0.005f;
                         return Verlet(modelMatrix.Translation, deltaTime);
                     }
@@ -235,9 +244,10 @@ namespace Pirates.Physics
 
         private Vector2 WindForce()
         {
-            float dotProduct = Vector2.Dot(Wind.Direction, sailDirection);
-            float wind = dotProduct * Wind.Force;
-            return sailDirection * wind;
+            float dotProduct = Vector2.Dot(Wind.Direction, SailDirection);
+            if (dotProduct < 0 && !ObjStatic) dotProduct = 0;
+
+            return SailDirection * dotProduct * Wind.Force;
         }
 
         private Vector2 AirResistance(Vector2 wind)
@@ -252,8 +262,8 @@ namespace Pirates.Physics
             Vector3 nextPosition = position + (position - oldPosition) + acc * deltaTime * deltaTime;
             oldPosition = position;
             velocity += (vDir * acc) * deltaTime;
-            ////.WriteLine(velocity.X.ToString());
-            //.WriteLine(position.ToString());
+            //Console.WriteLine(velocity.ToString());
+            Console.WriteLine(position.ToString());
 
             return nextPosition;
         }

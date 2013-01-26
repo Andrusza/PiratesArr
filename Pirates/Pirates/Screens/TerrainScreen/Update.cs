@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirates.Weather;
-using Pirates.Loaders.Colision;
-using Pirates.Loaders;
 
 namespace Pirates.Screens.Scene
 {
@@ -18,7 +16,7 @@ namespace Pirates.Screens.Scene
         {
             Input();
             time += gameTime.TotalGameTime.Seconds;
-            
+
             //Camera.Eye = ship.ModelMatrix.Translation + new Vector3(0,1500,0);
             //Camera.LookatPosition = ship.ModelMatrix.Translation - new Vector3(0,ship.ModelMatrix.Translation.Y,0);
             view = Camera.Update();
@@ -89,40 +87,37 @@ namespace Pirates.Screens.Scene
                 ship.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
-            if (island.IsOnHeightmap(ship2.ModelMatrix.Translation))
-            {
-                ship2.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-                ship2.Physics.FrictionCoefficient = 0.20f;
-                Wind.Force = 0;
-                island.ColisionWithTerrain(ship2);
-            }
-            else
-            {
-                ship2.Physics.FrictionCoefficient = 0.10f;
-                water.GetObjectPositionOnWater(ship2, waterShader);
-                ship2.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            }
+            //if (island.IsOnHeightmap(ship2.ModelMatrix.Translation))
+            //{
+            //    ship2.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            //    ship2.Physics.FrictionCoefficient = 0.20f;
+            //    Wind.Force = 0;
+            //    island.ColisionWithTerrain(ship2);
+            //}
+            //else
+            //{
+            //    ship2.Physics.FrictionCoefficient = 0.10f;
+            //    water.GetObjectPositionOnWater(ship2, waterShader);
+            //    ship2.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            //}
 
+            //foreach (BoundingBoxOOB aa in ship.BoundingBoxes)
+            //{
+            //    foreach (BoundingBoxOOB bb in ship2.BoundingBoxes)
+            //    {
+            //        bool lol = GilbertJohnsonKeerthi.BodiesIntersect(aa.Corners, bb.Corners);
+            //        if (lol)
+            //        {
+            //            ship.Physics.ForceOnObject = Vector3.Zero;
+            //            ship.Physics.Velocity = Vector3.Zero;
+            //            ship2.Physics.ForceOnObject = Vector3.Zero;
+            //            ship2.Physics.Velocity = Vector3.Zero;
+            //            ship.Physics.ObjStatic = true;
+            //            ship.Physics.ObjStatic = true;
 
-            foreach (BoundingBoxOOB aa in ship.BoundingBoxes)
-            {
-                foreach (BoundingBoxOOB bb in ship2.BoundingBoxes)
-                {
-                    bool lol = GilbertJohnsonKeerthi.BodiesIntersect(aa.Corners, bb.Corners);
-                    if (lol)
-                    {
-                        ship.Physics.ForceOnObject = Vector3.Zero;
-                        ship.Physics.Velocity = Vector3.Zero;
-                        ship2.Physics.ForceOnObject = Vector3.Zero;
-                        ship2.Physics.Velocity = Vector3.Zero;
-                        ship.Physics.ObjStatic = true;
-                        ship.Physics.ObjStatic = true;
-
-                    }
-                }
-            }
-           
-           
+            //        }
+            //    }
+            //}
 
             ////.WriteLine(Camera.Eye.ToString());
         }
@@ -154,7 +149,6 @@ namespace Pirates.Screens.Scene
                 ship2.Draw(shipShader);
                 island.Draw(islandShader);
                 water.Draw(waterShader);
-               
 
                 //rainManager.Draw(rainShader);
             }
