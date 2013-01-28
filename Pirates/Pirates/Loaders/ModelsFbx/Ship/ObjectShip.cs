@@ -64,9 +64,9 @@ namespace Pirates.Loaders.ModelsFbx
         {
             KeyboardState keyState = Keyboard.GetState();
 
-            if (keyState.IsKeyDown(Keys.W))
+            if (keyState.IsKeyDown(Keys.S))
             {
-                Wind.Force += 150.1f;
+                Wind.Force -= 40;
                 if (sailHeight >= 0)
                 {
                     sailHeight -= 0.05f;
@@ -76,9 +76,9 @@ namespace Pirates.Loaders.ModelsFbx
             }
             else if (Wind.Force > 0) Wind.Force -= 15.2f;
 
-            if (keyState.IsKeyDown(Keys.S))
+            if (keyState.IsKeyDown(Keys.W))
             {
-                Wind.Force -= 40;
+                Wind.Force += 150.1f;
                 if (sailHeight <= 1.0)
                 {
                     sailHeight += 0.05f;

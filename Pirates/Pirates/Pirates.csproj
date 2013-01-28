@@ -115,9 +115,6 @@
     <Compile Include="Loaders\ModelsFbx\ObjectPhysics.cs" />
     <Compile Include="Loaders\Terrain\Colision\GJK.cs" />
     <Compile Include="Locked3rdPersonCamera\Arc.cs" />
-    <Compile Include="Locked3rdPersonCamera\ArcBallCamera.cs" />
-    <Compile Include="Locked3rdPersonCamera\Input.cs" />
-    <Compile Include="Locked3rdPersonCamera\Update.cs" />
     <Compile Include="Keyboard\SpecialKeys.cs" />
     <Compile Include="Loaders\ModelsFbx\BoundingBoxRendering.cs" />
     <Compile Include="Loaders\Instancing\Clouds\CloudInstancer.cs" />

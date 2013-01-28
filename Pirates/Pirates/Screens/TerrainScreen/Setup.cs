@@ -3,16 +3,16 @@ using System.Runtime.Serialization;
 using Cameras;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pirates.Cameras;
 using Pirates.Loaders;
 using Pirates.Loaders.Cloud;
 using Pirates.Loaders.ModelsFbx;
 using Pirates.Loaders.Rain;
+using Pirates.Physics;
 using Pirates.Shaders;
 using Pirates.Shaders.Rain;
 using Pirates.Utility;
 using Pirates.Weather;
-using Pirates.Physics;
+using Pirates.Locked3rdPersonCamera;
 
 namespace Pirates.Screens.Scene
 {
@@ -70,22 +70,20 @@ namespace Pirates.Screens.Scene
 
         public TerrainScreen()
         {
-
             ship = new ObjectShip();
             ship.Translate(880, 20, -1290);
             ship.Physics = new ObjectPhysics(50, ship.ModelMatrix);
             ship.Update();
 
             ship2 = new ObjectShip();
-            ship2.Translate(480, 20, -290);
+            ship2.Translate(0, 20, 0);
             ship2.Physics = new ObjectPhysics(50, ship2.ModelMatrix);
             ship2.Update();
 
-
             //Camera = new FirstPersonCamera(new Vector3(0,100,0));
-            //camera2 = new ArcBallCamera(ship.ModelMatrix.Translation, ship.ModelMatrix.Translation);
-            camera2 = new ArcBallCamera(ship.ModelMatrix.Translation, new Vector3(0,0,0));
-            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 10000);
+            camera2 = new ArcBallCamera(ship.ModelMatrix.Translation,0, 0, 0, 360, 1000, 400, 1000);
+
+            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 20000);
 
             islandShader = new MultiTextured();
             {

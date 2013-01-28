@@ -17,8 +17,9 @@ namespace Pirates.Screens.Scene
             Input();
             time += gameTime.TotalGameTime.Seconds;
 
-            Camera.Eye = new Vector3(500, 100, 0);
-            Camera.LookatPosition = new Vector3(500, 0, 0);
+            //Camera.Eye = new Vector3(500, 100, 0);
+            //Camera.LookatPosition = new Vector3(500, 0, 0);
+            Camera.Target = ship.ModelMatrix.Translation;
             view = Camera.Update();
             ////.WriteLine(Camera.Eye.ToString());
 

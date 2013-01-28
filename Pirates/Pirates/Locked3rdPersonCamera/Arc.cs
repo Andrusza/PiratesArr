@@ -27,6 +27,25 @@ namespace Pirates.Locked3rdPersonCamera
         public Vector3 Position { get; private set; }
 
         public Vector3 Target { get; set; }
+
+        private Matrix view;
+
+        public Matrix View
+        {
+            get { return view; }
+            set { view = value; }
+        }
+
+        private Vector3 eye;
+
+        public Vector3 Eye
+        {
+            get { return eye; }
+            set { eye = View.Translation; }
+        }
+
+        private ButtonState previous;
+
         private MouseState lastMouseState;
 
         public ArcBallCamera(Vector3 Target, float RotationX,
@@ -42,7 +61,7 @@ namespace Pirates.Locked3rdPersonCamera
             this.RotationX = RotationX;
             this.MinDistance = MinDistance;
             this.MaxDistance = MaxDistance;
-
+            previous = ButtonState.Released;
             // Lock the distance between the min and max values
 
             this.Distance = MathHelper.Clamp(Distance, MinDistance,
@@ -51,7 +70,7 @@ namespace Pirates.Locked3rdPersonCamera
 
         public void Move(float DistanceChange)
         {
-            this.Distance += DistanceChange;
+            this.Distance += DistanceChange *0.1f;
             this.Distance = MathHelper.Clamp(Distance, MinDistance,
             MaxDistance);
         }
@@ -71,6 +90,12 @@ namespace Pirates.Locked3rdPersonCamera
 
         public Matrix Update()
         {
+            updateCamera();
+            return UpdateMatrix();
+        }
+
+        public Matrix UpdateMatrix()
+        {
             // Calculate rotation matrix from rotation values
             Matrix rotation = Matrix.CreateFromYawPitchRoll(RotationX, -
             RotationY, 0);
@@ -83,44 +108,36 @@ namespace Pirates.Locked3rdPersonCamera
             Position = Target + translation;
             // Calculate the up vector from the rotation matrix
             Vector3 up = Vector3.Transform(Vector3.Up, rotation);
-            Matrix View = Matrix.CreateLookAt(Position, Target, up);
+            View = Matrix.CreateLookAt(Position, Target, up);
             return View;
         }
 
-        private void updateCamera(GameTime gameTime)
+        private void updateCamera()
         {
-            //  if (currentState.LeftButton == ButtonState.Pressed &&
-            //    _previousLeftButton == ButtonState.Pressed)
-            //{
-            //    Vector2 curMouse = new Vector2(currentState.X, currentState.Y);
-            //    Vector2 deltaMouse = _previousMousePosition - curMouse;
-
-            //    this.Theta += deltaMouse.X * 0.01f;
-            //    this.Phi -= deltaMouse.Y * 0.005f;
-            //    _previousMousePosition = curMouse;
-            //}
-            //// It's implied that the leftPreviousState is unpressed in this situation.
-            //else if (currentState.LeftButton == ButtonState.Pressed)
-            //{
-            //    _previousMousePosition = new Vector2(currentState.X, currentState.Y);
-            //}
-
             MouseState mouseState = Mouse.GetState();
             KeyboardState keyState = Keyboard.GetState();
 
-            // Determine how much the camera should turn
-            float deltaX = (float)lastMouseState.X - (float)mouseState.X;
-            float deltaY = (float)lastMouseState.Y - (float)mouseState.Y;
-            // Rotate the camera
-            this.Rotate(deltaX * .01f, deltaY * .01f);
-            // Calculate scroll wheel movement
-            float scrollDelta = (float)lastMouseState.ScrollWheelValue -
-            (float)mouseState.ScrollWheelValue;
-            // Move the camera
+            float scrollDelta = (float)lastMouseState.ScrollWheelValue - (float)mouseState.ScrollWheelValue;
             this.Move(scrollDelta);
-            this.Update();
-            // Update the mouse state
-            lastMouseState = mouseState;
+
+            if (mouseState.LeftButton == ButtonState.Pressed &&
+                previous == ButtonState.Pressed)
+            {
+                // Determine how much the camera should turn
+                float deltaX = (float)lastMouseState.X - (float)mouseState.X;
+                float deltaY = (float)lastMouseState.Y - (float)mouseState.Y;
+                // Rotate the camera
+                this.Rotate(deltaX * .001f, deltaY * .001f);
+                lastMouseState = mouseState;
+            }
+            else if (mouseState.LeftButton == ButtonState.Pressed)
+            {
+                lastMouseState = mouseState;
+            }
+
+            
+
+            previous = mouseState.LeftButton;
         }
     }
 }
