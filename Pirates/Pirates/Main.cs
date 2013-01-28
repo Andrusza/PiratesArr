@@ -27,6 +27,7 @@ namespace Pirates
         }
 
         private BaseMode renderMode;
+        private BaseMode renderMode2;
 
         private XnaWindow window;
         private FPScounter fps;

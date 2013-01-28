@@ -50,7 +50,7 @@ namespace Pirates.Cameras
                 // Apply zoom
                 newCameraPosition += GetZoomVector();
 
-                // Apply Z rotation
+                
                 rotationMatrix = Matrix.CreateRotationZ(_phi);
                 newCameraPosition = Vector3.Transform(newCameraPosition,
                     rotationMatrix);

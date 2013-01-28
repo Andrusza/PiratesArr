@@ -89,14 +89,14 @@ namespace Pirates.Physics
             if (Math.Abs(forceX) > Math.Abs(frictionX))
             {
                 ObjStatic = false;
-                forceX += frictionX;
+                forceX -= frictionX;
             }
             else forceX = 0;
 
             if (Math.Abs(forceZ) > Math.Abs(frictionZ))
             {
                 ObjStatic = false;
-                forceZ += frictionZ;
+                forceZ -= frictionZ;
             }
             else forceZ = 0;
 
@@ -226,15 +226,18 @@ namespace Pirates.Physics
                         wind = AirResistance(wind);
                         //Console.WriteLine(wind.ToString());
                         Vector3 landForces = ForcesInMotion(modelMatrix, wind);
+
                         //Console.WriteLine(landForces.ToString());
                         ////.WriteLine(wind.X);
-                        ForceOnObject += landForces; //+ new Vector3(wind.X, 0, wind.Y);
+                        ForceOnObject += landForces;
+                        //ForceOnObject /= 2;//+ new Vector3(wind.X, 0, wind.Y);
                         //Console.WriteLine(forceOnObject.ToString());
-                        acc = ForceOnObject / mass * 0.005f;
+                        acc = ForceOnObject / mass * 0.15f;
                         return Verlet(modelMatrix.Translation, deltaTime);
                     }
 
                     velocity = Vector3.Zero;
+                    Wind.Force = 0;
                     ObjStatic = true;
                     return modelMatrix.Translation;
                 }
@@ -252,8 +255,21 @@ namespace Pirates.Physics
 
         private Vector2 AirResistance(Vector2 wind)
         {
-            wind.X -= 0.2f * velocity.X * velocity.X;
-            wind.Y -= 0.2f * velocity.Z * velocity.Z;
+            if (velocity.X > 300 || velocity.Z > 300)
+            {
+                ForceOnObject /= 2;
+                return gradientWind(wind, 0.6f);
+            }
+            else
+            {
+                return gradientWind(wind, 0.1f);
+            }
+        }
+
+        public Vector2 gradientWind(Vector2 wind, float coff)
+        {
+            wind.X -= vDir.X * coff * velocity.X * velocity.X;
+            wind.Y -= vDir.Z * coff * velocity.Z * velocity.Z;
             return wind;
         }
 
@@ -262,8 +278,8 @@ namespace Pirates.Physics
             Vector3 nextPosition = position + (position - oldPosition) + acc * deltaTime * deltaTime;
             oldPosition = position;
             velocity += (vDir * acc) * deltaTime;
-            //Console.WriteLine(velocity.ToString());
-            Console.WriteLine(position.ToString());
+            Console.WriteLine(velocity.ToString());
+            //Console.WriteLine(position.ToString());
 
             return nextPosition;
         }

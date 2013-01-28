@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Pirates.Physics;
 using Pirates.Shaders;
 using Pirates.Utility;
+using Pirates.Weather;
 
 namespace Pirates.Loaders.ModelsFbx
 {
@@ -65,6 +66,7 @@ namespace Pirates.Loaders.ModelsFbx
 
             if (keyState.IsKeyDown(Keys.W))
             {
+                Wind.Force += 150.1f;
                 if (sailHeight >= 0)
                 {
                     sailHeight -= 0.05f;
@@ -72,9 +74,11 @@ namespace Pirates.Loaders.ModelsFbx
                     sailMiddle.Transform *= Matrix.CreateScale(1f, 1f - 0.05f, 1f) * Matrix.CreateTranslation(new Vector3(0f, 7.4f, 0f));
                 }
             }
+            else if (Wind.Force > 0) Wind.Force -= 15.2f;
 
             if (keyState.IsKeyDown(Keys.S))
             {
+                Wind.Force -= 40;
                 if (sailHeight <= 1.0)
                 {
                     sailHeight += 0.05f;
@@ -88,6 +92,7 @@ namespace Pirates.Loaders.ModelsFbx
             {
                 if (rotation > MathHelper.ToRadians(-90))
                 {
+                    Physics.ForceOnObject /= 2.0f;
                     rotation -= rot;
                     sailDirection = MathFunctions.AngleToVector(rotation);
 
@@ -104,6 +109,7 @@ namespace Pirates.Loaders.ModelsFbx
             {
                 if (rotation < MathHelper.ToRadians(90))
                 {
+                    Physics.ForceOnObject /= 2.0f;
                     rotation += rot;
                     sailDirection = MathFunctions.AngleToVector(rotation);
 

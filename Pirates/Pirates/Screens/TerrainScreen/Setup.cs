@@ -22,10 +22,10 @@ namespace Pirates.Screens.Scene
         private FirstPersonCamera camera;
         private ArcBallCamera camera2;
 
-        public FirstPersonCamera Camera
+        public ArcBallCamera Camera
         {
-            get { return camera; }
-            set { camera = value; }
+            get { return camera2; }
+            set { camera2 = value; }
         }
 
         //private Locked3rdPersonCamera Camera;
@@ -72,7 +72,7 @@ namespace Pirates.Screens.Scene
         {
 
             ship = new ObjectShip();
-            ship.Translate(0, 20, 0);
+            ship.Translate(880, 20, -1290);
             ship.Physics = new ObjectPhysics(50, ship.ModelMatrix);
             ship.Update();
 
@@ -82,8 +82,9 @@ namespace Pirates.Screens.Scene
             ship2.Update();
 
 
-            Camera = new FirstPersonCamera(new Vector3(0,100,0));
-            //camera2 = new ArcBallCamera(ship.ModelMatrix.Translation+new Vector3(0,1500,0), ship.ModelMatrix.Translation);
+            //Camera = new FirstPersonCamera(new Vector3(0,100,0));
+            //camera2 = new ArcBallCamera(ship.ModelMatrix.Translation, ship.ModelMatrix.Translation);
+            camera2 = new ArcBallCamera(ship.ModelMatrix.Translation, new Vector3(0,0,0));
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 10000);
 
             islandShader = new MultiTextured();
@@ -165,14 +166,14 @@ namespace Pirates.Screens.Scene
 
             island = new Terrain("island4", 10, 1);
 
-            water = new Terrain("map2", 30, 1);
+            water = new Terrain("map2", 50, 1);
             water.Translate(0, 40, 0);
             water.Update();
             reflectionPlane = CreatePlane(40, new Vector3(0, -1, 0), true);
             reflectionMatrix = Matrix.CreateReflection(reflectionPlane);
 
             skydome = new ObjectSkydome(scatteringShader);
-            skydome.Scale(3200);
+            skydome.Scale(6400);
             skydome.Rotate(-90, new Vector3(1, 0, 0));
             skydome.Update();
 

@@ -17,8 +17,8 @@ namespace Pirates.Screens.Scene
             Input();
             time += gameTime.TotalGameTime.Seconds;
 
-            //Camera.Eye = ship.ModelMatrix.Translation + new Vector3(0,1500,0);
-            //Camera.LookatPosition = ship.ModelMatrix.Translation - new Vector3(0,ship.ModelMatrix.Translation.Y,0);
+            Camera.Eye = new Vector3(500, 100, 0);
+            Camera.LookatPosition = new Vector3(500, 0, 0);
             view = Camera.Update();
             ////.WriteLine(Camera.Eye.ToString());
 
@@ -76,7 +76,7 @@ namespace Pirates.Screens.Scene
             if (island.IsOnHeightmap(ship.ModelMatrix.Translation))
             {
                 ship.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-                ship.Physics.FrictionCoefficient = 0.20f;
+                ship.Physics.FrictionCoefficient = 0.30f;
                 Wind.Force = 0;
                 island.ColisionWithTerrain(ship);
             }

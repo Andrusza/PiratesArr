@@ -24,7 +24,7 @@ namespace Pirates.Weather
             //direction.X = (float)rnd.NextDouble() * 2 - 1;
             //direction.Y = (float)rnd.NextDouble() * 2 - 1;
             //direction.Normalize();
-            Force = 1000;
+            //Force = 1000;
             Direction = new Vector2(0, 1);
             
         }
