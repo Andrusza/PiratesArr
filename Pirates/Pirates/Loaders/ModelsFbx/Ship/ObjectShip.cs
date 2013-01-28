@@ -51,7 +51,7 @@ namespace Pirates.Loaders.ModelsFbx
             shader = new JustMvp();
             shader.InitParameters();
 
-            foreach (ModelMeshPart part in Fbx.Meshes[20].MeshParts)
+            foreach (ModelMeshPart part in Fbx.Meshes[18].MeshParts)
             {
                 part.Effect = shader.Technique.Clone();
             }

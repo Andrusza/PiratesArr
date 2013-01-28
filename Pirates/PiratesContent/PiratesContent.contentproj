@@ -347,8 +347,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fbx\model.fbx">
-      <Name>model</Name>
+    <Compile Include="Fbx\mod3el.fbx">
+      <Name>mod3el</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
@@ -372,6 +372,13 @@
       <Name>sail2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fbx\model.fbx">
+      <Name>model</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
